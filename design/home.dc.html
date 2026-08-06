@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { font-family: 'Manrope', system-ui, sans-serif; -webkit-font-smoothing: antialiased; background:#ffffff; }
+  ::selection { background: #ff6a1a; color: #fff; }
+  .chip-link:hover { color:#ff6a1a !important; }
+  .cat-card:hover { border-color:#1e5cff !important; box-shadow:0 16px 36px rgba(30,92,255,.14) !important; transform:translateY(-3px); }
+  .cat-card:hover .cat-arrow { color:#ff6a1a !important; transform:translateX(3px); }
+  .foot-link:hover { color:#fff !important; }
+  .btn-primary:hover { box-shadow:0 12px 26px rgba(255,106,26,.42) !important; transform:translateY(-1px); }
+  .btn-blue:hover { box-shadow:0 12px 26px rgba(30,92,255,.42) !important; transform:translateY(-1px); }
+  select, input { font-family: inherit; }
+  a { text-decoration:none; color:inherit; }
+</style>
+</helmet>
+
+<div style="width:100%; overflow-x:hidden;">
+
+  <!-- ============ STICKY NAV ============ -->
+  <div style="position:sticky; top:0; z-index:50; background:rgba(255,255,255,.86); backdrop-filter:blur(12px); border-bottom:1px solid rgba(11,23,48,.08);">
+    <div style="max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; padding:16px 32px;">
+      <div style="display:flex; align-items:center; gap:11px;">
+        <div style="width:38px; height:38px; border-radius:10px; background:#1e5cff; display:flex; align-items:center; justify-content:center; color:#fff; font:700 19px/1 'Space Grotesk', sans-serif;">А</div>
+        <div style="font:700 20px/1 'Space Grotesk', sans-serif; color:#0b1730; letter-spacing:-.01em;">АВТОРАЗБОРКА<span style="color:#ff6a1a;">23</span></div>
+      </div>
+      <div style="display:flex; align-items:center; gap:32px; font:600 14px/1 'Manrope', sans-serif; color:#3c485f;">
+        <a class="chip-link" href="Каталог.dc.html" style="cursor:pointer; transition:color .15s;">Каталог</a>
+        <a class="chip-link" href="#how" style="cursor:pointer; transition:color .15s;">Как мы работаем</a>
+        <a class="chip-link" href="#why" style="cursor:pointer; transition:color .15s;">Гарантия</a>
+        <a class="chip-link" href="#footer" style="cursor:pointer; transition:color .15s;">Контакты</a>
+      </div>
+      <div style="display:flex; align-items:center; gap:20px;">
+        <a href="tel:+78005552424" style="font:700 16px/1 'Space Grotesk', sans-serif; color:#0b1730;">+7 800 555-24-24</a>
+        <div class="btn-primary" onClick="{{ openPicker }}" style="padding:11px 20px; border-radius:10px; background:#ff6a1a; color:#fff; font:700 14px/1 'Manrope', sans-serif; cursor:pointer; box-shadow:0 8px 18px rgba(255,106,26,.32); transition:transform .15s, box-shadow .15s;">Подобрать запчасть</div>
+      </div>
+    </div>
+    <!-- slide-down picker -->
+    <div style="position:absolute; top:100%; left:0; right:0; background:#fff; border-bottom:1px solid rgba(11,23,48,.1); box-shadow:0 26px 44px rgba(11,23,48,.14); overflow:hidden; max-height:{{ pickerH }}; opacity:{{ pickerO }}; pointer-events:{{ pickerPE }}; transition:max-height .34s ease, opacity .26s ease; z-index:40;">
+      <div style="max-width:1200px; margin:0 auto; padding:24px 32px 28px;">
+        <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:20px; margin-bottom:18px;">
+          <div>
+            <div style="font:700 22px/1.1 'Space Grotesk', sans-serif; color:#0b1730; margin-bottom:6px;">Подбор запчасти</div>
+            <div style="font:400 14px/1.5 'Manrope', sans-serif; color:#566;">Укажите параметры — подберём деталь по своему складу и базе разборок.</div>
+          </div>
+          <div onClick="{{ closePicker }}" style="width:38px; height:38px; flex:none; border-radius:10px; background:#f4f7fd; display:flex; align-items:center; justify-content:center; font:600 17px/1 'Manrope', sans-serif; color:#8a93a6; cursor:pointer;">✕</div>
+        </div>
+        <div style="display:flex; gap:10px; align-items:stretch; flex-wrap:wrap;">
+          <div style="flex:1; min-width:130px; display:flex; flex-direction:column; gap:3px; padding:8px 12px; background:#f4f7fd; border-radius:11px;"><span style="font:600 10px/1 'JetBrains Mono', monospace; letter-spacing:.06em; color:#8a93a6; text-transform:uppercase;">Марка</span><select style="border:none; outline:none; background:none; font:600 14px/1 'Manrope', sans-serif; color:#0b1730; cursor:pointer;"><option>Любая</option><option>Toyota</option><option>Volkswagen</option><option>Kia</option><option>Hyundai</option><option>BMW</option><option>LADA</option></select></div>
+          <div style="flex:1; min-width:130px; display:flex; flex-direction:column; gap:3px; padding:8px 12px; background:#f4f7fd; border-radius:11px;"><span style="font:600 10px/1 'JetBrains Mono', monospace; letter-spacing:.06em; color:#8a93a6; text-transform:uppercase;">Модель</span><select style="border:none; outline:none; background:none; font:600 14px/1 'Manrope', sans-serif; color:#0b1730; cursor:pointer;"><option>Любая</option><option>RAV4</option><option>Camry</option><option>Tiguan</option><option>Sportage</option></select></div>
+          <div style="flex:1; min-width:110px; display:flex; flex-direction:column; gap:3px; padding:8px 12px; background:#f4f7fd; border-radius:11px;"><span style="font:600 10px/1 'JetBrains Mono', monospace; letter-spacing:.06em; color:#8a93a6; text-transform:uppercase;">Год</span><select style="border:none; outline:none; background:none; font:600 14px/1 'Manrope', sans-serif; color:#0b1730; cursor:pointer;"><option>Любой</option><option>2020+</option><option>2015–2019</option><option>2010–2014</option><option>до 2010</option></select></div>
+          <div style="flex:1; min-width:160px; display:flex; flex-direction:column; gap:3px; padding:8px 12px; background:#f4f7fd; border-radius:11px;"><span style="font:600 10px/1 'JetBrains Mono', monospace; letter-spacing:.06em; color:#8a93a6; text-transform:uppercase;">Категория детали</span><select style="border:none; outline:none; background:none; font:600 14px/1 'Manrope', sans-serif; color:#0b1730; cursor:pointer;"><option>Любая</option><option>Двигатель</option><option>Кузовные элементы</option><option>Оптика</option><option>Стёкла</option><option>Салон</option><option>Топливная система</option><option>Шины и диски</option><option>Трансмиссия</option></select></div>
+          <div style="flex:1; min-width:150px; display:flex; flex-direction:column; gap:3px; padding:8px 12px; background:#f4f7fd; border-radius:11px;"><span style="font:600 10px/1 'JetBrains Mono', monospace; letter-spacing:.06em; color:#8a93a6; text-transform:uppercase;">Тип детали</span><select style="border:none; outline:none; background:none; font:600 14px/1 'Manrope', sans-serif; color:#0b1730; cursor:pointer;"><option>Любой</option><option>Капот</option><option>Дверь</option><option>Крыло</option><option>Бампер</option><option>Фара / фонарь</option><option>Стекло</option><option>Зеркало</option><option>Диск / шина</option></select></div>
+        </div>
+        <div style="display:flex; gap:10px; margin-top:10px; flex-wrap:wrap;">
+          <div style="flex:3; min-width:240px; display:flex; flex-direction:column; gap:3px; padding:8px 12px; background:#f4f7fd; border-radius:11px;"><span style="font:600 10px/1 'JetBrains Mono', monospace; letter-spacing:.06em; color:#8a93a6; text-transform:uppercase;">Какая деталь нужна</span><input placeholder="Или укажите в свободной форме: капот, фара левая, бампер…" style="border:none; outline:none; background:none; font:600 14px/1 'Manrope', sans-serif; color:#0b1730; width:100%;"></div>
+          <div onClick="{{ closePicker }}" class="btn-blue" style="flex:1; min-width:200px; display:flex; align-items:center; justify-content:center; padding:0 36px; border-radius:11px; background:#1e5cff; color:#fff; font:700 15px/1 'Manrope', sans-serif; cursor:pointer; box-shadow:0 10px 22px rgba(30,92,255,.3); transition:transform .15s, box-shadow .15s; min-height:54px;">Подобрать</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ HERO ============ -->
+  <div style="background:linear-gradient(180deg,#ffffff 0%,#e8eefb 100%); border-bottom:1px solid rgba(11,23,48,.06);">
+    <div style="max-width:1200px; margin:0 auto; padding:48px 32px 0;">
+
+      <div style="text-align:center;">
+        <div style="display:inline-flex; align-items:center; gap:8px; font:600 12px/1 'JetBrains Mono', monospace; letter-spacing:.14em; color:#1e5cff; text-transform:uppercase; padding:7px 13px; border:1px solid rgba(30,92,255,.25); border-radius:999px;"><span style="width:6px;height:6px;background:#ff6a1a;border-radius:50%;"></span>12 000+ деталей в наличии</div>
+        <h1 style="font:700 54px/1.05 'Space Grotesk', sans-serif; color:#0b1730; letter-spacing:-.02em; margin:18px 0 12px; text-wrap:balance;">Любая деталь с разборки —<br>наведите на нужный узел</h1>
+        <p style="font:400 19px/1.5 'Manrope', sans-serif; color:#566; max-width:580px; margin:0 auto;">Проверенные б/у запчасти с гарантией 14 дней. Подбор по VIN и отправка по всей России.</p>
+      </div>
+
+      <!-- car stage with callouts -->
+      <div style="position:relative; width:1120px; max-width:100%; height:560px; margin:6px auto 0;">
+        <div style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:780px; height:430px; background:radial-gradient(closest-side, rgba(30,92,255,.13), transparent 72%); pointer-events:none;"></div>
+        <div style="position:absolute; left:50%; bottom:58px; transform:translateX(-50%); width:600px; height:34px; background:radial-gradient(closest-side, rgba(11,23,48,.16), transparent 75%); filter:blur(2px); pointer-events:none;"></div>
+        <img src="car-photo.png" alt="Автомобиль в разборе" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:720px; height:445px; object-fit:contain; z-index:1; pointer-events:none;">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none" style="position:absolute; inset:0; width:100%; height:100%; z-index:3; pointer-events:none; overflow:visible;">
+          <sc-for list="{{ pins }}" as="c" hint-placeholder-count="8">
+            <line x1="{{ c.lx }}" y1="{{ c.ly }}" x2="{{ c.ax }}" y2="{{ c.ay }}" stroke="{{ c.lineColor }}" stroke-width="1.4" vector-effect="non-scaling-stroke"></line>
+          </sc-for>
+        </svg>
+        <sc-for list="{{ pins }}" as="c" hint-placeholder-count="8">
+          <div style="position:absolute; left:{{ c.ax }}%; top:{{ c.ay }}%; transform:translate(-50%,-50%); width:13px; height:13px; border-radius:50%; background:{{ c.dotColor }}; box-shadow:0 0 0 4px rgba(255,255,255,.92), 0 2px 7px rgba(11,23,48,.32); z-index:6; pointer-events:none;"></div>
+          <div onMouseEnter="{{ c.enter }}" onMouseLeave="{{ c.leave }}" style="position:absolute; left:{{ c.lx }}%; top:{{ c.ly }}%; transform:{{ c.labelTransform }}; z-index:7; max-width:178px; background:rgba(255,255,255,.97); backdrop-filter:blur(6px); border:1px solid rgba(30,92,255,.22); border-radius:11px; box-shadow:0 8px 22px rgba(15,30,70,.14); padding:9px 13px; cursor:pointer; transition:border-color .15s, box-shadow .15s;" style-hover="border-color:#ff6a1a; box-shadow:0 12px 30px rgba(255,106,26,.22);">
+            <div style="font:700 13px/1.15 'Space Grotesk', sans-serif; color:#0b1730; white-space:nowrap;">{{ c.label }}</div>
+            <sc-if value="{{ c.active }}" hint-placeholder-val="{{ false }}">
+              <div style="margin-top:7px;">
+                <div style="font:400 12px/1.45 'Manrope', sans-serif; color:#5a6478;">{{ c.items }}</div>
+                <sc-if value="{{ c.note }}" hint-placeholder-val="{{ false }}"><div style="font:500 11px/1.4 'Manrope', sans-serif; color:#1e5cff; margin-top:5px;">{{ c.note }}</div></sc-if>
+              </div>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+
+      <!-- search -->
+      <div style="padding:0 0 30px; margin-top:-6px;">
+        <div style="background:#fff; border:1px solid rgba(11,23,48,.08); border-radius:16px; padding:12px; box-shadow:0 16px 40px rgba(11,23,48,.12); max-width:1040px; margin:0 auto;">
+          <div style="display:flex; gap:10px; align-items:stretch; flex-wrap:wrap;">
+            <div style="flex:1; min-width:130px; display:flex; flex-direction:column; gap:3px; padding:8px 12px; background:#f4f7fd; border-radius:11px;"><span style="font:600 10px/1 'JetBrains Mono', monospace; letter-spacing:.06em; color:#8a93a6; text-transform:uppercase;">Марка</span><select style="border:none; outline:none; background:none; font:600 14px/1 'Manrope', sans-serif; color:#0b1730; cursor:pointer;"><option>Любая</option><option>Toyota</option><option>Volkswagen</option><option>Kia</option><option>Hyundai</option><option>BMW</option><option>LADA</option></select></div>
+            <div style="flex:1; min-width:130px; display:flex; flex-direction:column; gap:3px; padding:8px 12px; background:#f4f7fd; border-radius:11px;"><span style="font:600 10px/1 'JetBrains Mono', monospace; letter-spacing:.06em; color:#8a93a6; text-transform:uppercase;">Модель</span><select style="border:none; outline:none; background:none; font:600 14px/1 'Manrope', sans-serif; color:#0b1730; cursor:pointer;"><option>Любая</option><option>RAV4</option><option>Camry</option><option>Tiguan</option><option>Sportage</option></select></div>
+            <div style="flex:1; min-width:110px; display:flex; flex-direction:column; gap:3px; padding:8px 12px; background:#f4f7fd; border-radius:11px;"><span style="font:600 10px/1 'JetBrains Mono', monospace; letter-spacing:.06em; color:#8a93a6; text-transform:uppercase;">Год</span><select style="border:none; outline:none; background:none; font:600 14px/1 'Manrope', sans-serif; color:#0b1730; cursor:pointer;"><option>Любой</option><option>2020+</option><option>2015–2019</option><option>2010–2014</option><option>до 2010</option></select></div>
+            <div style="flex:1; min-width:160px; display:flex; flex-direction:column; gap:3px; padding:8px 12px; background:#f4f7fd; border-radius:11px;"><span style="font:600 10px/1 'JetBrains Mono', monospace; letter-spacing:.06em; color:#8a93a6; text-transform:uppercase;">Категория детали</span><select style="border:none; outline:none; background:none; font:600 14px/1 'Manrope', sans-serif; color:#0b1730; cursor:pointer;"><option>Любая</option><option>Двигатель</option><option>Кузовные элементы</option><option>Оптика</option><option>Стёкла</option><option>Салон</option><option>Топливная система</option><option>Шины и диски</option><option>Трансмиссия</option></select></div>
+            <div style="flex:1; min-width:150px; display:flex; flex-direction:column; gap:3px; padding:8px 12px; background:#f4f7fd; border-radius:11px;"><span style="font:600 10px/1 'JetBrains Mono', monospace; letter-spacing:.06em; color:#8a93a6; text-transform:uppercase;">Тип детали</span><select style="border:none; outline:none; background:none; font:600 14px/1 'Manrope', sans-serif; color:#0b1730; cursor:pointer;"><option>Любой</option><option>Капот</option><option>Дверь</option><option>Крыло</option><option>Бампер</option><option>Фара / фонарь</option><option>Стекло</option><option>Зеркало</option><option>Диск / шина</option></select></div>
+          </div>
+          <div style="display:flex; gap:10px; margin-top:10px; flex-wrap:wrap;">
+            <div style="flex:3; min-width:240px; display:flex; flex-direction:column; gap:3px; padding:8px 12px; background:#f4f7fd; border-radius:11px;"><span style="font:600 10px/1 'JetBrains Mono', monospace; letter-spacing:.06em; color:#8a93a6; text-transform:uppercase;">Какая деталь нужна</span><input placeholder="Или укажите в свободной форме: капот, фара левая, бампер…" style="border:none; outline:none; background:none; font:600 14px/1 'Manrope', sans-serif; color:#0b1730; width:100%;"></div>
+            <a href="Каталог.dc.html" class="btn-blue" style="flex:1; min-width:200px; display:flex; align-items:center; justify-content:center; padding:0 36px; border-radius:11px; background:#1e5cff; color:#fff; font:700 15px/1 'Manrope', sans-serif; cursor:pointer; box-shadow:0 10px 22px rgba(30,92,255,.3); transition:transform .15s, box-shadow .15s; min-height:54px;">Найти</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- stats strip -->
+    <div style="border-top:1px solid rgba(11,23,48,.07); background:rgba(255,255,255,.5);">
+      <div style="max-width:1200px; margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); ">
+        <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+          <div style="padding:22px 32px; text-align:center; border-right:1px solid rgba(11,23,48,.07);">
+            <div style="font:700 30px/1 'Space Grotesk', sans-serif; color:#1e5cff; letter-spacing:-.01em;">{{ s.num }}</div>
+            <div style="font:500 13px/1.3 'Manrope', sans-serif; color:#566; margin-top:6px;">{{ s.label }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ CATEGORIES ============ -->
+  <div id="catalog" style="max-width:1200px; margin:0 auto; padding:72px 32px 8px;">
+    <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:24px; margin-bottom:28px;">
+      <div>
+        <div style="font:600 12px/1 'JetBrains Mono', monospace; letter-spacing:.14em; color:#1e5cff; text-transform:uppercase; margin-bottom:10px;">Каталог по узлам</div>
+        <h2 style="font:700 38px/1.08 'Space Grotesk', sans-serif; color:#0b1730; letter-spacing:-.02em; margin:0;">Запчасти по группам</h2>
+      </div>
+      <a class="chip-link" href="Каталог.dc.html" style="font:700 15px/1 'Manrope', sans-serif; color:#1e5cff; cursor:pointer; white-space:nowrap;">Весь каталог →</a>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:18px;">
+      <sc-for list="{{ pins }}" as="c" hint-placeholder-count="8">
+        <a href="Каталог.dc.html" class="cat-card" style="display:block; border:1px solid rgba(11,23,48,.1); border-radius:16px; padding:22px; background:#fff; cursor:pointer; transition:border-color .18s, box-shadow .18s, transform .18s;">
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;">
+            <div style="width:44px; height:44px; border-radius:11px; background:rgba(30,92,255,.1); display:flex; align-items:center; justify-content:center; font:700 14px/1 'JetBrains Mono', monospace; color:#1e5cff;">{{ c.n }}</div>
+            <span class="cat-arrow" style="font:700 18px/1 'Manrope', sans-serif; color:#c2cbdc; transition:color .18s, transform .18s;">→</span>
+          </div>
+          <div style="font:700 18px/1.2 'Space Grotesk', sans-serif; color:#0b1730; margin-bottom:6px;">{{ c.label }}</div>
+          <div style="font:400 13px/1.5 'Manrope', sans-serif; color:#5a6478; margin-bottom:14px;">{{ c.items }}</div>
+          <div style="font:600 12px/1 'JetBrains Mono', monospace; color:#1e5cff;">{{ c.count }}</div>
+        </a>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- ============ WHY US ============ -->
+  <div id="why" style="max-width:1200px; margin:0 auto; padding:64px 32px 8px;">
+    <div style="font:600 12px/1 'JetBrains Mono', monospace; letter-spacing:.14em; color:#1e5cff; text-transform:uppercase; margin-bottom:10px;">Почему Авторазборка23</div>
+    <h2 style="font:700 38px/1.08 'Space Grotesk', sans-serif; color:#0b1730; letter-spacing:-.02em; margin:0 0 28px;">Покупать б/у — спокойно</h2>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px;">
+      <sc-for list="{{ advantages }}" as="a" hint-placeholder-count="3">
+        <div style="border:1px solid rgba(11,23,48,.1); border-radius:18px; padding:28px; background:#fff;">
+          <div style="width:48px; height:48px; border-radius:13px; background:rgba(30,92,255,.1); display:flex; align-items:center; justify-content:center; margin-bottom:18px; font:700 22px/1 'Space Grotesk', sans-serif; color:#1e5cff;">{{ a.icon }}</div>
+          <div style="font:700 20px/1.2 'Space Grotesk', sans-serif; color:#0b1730; margin-bottom:8px;">{{ a.title }}</div>
+          <div style="font:400 14px/1.55 'Manrope', sans-serif; color:#5a6478;">{{ a.text }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- ============ HOW IT WORKS ============ -->
+  <div id="how" style="max-width:1200px; margin:0 auto; padding:64px 32px 8px;">
+    <div style="font:600 12px/1 'JetBrains Mono', monospace; letter-spacing:.14em; color:#1e5cff; text-transform:uppercase; margin-bottom:10px;">4 шага</div>
+    <h2 style="font:700 38px/1.08 'Space Grotesk', sans-serif; color:#0b1730; letter-spacing:-.02em; margin:0 0 28px;">Как мы работаем</h2>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:18px;">
+      <sc-for list="{{ steps }}" as="s" hint-placeholder-count="4">
+        <div style="position:relative; padding:24px; border-radius:18px; background:#f4f7fd;">
+          <div style="font:700 36px/1 'Space Grotesk', sans-serif; color:#1e5cff; margin-bottom:16px;">{{ s.n }}</div>
+          <div style="font:700 17px/1.25 'Space Grotesk', sans-serif; color:#0b1730; margin-bottom:7px;">{{ s.title }}</div>
+          <div style="font:400 13px/1.5 'Manrope', sans-serif; color:#5a6478;">{{ s.text }}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- ============ CTA BAND ============ -->
+  <div style="max-width:1200px; margin:64px auto 0; padding:0 32px;">
+    <div style="position:relative; overflow:hidden; border-radius:24px; background:radial-gradient(125% 130% at 12% 10%, #1b2f7e 0%, #0c1640 55%, #060a20 100%); padding:52px 56px;">
+      <div style="position:absolute; right:-40px; top:-40px; width:280px; height:280px; background:radial-gradient(closest-side, rgba(255,106,26,.35), transparent 70%); pointer-events:none;"></div>
+      <div style="position:relative; display:flex; align-items:center; justify-content:space-between; gap:40px; flex-wrap:wrap;">
+        <div style="max-width:600px;">
+          <h2 style="font:700 36px/1.1 'Space Grotesk', sans-serif; color:#fff; letter-spacing:-.02em; margin:0 0 12px;">Не нашли нужную деталь?</h2>
+          <p style="font:400 17px/1.5 'Manrope', sans-serif; color:#aeb9d8; margin:0;">Оставьте заявку — найдём по своему складу и базе партнёров-разборок. Перезвоним в течение 15 минут.</p>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:12px; align-items:flex-start;">
+          <a href="tel:+78005552424" style="font:700 26px/1 'Space Grotesk', sans-serif; color:#fff;">+7 800 555-24-24</a>
+          <div class="btn-primary" style="padding:15px 30px; border-radius:12px; background:#ff6a1a; color:#fff; font:700 16px/1 'Manrope', sans-serif; cursor:pointer; box-shadow:0 10px 26px rgba(255,106,26,.4); transition:transform .15s, box-shadow .15s;">Оставить заявку</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ FOOTER ============ -->
+  <div id="footer" style="margin-top:72px; background:#0b1730; color:#aeb9d8;">
+    <div style="max-width:1200px; margin:0 auto; padding:56px 32px 28px; display:grid; grid-template-columns:1.6fr 1fr 1fr 1.2fr; gap:40px;">
+
+      <div>
+        <div style="display:flex; align-items:center; gap:11px; margin-bottom:18px;">
+          <div style="width:38px; height:38px; border-radius:10px; background:#1e5cff; display:flex; align-items:center; justify-content:center; color:#fff; font:700 19px/1 'Space Grotesk', sans-serif;">А</div>
+          <div style="font:700 20px/1 'Space Grotesk', sans-serif; color:#fff; letter-spacing:-.01em;">АВТОРАЗБОРКА<span style="color:#ff6a1a;">23</span></div>
+        </div>
+        <p style="font:400 14px/1.6 'Manrope', sans-serif; color:#8693b3; margin:0 0 20px; max-width:300px;">Авторазборка полного цикла. Проверенные б/у запчасти с гарантией и доставкой по всей России с 2011 года.</p>
+        <div style="display:flex; gap:10px;">
+          <sc-for list="{{ socials }}" as="s" hint-placeholder-count="4">
+            <div style="width:38px; height:38px; border-radius:10px; background:rgba(255,255,255,.07); display:flex; align-items:center; justify-content:center; font:700 13px/1 'JetBrains Mono', monospace; color:#aeb9d8; cursor:pointer;">{{ s }}</div>
+          </sc-for>
+        </div>
+      </div>
+
+      <div>
+        <div style="font:700 14px/1 'Space Grotesk', sans-serif; color:#fff; margin-bottom:16px;">Каталог</div>
+        <div style="display:flex; flex-direction:column; gap:11px; font:400 14px/1 'Manrope', sans-serif;">
+          <sc-for list="{{ pins }}" as="c" hint-placeholder-count="8">
+            <a class="foot-link" href="Каталог.dc.html" style="color:#8693b3; cursor:pointer; transition:color .15s;">{{ c.label }}</a>
+          </sc-for>
+        </div>
+      </div>
+
+      <div>
+        <div style="font:700 14px/1 'Space Grotesk', sans-serif; color:#fff; margin-bottom:16px;">Покупателям</div>
+        <div style="display:flex; flex-direction:column; gap:11px; font:400 14px/1 'Manrope', sans-serif;">
+          <sc-for list="{{ buyerLinks }}" as="l" hint-placeholder-count="5">
+            <a class="foot-link" href="#footer" style="color:#8693b3; cursor:pointer; transition:color .15s;">{{ l }}</a>
+          </sc-for>
+        </div>
+      </div>
+
+      <div>
+        <div style="font:700 14px/1 'Space Grotesk', sans-serif; color:#fff; margin-bottom:16px;">Контакты</div>
+        <a href="tel:+78005552424" style="display:block; font:700 20px/1 'Space Grotesk', sans-serif; color:#fff; margin-bottom:12px;">+7 800 555-24-24</a>
+        <div style="font:400 14px/1.7 'Manrope', sans-serif; color:#8693b3;">
+          info@avtorazborka23.ru<br>
+          г. Краснодар, ул. Промышленная, 14с3<br>
+          Ежедневно 9:00–21:00
+        </div>
+        <div style="margin-top:16px; display:inline-flex; align-items:center; gap:8px; padding:8px 13px; border:1px solid rgba(255,255,255,.14); border-radius:10px; font:600 13px/1 'Manrope', sans-serif; color:#aeb9d8; cursor:pointer;"><span style="width:7px;height:7px;background:#3ddc84;border-radius:50%;"></span>Написать в WhatsApp</div>
+      </div>
+
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,.09);">
+      <div style="max-width:1200px; margin:0 auto; padding:20px 32px; display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; font:400 13px/1.5 'Manrope', sans-serif; color:#6b7796;">
+        <span>© 2026 Авторазборка23. Все права защищены.</span>
+        <div style="display:flex; gap:24px;">
+          <a class="foot-link" href="#footer" style="color:#6b7796; transition:color .15s;">Политика конфиденциальности</a>
+          <a class="foot-link" href="#footer" style="color:#6b7796; transition:color .15s;">Договор оферты</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { hover: null, picker: false };
+
+  base() {
+    return [
+      { id:'engine',  n:'02', label:'Двигатель',         ax:33, ay:46, lx:17, ly:40, side:'l', items:'ДВС в сборе · ГБЦ · поршневая · навесное', count:'1 240 шт', note:'Виден через прозрачный капот' },
+      { id:'optics',  n:'01', label:'Оптика',            ax:42, ay:58, lx:17, ly:67, side:'l', items:'Фары · фонари · ПТФ · корпуса', count:'1 510 шт' },
+      { id:'glass',   n:'03', label:'Стёкла',            ax:45, ay:32, lx:38, ly:11, side:'t', items:'Лобовое · боковые · заднее · люк', count:'540 шт' },
+      { id:'interior',n:'04', label:'Салон',             ax:54, ay:30, lx:60, ly:11, side:'t', items:'Сиденья · торпедо · обшивки · airbag', count:'2 100 шт' },
+      { id:'fuel',    n:'06', label:'Топливная система', ax:74, ay:44, lx:83, ly:34, side:'r', items:'Бензонасос · ТНВД · форсунки · бак', count:'720 шт' },
+      { id:'body',    n:'05', label:'Кузовные элементы', ax:62, ay:48, lx:83, ly:57, side:'r', items:'Капот · двери · крылья · бамперы', count:'3 880 шт' },
+      { id:'trans',   n:'08', label:'Трансмиссия',       ax:46, ay:65, lx:34, ly:89, side:'b', items:'АКПП · МКПП · редуктор · привод', count:'830 шт' },
+      { id:'wheels',  n:'07', label:'Шины и диски',      ax:53, ay:70, lx:60, ly:89, side:'b', items:'Литьё · штамповка · шины б/у', count:'960 компл' },
+    ];
+  }
+
+  renderVals() {
+    const tf = {
+      l: 'translate(calc(-100% - 14px), -50%)',
+      r: 'translate(14px, -50%)',
+      t: 'translate(-50%, calc(-100% - 13px))',
+      b: 'translate(-50%, 13px)',
+    };
+    const pins = this.base().map(g => {
+      const active = this.state.hover === g.id;
+      return Object.assign({}, g, {
+        active,
+        labelTransform: tf[g.side],
+        lineColor: active ? '#ff6a1a' : 'rgba(11,23,48,.32)',
+        dotColor: active ? '#ff6a1a' : '#1e5cff',
+        enter: () => this.setState({ hover: g.id }),
+        leave: () => this.setState({ hover: null }),
+      });
+    });
+    return {
+      pickerH: this.state.picker ? '460px' : '0px',
+      pickerO: this.state.picker ? 1 : 0,
+      pickerPE: this.state.picker ? 'auto' : 'none',
+      openPicker: () => this.setState({ picker: true }),
+      closePicker: () => this.setState({ picker: false }),
+      pins,
+      stats: [
+        { num:'12 000+', label:'деталей в наличии' },
+        { num:'4 500',   label:'авто в разборе' },
+        { num:'14 дней', label:'гарантия на запчасти' },
+        { num:'1 день',  label:'отгрузка после оплаты' },
+      ],
+      advantages: [
+        { icon:'✓', title:'Гарантия 14 дней', text:'Возврат или обмен, если деталь не подошла или есть скрытый дефект. Деньги возвращаем без споров.' },
+        { icon:'⤓', title:'Доставка по РФ', text:'СДЭК, ПЭК и до двери. Отправка в день оплаты, трек-номер сразу после отгрузки.' },
+        { icon:'⚲', title:'Проверка перед отправкой', text:'Фото реальной детали, проверка на стенде и тест перед упаковкой. Берёте именно то, что видели.' },
+      ],
+      steps: [
+        { n:'1', title:'Оставьте заявку', text:'Марка, модель, год и нужный узел — через поиск или менеджеру.' },
+        { n:'2', title:'Подберём деталь', text:'Найдём по своему складу и базе партнёров-разборок.' },
+        { n:'3', title:'Проверка и фото', text:'Пришлём фото, артикул и состояние. Согласуем цену.' },
+        { n:'4', title:'Доставка', text:'Отправим удобной ТК и поддержим по гарантии после.' },
+      ],
+      socials: ['VK', 'TG', 'WA', 'YT'],
+      buyerLinks: ['Доставка и оплата', 'Гарантия и возврат', 'Подбор по VIN', 'Оптовикам', 'О компании'],
+    };
+  }
+}
+</script>
+</body>
+</html>

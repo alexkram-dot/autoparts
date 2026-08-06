@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Каталог запчастей — Авторазборка23</title>
+  <meta name="description" content="Более 12 000 проверенных б/у деталей всех групп. Подбор по марке, модели и VIN, фото реального состояния.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/catalog.css">
+</head>
+<body>
+
+<!-- ══ NAV ════════════════════════════════════ -->
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">А</div>
+      <span class="nav-logo-name">АВТОРАЗБОРКА<em>23</em></span>
+    </a>
+
+    <nav class="nav-links">
+      <a href="catalog.html" class="active">Каталог</a>
+      <a href="index.html#how">Как мы работаем</a>
+      <a href="index.html#why">Гарантия</a>
+      <a href="about.html">О компании</a>
+    </nav>
+
+    <div class="nav-right">
+      <a href="tel:+78005552424" class="nav-phone">+7 800 555-24-24</a>
+      <button class="btn btn-orange nav-btn" data-picker-open>Подобрать запчасть</button>
+    </div>
+
+    <button class="nav-burger" aria-label="Меню" onclick="window.AR23?.openDrawer()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <div class="picker-drop" id="picker-drop">
+    <div class="picker-drop-inner">
+      <div class="picker-hdr">
+        <div><h3>Подбор запчасти</h3><p>Укажите параметры — подберём деталь по своему складу и базе разборок.</p></div>
+        <button class="picker-close" data-picker-close>✕</button>
+      </div>
+      <div class="picker-row">
+        <div class="picker-field"><span class="picker-field-lbl">Марка</span><select><option>Любая</option><option>Toyota</option><option>Volkswagen</option><option>Kia</option><option>Hyundai</option><option>BMW</option><option>LADA</option></select></div>
+        <div class="picker-field"><span class="picker-field-lbl">Модель</span><select><option>Любая</option><option>RAV4</option><option>Camry</option><option>Tiguan</option><option>Sportage</option></select></div>
+        <div class="picker-field"><span class="picker-field-lbl">Год</span><select><option>Любой</option><option>2020+</option><option>2015–2019</option><option>2010–2014</option><option>до 2010</option></select></div>
+        <div class="picker-field"><span class="picker-field-lbl">Категория детали</span><select><option>Любая</option><option>Двигатель</option><option>Кузовные элементы</option><option>Оптика</option><option>Стёкла</option><option>Салон</option><option>Топливная система</option><option>Шины и диски</option><option>Трансмиссия</option></select></div>
+        <div class="picker-field"><span class="picker-field-lbl">Тип детали</span><select><option>Любой</option><option>Капот</option><option>Дверь</option><option>Крыло</option><option>Бампер</option><option>Фара / фонарь</option><option>Стекло</option><option>Зеркало</option><option>Диск / шина</option></select></div>
+      </div>
+      <div class="picker-row">
+        <div class="picker-field wide"><span class="picker-field-lbl">Какая деталь нужна</span><input placeholder="Или укажите в свободной форме: капот, фара левая, бампер…"></div>
+        <a href="catalog.html" class="btn btn-blue picker-submit" data-picker-close>Подобрать</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="scrim" id="scrim"></div>
+
+<aside class="drawer" id="drawer">
+  <div class="drawer-hdr"><span>Меню</span><button class="drawer-close" id="drawer-close">✕</button></div>
+  <nav class="drawer-nav">
+    <a href="catalog.html">Каталог <span>→</span></a>
+    <a href="index.html#how" onclick="window.AR23?.closeDrawer()">Как мы работаем <span>→</span></a>
+    <a href="index.html#why" onclick="window.AR23?.closeDrawer()">Гарантия и возврат <span>→</span></a>
+    <a href="about.html">О компании <span>→</span></a>
+    <a href="#footer" onclick="window.AR23?.closeDrawer()">Контакты <span>→</span></a>
+  </nav>
+  <div class="drawer-footer">
+    <a href="tel:+78005552424" class="drawer-phone">+7 800 555-24-24</a>
+    <p class="drawer-hours">Ежедневно 9:00–21:00</p>
+    <button class="btn btn-orange picker-open-full" data-picker-open onclick="window.AR23?.closeDrawer()">Подобрать запчасть</button>
+  </div>
+</aside>
+
+<div class="picker-sheet" id="picker-sheet">
+  <div class="picker-sheet-handle"><div class="picker-sheet-handle-bar"></div></div>
+  <div class="picker-sheet-hdr">
+    <div><h3>Подбор запчасти</h3><p>Укажите параметры — подберём деталь.</p></div>
+    <button class="picker-close" data-picker-close>✕</button>
+  </div>
+  <div class="picker-sheet-body">
+    <div class="picker-sheet-field"><span class="picker-field-lbl">Марка</span><select><option>Любая</option><option>Toyota</option><option>Volkswagen</option><option>Kia</option><option>Hyundai</option><option>BMW</option><option>LADA</option></select></div>
+    <div class="picker-sheet-field"><span class="picker-field-lbl">Модель</span><select><option>Любая</option><option>RAV4</option><option>Camry</option><option>Tiguan</option><option>Sportage</option></select></div>
+    <div class="picker-sheet-field-row">
+      <div class="picker-sheet-field"><span class="picker-field-lbl">Год</span><select><option>Любой</option><option>2020+</option><option>2015–2019</option><option>2010–2014</option><option>до 2010</option></select></div>
+      <div class="picker-sheet-field"><span class="picker-field-lbl">Категория</span><select><option>Любая</option><option>Двигатель</option><option>Кузовные</option><option>Оптика</option><option>Стёкла</option></select></div>
+    </div>
+    <div class="picker-sheet-field"><span class="picker-field-lbl">Тип детали</span><select><option>Любой</option><option>Капот</option><option>Дверь</option><option>Крыло</option><option>Бампер</option><option>Фара / фонарь</option></select></div>
+    <div class="picker-sheet-field"><span class="picker-field-lbl">Какая деталь нужна</span><input placeholder="Капот, фара левая, бампер…"></div>
+    <a href="catalog.html" class="btn btn-blue picker-submit-sheet" data-picker-close>Подобрать</a>
+  </div>
+</div>
+
+<!-- Filter sheet (mobile) -->
+<div class="filter-sheet" id="filter-sheet">
+  <div class="picker-sheet-handle"><div class="picker-sheet-handle-bar"></div></div>
+  <div class="filter-sheet-hdr">
+    <span class="filter-sheet-title">Фильтры</span>
+    <div class="filter-sheet-hdr-right">
+      <span class="filter-sheet-reset">Сбросить</span>
+      <button class="drawer-close" id="filter-close">✕</button>
+    </div>
+  </div>
+  <div class="filter-sheet-body">
+    <div class="filter-section">
+      <div class="filter-title">Цена, ₽</div>
+      <div class="price-inputs">
+        <div class="price-input">от 1 500</div>
+        <div class="price-input">до 80 000</div>
+      </div>
+      <div class="price-range">
+        <div class="price-range-fill"></div>
+        <div class="price-thumb"></div>
+        <div class="price-thumb"></div>
+      </div>
+    </div>
+    <div class="filter-section">
+      <div class="filter-title">Марка</div>
+      <div class="filter-checks">
+        <label class="filter-check"><div class="filter-check-left"><div class="check-box">✓</div><span class="check-lbl">Toyota</span></div><span class="check-count">1 840</span></label>
+        <label class="filter-check"><div class="filter-check-left"><div class="check-box">✓</div><span class="check-lbl">Volkswagen</span></div><span class="check-count">1 220</span></label>
+        <label class="filter-check"><div class="filter-check-left"><div class="check-box checked"></div><span class="check-lbl">Kia</span></div><span class="check-count">1 160</span></label>
+        <label class="filter-check"><div class="filter-check-left"><div class="check-box">✓</div><span class="check-lbl">Hyundai</span></div><span class="check-count">980</span></label>
+        <label class="filter-check"><div class="filter-check-left"><div class="check-box">✓</div><span class="check-lbl">BMW</span></div><span class="check-count">870</span></label>
+      </div>
+    </div>
+    <div class="filter-section">
+      <div class="filter-title">Состояние</div>
+      <div class="filter-checks">
+        <label class="filter-check" data-cond="Отличное"><div class="filter-check-left"><div class="check-box checked">✓</div><span class="check-lbl"><span class="check-dot" style="background:#3ddc84;"></span>Отличное</span></div></label>
+        <label class="filter-check" data-cond="Хорошее"><div class="filter-check-left"><div class="check-box checked">✓</div><span class="check-lbl"><span class="check-dot" style="background:var(--blue);"></span>Хорошее</span></div></label>
+        <label class="filter-check" data-cond="Есть дефекты"><div class="filter-check-left"><div class="check-box"></div><span class="check-lbl"><span class="check-dot" style="background:#ff9a4d;"></span>Есть дефекты</span></div></label>
+      </div>
+    </div>
+    <div class="filter-toggle">
+      <span>Только в наличии</span>
+      <div class="toggle-track"><div class="toggle-thumb"></div></div>
+    </div>
+    <button class="btn btn-blue" style="margin-top:16px;width:100%;min-height:48px;" onclick="closeFilterSheet()">Применить фильтры</button>
+  </div>
+</div>
+
+<!-- ══ MAIN ════════════════════════════════════ -->
+<main>
+  <!-- Page header -->
+  <div style="background:#fff;border-bottom:1px solid var(--border-soft);">
+    <div class="container section-catalog-hdr" style="padding-top:28px;padding-bottom:20px;">
+      <nav class="breadcrumb" style="margin-bottom:16px;">
+        <a href="index.html">Главная</a>
+        <span class="breadcrumb-sep">/</span>
+        <span class="current">Каталог</span>
+      </nav>
+      <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;">
+        <div>
+          <h1 style="font:700 40px/1.05 var(--font-d);color:var(--dark);letter-spacing:-.02em;margin-bottom:8px;">Каталог запчастей</h1>
+          <p style="font:400 16px/1.5 var(--font);color:#566;max-width:580px;">Более 12 000 проверенных б/у деталей всех групп. Подбор по марке, модели и VIN.</p>
+        </div>
+        <span class="catalog-found">Найдено <b class="found-count" style="color:var(--blue);">12</b> деталей</span>
+      </div>
+
+      <!-- Group chips -->
+      <div class="group-chips" id="group-chips">
+        <button class="gchip active" data-group="Все">Все</button>
+        <button class="gchip" data-group="Двигатель">Двигатель</button>
+        <button class="gchip" data-group="Кузовные">Кузовные</button>
+        <button class="gchip" data-group="Оптика">Оптика</button>
+        <button class="gchip" data-group="Стёкла">Стёкла</button>
+        <button class="gchip" data-group="Салон">Салон</button>
+        <button class="gchip" data-group="Топливная">Топливная</button>
+        <button class="gchip" data-group="Шины и диски">Шины и диски</button>
+        <button class="gchip" data-group="Трансмиссия">Трансмиссия</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile filter/sort controls -->
+  <div class="mobile-controls">
+    <button class="mobile-control-btn" onclick="openFilterSheet()">
+      <svg width="16" height="16" viewBox="0 0 18 18" fill="none"><line x1="2" y1="5" x2="16" y2="5" stroke="#1e5cff" stroke-width="2" stroke-linecap="round"/><line x1="2" y1="13" x2="16" y2="13" stroke="#1e5cff" stroke-width="2" stroke-linecap="round"/><circle cx="11" cy="5" r="2.4" fill="#fff" stroke="#1e5cff" stroke-width="2"/><circle cx="6" cy="13" r="2.4" fill="#fff" stroke="#1e5cff" stroke-width="2"/></svg>
+      Фильтры <span class="mobile-ctrl-badge">2</span>
+    </button>
+    <button class="mobile-control-btn" id="sort-btn">
+      <svg width="16" height="16" viewBox="0 0 18 18" fill="none"><path d="M5 3v12M5 15l-3-3M5 3l3 3" stroke="#1e5cff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><line x1="11" y1="5" x2="16" y2="5" stroke="#1e5cff" stroke-width="2" stroke-linecap="round"/><line x1="11" y1="9" x2="15" y2="9" stroke="#1e5cff" stroke-width="2" stroke-linecap="round"/><line x1="11" y1="13" x2="14" y2="13" stroke="#1e5cff" stroke-width="2" stroke-linecap="round"/></svg>
+      Дешевле
+    </button>
+  </div>
+
+  <div class="container" style="padding-bottom:64px;">
+    <div class="catalog-layout">
+
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <div class="sidebar-hdr">
+          <h3>Фильтры</h3>
+          <span class="sidebar-reset">Сбросить</span>
+        </div>
+        <div class="active-filters">
+          <span class="active-filter">В наличии <button>✕</button></span>
+        </div>
+
+        <div class="filter-section">
+          <div class="filter-title">Цена, ₽</div>
+          <div class="price-inputs">
+            <div class="price-input">от 1 500</div>
+            <div class="price-input">до 80 000</div>
+          </div>
+          <div class="price-range">
+            <div class="price-range-fill"></div>
+            <div class="price-thumb"></div>
+            <div class="price-thumb"></div>
+          </div>
+        </div>
+
+        <div class="filter-section">
+          <div class="filter-title">Марка</div>
+          <div class="filter-checks">
+            <label class="filter-check"><div class="filter-check-left"><div class="check-box"></div><span class="check-lbl">Toyota</span></div><span class="check-count">1 840</span></label>
+            <label class="filter-check"><div class="filter-check-left"><div class="check-box"></div><span class="check-lbl">Volkswagen</span></div><span class="check-count">1 220</span></label>
+            <label class="filter-check"><div class="filter-check-left"><div class="check-box"></div><span class="check-lbl">Kia</span></div><span class="check-count">1 160</span></label>
+            <label class="filter-check"><div class="filter-check-left"><div class="check-box"></div><span class="check-lbl">Hyundai</span></div><span class="check-count">980</span></label>
+            <label class="filter-check"><div class="filter-check-left"><div class="check-box"></div><span class="check-lbl">BMW</span></div><span class="check-count">870</span></label>
+          </div>
+        </div>
+
+        <div class="filter-section">
+          <div class="filter-title">Состояние</div>
+          <div class="filter-checks">
+            <label class="filter-check"><div class="filter-check-left"><div class="check-box checked">✓</div><span class="check-lbl"><span class="check-dot" style="background:#3ddc84;"></span>Отличное</span></div></label>
+            <label class="filter-check"><div class="filter-check-left"><div class="check-box checked">✓</div><span class="check-lbl"><span class="check-dot" style="background:var(--blue);"></span>Хорошее</span></div></label>
+            <label class="filter-check"><div class="filter-check-left"><div class="check-box"></div><span class="check-lbl"><span class="check-dot" style="background:#ff9a4d;"></span>Есть дефекты</span></div></label>
+          </div>
+        </div>
+
+        <div class="filter-toggle">
+          <span>Только в наличии</span>
+          <div class="toggle-track"><div class="toggle-thumb"></div></div>
+        </div>
+
+        <button class="btn btn-blue" style="width:100%;margin-top:14px;min-height:48px;">Применить</button>
+      </aside>
+
+      <!-- CONTENT -->
+      <div>
+        <!-- Sort + view toggle -->
+        <div class="sort-bar">
+          <span class="sort-bar-info">Показаны <b>1–12</b> из 12 480</span>
+          <div class="sort-bar-right">
+            <div class="sort-select-wrap">
+              <span>Сортировка</span>
+              <select class="sort-select" id="sort-select">
+                <option value="cheap">Сначала дешевле</option>
+                <option value="exp">Сначала дороже</option>
+                <option value="new">Сначала новые</option>
+                <option value="pop">По популярности</option>
+              </select>
+            </div>
+            <div class="view-toggle">
+              <button class="view-btn active" id="view-grid" title="Сетка">
+                <svg width="16" height="16" viewBox="0 0 16 16"><rect x="0" y="0" width="6.5" height="6.5" rx="1.5" fill="#1e5cff"/><rect x="9.5" y="0" width="6.5" height="6.5" rx="1.5" fill="#1e5cff"/><rect x="0" y="9.5" width="6.5" height="6.5" rx="1.5" fill="#1e5cff"/><rect x="9.5" y="9.5" width="6.5" height="6.5" rx="1.5" fill="#1e5cff"/></svg>
+              </button>
+              <button class="view-btn" id="view-list" title="Список">
+                <svg width="17" height="13" viewBox="0 0 17 13"><rect x="0" y="0" width="17" height="3" rx="1.5" fill="#9aa3b4"/><rect x="0" y="5" width="17" height="3" rx="1.5" fill="#9aa3b4"/><rect x="0" y="10" width="17" height="3" rx="1.5" fill="#9aa3b4"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Products -->
+        <div class="products-grid" id="products-container"></div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+          <button class="btn btn-blue">Показать ещё 12</button>
+          <div class="page-nums">
+            <button class="page-btn active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn">3</button>
+            <span class="page-dots">…</span>
+            <button class="page-btn">43</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div style="padding:0 0 72px;">
+    <div class="container">
+      <div class="cta-band">
+        <div class="cta-inner">
+          <div>
+            <h2 class="cta-title">Не нашли нужную деталь?</h2>
+            <p class="cta-text">Оставьте заявку — найдём по своему складу и базе партнёров-разборок. Перезвоним в течение 15 минут.</p>
+          </div>
+          <div class="cta-aside">
+            <a href="tel:+78005552424" class="cta-phone">+7 800 555-24-24</a>
+            <button class="btn btn-orange" data-picker-open>Оставить заявку</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- ══ FOOTER ══════════════════════════════════ -->
+<footer class="footer" id="footer">
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo"><div class="footer-logo-icon">А</div><span class="footer-logo-name">АВТОРАЗБОРКА<em>23</em></span></div>
+      <p class="footer-desc">Авторазборка полного цикла. Проверенные б/у запчасти с гарантией и доставкой по всей России с 2011 года.</p>
+      <div class="footer-socials">
+        <a class="footer-social" href="#">VK</a><a class="footer-social" href="#">TG</a><a class="footer-social" href="#">WA</a><a class="footer-social" href="#">YT</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-ttl">Каталог</div>
+      <div class="footer-links">
+        <a href="catalog.html">Двигатель</a><a href="catalog.html">Кузовные элементы</a><a href="catalog.html">Оптика</a><a href="catalog.html">Стёкла</a><a href="catalog.html">Салон</a><a href="catalog.html">Топливная система</a><a href="catalog.html">Шины и диски</a><a href="catalog.html">Трансмиссия</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-ttl">Покупателям</div>
+      <div class="footer-links">
+        <a href="#">Доставка и оплата</a><a href="#">Гарантия и возврат</a><a href="#">Подбор по VIN</a><a href="#">Оптовикам</a><a href="#">О компании</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-ttl">Контакты</div>
+      <a href="tel:+78005552424" class="footer-contact-phone">+7 800 555-24-24</a>
+      <p class="footer-contact-info">info@avtorazborka23.ru<br>г. Краснодар, ул. Промышленная, 14с3<br>Ежедневно 9:00–21:00</p>
+      <a href="#" class="footer-wa"><span class="footer-wa-dot"></span>Написать в WhatsApp</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-bottom-inner">
+      <span>© 2026 Авторазборка23. Все права защищены.</span>
+      <div class="footer-legal"><a href="#">Политика конфиденциальности</a><a href="#">Договор оферты</a></div>
+    </div>
+  </div>
+</footer>
+
+<!-- Bottom tabs -->
+<nav class="btabs">
+  <div class="btabs-inner">
+    <a class="btab active" href="catalog.html">
+      <svg width="22" height="22" viewBox="0 0 22 22"><rect x="2" y="2" width="7.5" height="7.5" rx="2" fill="#1e5cff"/><rect x="12.5" y="2" width="7.5" height="7.5" rx="2" fill="#1e5cff"/><rect x="2" y="12.5" width="7.5" height="7.5" rx="2" fill="#1e5cff"/><rect x="12.5" y="12.5" width="7.5" height="7.5" rx="2" fill="#1e5cff"/></svg>
+      <span style="color:#1e5cff;">Каталог</span>
+    </a>
+    <button class="btab" data-picker-open>
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="9.5" cy="9.5" r="6.5" stroke="#9aa3b4" stroke-width="2.2"/><line x1="14.5" y1="14.5" x2="19.5" y2="19.5" stroke="#9aa3b4" stroke-width="2.2" stroke-linecap="round"/></svg>
+      <span>Поиск</span>
+    </button>
+    <button class="btab">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M5 7h12l-1 11H6L5 7z" stroke="#9aa3b4" stroke-width="2.2" stroke-linejoin="round"/><path d="M8 7a3 3 0 0 1 6 0" stroke="#9aa3b4" stroke-width="2.2" stroke-linecap="round"/></svg>
+      <span>Корзина</span>
+    </button>
+    <a class="btab" href="#footer">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="2.5" y="3.5" width="17" height="12" rx="3" stroke="#9aa3b4" stroke-width="2.2"/><path d="M7 18.5l3-3" stroke="#9aa3b4" stroke-width="2.2" stroke-linecap="round"/></svg>
+      <span>Контакты</span>
+    </a>
+  </div>
+</nav>
+
+<script src="js/main.js"></script>
+<script src="js/catalog.js"></script>
+</body>
+</html>

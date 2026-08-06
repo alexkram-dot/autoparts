@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="image-slot.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { font-family: 'Manrope', system-ui, sans-serif; -webkit-font-smoothing: antialiased; background:#f4f7fd; }
+  ::selection { background: #ff6a1a; color: #fff; }
+  .chip-link:hover { color:#ff6a1a !important; }
+  .foot-link:hover { color:#fff !important; }
+  .btn-primary:hover { box-shadow:0 12px 26px rgba(255,106,26,.42) !important; transform:translateY(-1px); }
+  .btn-blue:hover { box-shadow:0 12px 26px rgba(30,92,255,.42) !important; transform:translateY(-1px); }
+  .prod-card:hover { border-color:#1e5cff !important; box-shadow:0 18px 40px rgba(30,92,255,.13) !important; transform:translateY(-3px); }
+  .prod-card:hover .prod-cart { background:#1e5cff !important; color:#fff !important; }
+  .prod-row:hover { border-color:#1e5cff !important; box-shadow:0 14px 32px rgba(30,92,255,.12) !important; }
+  .prod-row:hover .prod-cart { background:#1e5cff !important; color:#fff !important; }
+  .gchip:hover { border-color:#1e5cff !important; color:#1e5cff !important; }
+  .fav:hover { border-color:#ff6a1a !important; color:#ff6a1a !important; }
+  .pagebtn:hover { border-color:#1e5cff !important; color:#1e5cff !important; }
+  .viewbtn:hover { background:rgba(30,92,255,.07) !important; }
+  select, input { font-family: inherit; }
+  a { text-decoration:none; color:inherit; }
+</style>
+</helmet>
+
+<div style="width:100%; overflow-x:hidden;">
+
+  <!-- ============ STICKY NAV ============ -->
+  <div style="position:sticky; top:0; z-index:50; background:rgba(255,255,255,.92); backdrop-filter:blur(12px); border-bottom:1px solid rgba(11,23,48,.08);">
+    <div style="max-width:1280px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; padding:16px 32px;">
+      <a href="Главная авторазборки.dc.html" style="display:flex; align-items:center; gap:11px;">
+        <div style="width:38px; height:38px; border-radius:10px; background:#1e5cff; display:flex; align-items:center; justify-content:center; color:#fff; font:700 19px/1 'Space Grotesk', sans-serif;">А</div>
+        <div style="font:700 20px/1 'Space Grotesk', sans-serif; color:#0b1730; letter-spacing:-.01em;">АВТОРАЗБОРКА<span style="color:#ff6a1a;">23</span></div>
+      </a>
+      <div style="display:flex; align-items:center; gap:32px; font:600 14px/1 'Manrope', sans-serif; color:#3c485f;">
+        <span style="color:#1e5cff; cursor:pointer;">Каталог</span>
+        <a class="chip-link" href="Главная авторазборки.dc.html#how" style="cursor:pointer; transition:color .15s;">Как мы работаем</a>
+        <a class="chip-link" href="Главная авторазборки.dc.html#why" style="cursor:pointer; transition:color .15s;">Гарантия</a>
+        <a class="chip-link" href="#footer" style="cursor:pointer; transition:color .15s;">Контакты</a>
+      </div>
+      <div style="display:flex; align-items:center; gap:20px;">
+        <a href="tel:+78005552424" style="font:700 16px/1 'Space Grotesk', sans-serif; color:#0b1730;">+7 800 555-24-24</a>
+        <div class="btn-primary" onClick="{{ openPicker }}" style="padding:11px 20px; border-radius:10px; background:#ff6a1a; color:#fff; font:700 14px/1 'Manrope', sans-serif; cursor:pointer; box-shadow:0 8px 18px rgba(255,106,26,.32); transition:transform .15s, box-shadow .15s;">Подобрать запчасть</div>
+      </div>
+    </div>
+    <!-- slide-down picker -->
+    <div style="position:absolute; top:100%; left:0; right:0; background:#fff; border-bottom:1px solid rgba(11,23,48,.1); box-shadow:0 26px 44px rgba(11,23,48,.14); overflow:hidden; max-height:{{ pickerH }}; opacity:{{ pickerO }}; pointer-events:{{ pickerPE }}; transition:max-height .34s ease, opacity .26s ease; z-index:40;">
+      <div style="max-width:1280px; margin:0 auto; padding:24px 32px 28px;">
+        <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:20px; margin-bottom:18px;">
+          <div>
+            <div style="font:700 22px/1.1 'Space Grotesk', sans-serif; color:#0b1730; margin-bottom:6px;">Подбор запчасти</div>
+            <div style="font:400 14px/1.5 'Manrope', sans-serif; color:#566;">Укажите параметры — подберём деталь по своему складу и базе разборок.</div>
+          </div>
+          <div onClick="{{ closePicker }}" style="width:38px; height:38px; flex:none; border-radius:10px; background:#f4f7fd; display:flex; align-items:center; justify-content:center; font:600 17px/1 'Manrope', sans-serif; color:#8a93a6; cursor:pointer;">✕</div>
+        </div>
+        <div style="display:flex; gap:10px; align-items:stretch; flex-wrap:wrap;">
+          <div style="flex:1; min-width:130px; display:flex; flex-direction:column; gap:3px; padding:8px 12px; background:#f4f7fd; border-radius:11px;"><span style="font:600 10px/1 'JetBrains Mono', monospace; letter-spacing:.06em; color:#8a93a6; text-transform:uppercase;">Марка</span><select style="border:none; outline:none; background:none; font:600 14px/1 'Manrope', sans-serif; color:#0b1730; cursor:pointer;"><option>Любая</option><option>Toyota</option><option>Volkswagen</option><option>Kia</option><option>Hyundai</option><option>BMW</option><option>LADA</option></select></div>
+          <div style="flex:1; min-width:130px; display:flex; flex-direction:column; gap:3px; padding:8px 12px; background:#f4f7fd; border-radius:11px;"><span style="font:600 10px/1 'JetBrains Mono', monospace; letter-spacing:.06em; color:#8a93a6; text-transform:uppercase;">Модель</span><select style="border:none; outline:none; background:none; font:600 14px/1 'Manrope', sans-serif; color:#0b1730; cursor:pointer;"><option>Любая</option><option>RAV4</option><option>Camry</option><option>Tiguan</option><option>Sportage</option></select></div>
+          <div style="flex:1; min-width:110px; display:flex; flex-direction:column; gap:3px; padding:8px 12px; background:#f4f7fd; border-radius:11px;"><span style="font:600 10px/1 'JetBrains Mono', monospace; letter-spacing:.06em; color:#8a93a6; text-transform:uppercase;">Год</span><select style="border:none; outline:none; background:none; font:600 14px/1 'Manrope', sans-serif; color:#0b1730; cursor:pointer;"><option>Любой</option><option>2020+</option><option>2015–2019</option><option>2010–2014</option><option>до 2010</option></select></div>
+          <div style="flex:1; min-width:160px; display:flex; flex-direction:column; gap:3px; padding:8px 12px; background:#f4f7fd; border-radius:11px;"><span style="font:600 10px/1 'JetBrains Mono', monospace; letter-spacing:.06em; color:#8a93a6; text-transform:uppercase;">Категория детали</span><select style="border:none; outline:none; background:none; font:600 14px/1 'Manrope', sans-serif; color:#0b1730; cursor:pointer;"><option>Любая</option><option>Двигатель</option><option>Кузовные элементы</option><option>Оптика</option><option>Стёкла</option><option>Салон</option><option>Топливная система</option><option>Шины и диски</option><option>Трансмиссия</option></select></div>
+          <div style="flex:1; min-width:150px; display:flex; flex-direction:column; gap:3px; padding:8px 12px; background:#f4f7fd; border-radius:11px;"><span style="font:600 10px/1 'JetBrains Mono', monospace; letter-spacing:.06em; color:#8a93a6; text-transform:uppercase;">Тип детали</span><select style="border:none; outline:none; background:none; font:600 14px/1 'Manrope', sans-serif; color:#0b1730; cursor:pointer;"><option>Любой</option><option>Капот</option><option>Дверь</option><option>Крыло</option><option>Бампер</option><option>Фара / фонарь</option><option>Стекло</option><option>Зеркало</option><option>Диск / шина</option></select></div>
+        </div>
+        <div style="display:flex; gap:10px; margin-top:10px; flex-wrap:wrap;">
+          <div style="flex:3; min-width:240px; display:flex; flex-direction:column; gap:3px; padding:8px 12px; background:#f4f7fd; border-radius:11px;"><span style="font:600 10px/1 'JetBrains Mono', monospace; letter-spacing:.06em; color:#8a93a6; text-transform:uppercase;">Какая деталь нужна</span><input placeholder="Или укажите в свободной форме: капот, фара левая, бампер…" style="border:none; outline:none; background:none; font:600 14px/1 'Manrope', sans-serif; color:#0b1730; width:100%;"></div>
+          <div onClick="{{ closePicker }}" class="btn-blue" style="flex:1; min-width:200px; display:flex; align-items:center; justify-content:center; padding:0 36px; border-radius:11px; background:#1e5cff; color:#fff; font:700 15px/1 'Manrope', sans-serif; cursor:pointer; box-shadow:0 10px 22px rgba(30,92,255,.3); transition:transform .15s, box-shadow .15s; min-height:54px;">Подобрать</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ HEADER + BREADCRUMBS + CHIPS ============ -->
+  <div style="max-width:1280px; margin:0 auto; padding:28px 32px 0;">
+    <div style="display:flex; align-items:center; gap:8px; font:500 13px/1 'Manrope', sans-serif; color:#8a93a6; margin-bottom:16px;">
+      <a href="Главная авторазборки.dc.html" class="chip-link" style="cursor:pointer; transition:color .15s;">Главная</a><span>/</span>
+      <span style="color:#0b1730; font-weight:600;">Каталог</span>
+    </div>
+    <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:24px; flex-wrap:wrap;">
+      <div>
+        <h1 style="font:700 40px/1.05 'Space Grotesk', sans-serif; color:#0b1730; letter-spacing:-.02em; margin:0 0 8px;">Каталог запчастей</h1>
+        <p style="font:400 16px/1.5 'Manrope', sans-serif; color:#566; max-width:620px; margin:0;">Более 12 000 проверенных б/у деталей всех групп. Подбор по марке, модели и VIN, фото реального состояния.</p>
+      </div>
+      <div style="font:600 14px/1 'Manrope', sans-serif; color:#8a93a6; white-space:nowrap;">Найдено <b style="color:#1e5cff;">12 480</b> деталей</div>
+    </div>
+    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:20px;">
+      <sc-for list="{{ groups }}" as="g" hint-placeholder-count="9">
+        <div class="gchip" style="display:flex; align-items:center; gap:8px; padding:9px 15px; border-radius:11px; border:1.5px solid {{ g.border }}; background:{{ g.bg }}; color:{{ g.color }}; font:600 14px/1 'Manrope', sans-serif; cursor:pointer; transition:border-color .15s, color .15s;">{{ g.label }}</div>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- ============ MAIN: SIDEBAR + CONTENT ============ -->
+  <div style="max-width:1280px; margin:0 auto; padding:26px 32px 8px; display:grid; grid-template-columns:282px 1fr; gap:28px; align-items:start;">
+
+    <!-- SIDEBAR -->
+    <div style="position:sticky; top:96px; background:#fff; border:1px solid rgba(11,23,48,.09); border-radius:18px; padding:22px;">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;"><div style="font:700 17px/1 'Space Grotesk', sans-serif; color:#0b1730;">Фильтры</div><span style="font:600 13px/1 'Manrope', sans-serif; color:#8a93a6; cursor:pointer;">Сбросить</span></div>
+      <div style="display:flex; flex-wrap:wrap; gap:7px; margin-bottom:18px;"><div style="display:inline-flex; align-items:center; gap:6px; padding:6px 10px; background:rgba(30,92,255,.08); border-radius:8px; font:600 12px/1 'Manrope', sans-serif; color:#1e5cff;">В наличии <span style="opacity:.7; cursor:pointer;">✕</span></div></div>
+      <div style="padding:18px 0; border-top:1px solid rgba(11,23,48,.08);">
+        <div style="font:700 13px/1 'Space Grotesk', sans-serif; color:#0b1730; margin-bottom:14px;">Цена, ₽</div>
+        <div style="display:flex; gap:10px; margin-bottom:14px;"><div style="flex:1; padding:9px 11px; background:#f4f7fd; border-radius:9px; font:600 13px/1 'Manrope', sans-serif; color:#0b1730;">от 1 500</div><div style="flex:1; padding:9px 11px; background:#f4f7fd; border-radius:9px; font:600 13px/1 'Manrope', sans-serif; color:#0b1730;">до 80 000</div></div>
+        <div style="position:relative; height:4px; background:#e2e8f3; border-radius:2px;"><div style="position:absolute; left:6%; right:22%; top:0; height:4px; background:#1e5cff; border-radius:2px;"></div><div style="position:absolute; left:6%; top:50%; transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%; background:#fff; border:3px solid #1e5cff;"></div><div style="position:absolute; left:78%; top:50%; transform:translate(-50%,-50%); width:16px; height:16px; border-radius:50%; background:#fff; border:3px solid #1e5cff;"></div></div>
+      </div>
+      <div style="padding:18px 0; border-top:1px solid rgba(11,23,48,.08);">
+        <div style="font:700 13px/1 'Space Grotesk', sans-serif; color:#0b1730; margin-bottom:14px;">Марка</div>
+        <div style="display:flex; flex-direction:column; gap:11px;">
+          <sc-for list="{{ marks }}" as="m" hint-placeholder-count="5">
+            <label style="display:flex; align-items:center; justify-content:space-between; cursor:pointer;"><span style="display:flex; align-items:center; gap:10px;"><span style="width:18px; height:18px; border-radius:5px; border:1.5px solid {{ m.bc }}; background:{{ m.bg }}; display:flex; align-items:center; justify-content:center; color:#fff; font:700 11px/1 'Manrope', sans-serif;">{{ m.tick }}</span><span style="font:500 14px/1 'Manrope', sans-serif; color:#3c485f;">{{ m.name }}</span></span><span style="font:500 12px/1 'JetBrains Mono', monospace; color:#a6afc0;">{{ m.count }}</span></label>
+          </sc-for>
+        </div>
+      </div>
+      <div style="padding:18px 0; border-top:1px solid rgba(11,23,48,.08);">
+        <div style="font:700 13px/1 'Space Grotesk', sans-serif; color:#0b1730; margin-bottom:14px;">Состояние</div>
+        <div style="display:flex; flex-direction:column; gap:11px;">
+          <sc-for list="{{ conds }}" as="c" hint-placeholder-count="3">
+            <label style="display:flex; align-items:center; gap:10px; cursor:pointer;"><span style="width:18px; height:18px; border-radius:5px; border:1.5px solid {{ c.bc }}; background:{{ c.bg }}; display:flex; align-items:center; justify-content:center; color:#fff; font:700 11px/1 'Manrope', sans-serif;">{{ c.tick }}</span><span style="display:inline-flex; align-items:center; gap:7px; font:500 14px/1 'Manrope', sans-serif; color:#3c485f;"><span style="width:8px; height:8px; border-radius:50%; background:{{ c.dot }};"></span>{{ c.name }}</span></label>
+          </sc-for>
+        </div>
+      </div>
+      <div style="padding:18px 0 6px; border-top:1px solid rgba(11,23,48,.08); display:flex; align-items:center; justify-content:space-between;"><span style="font:600 14px/1 'Manrope', sans-serif; color:#0b1730;">Только в наличии</span><div style="width:40px; height:23px; border-radius:999px; background:#1e5cff; position:relative;"><div style="position:absolute; top:2px; right:2px; width:19px; height:19px; border-radius:50%; background:#fff;"></div></div></div>
+      <div class="btn-blue" style="margin-top:14px; text-align:center; padding:13px; border-radius:11px; background:#1e5cff; color:#fff; font:700 15px/1 'Manrope', sans-serif; cursor:pointer; box-shadow:0 10px 22px rgba(30,92,255,.28); transition:transform .15s, box-shadow .15s;">Применить</div>
+    </div>
+
+    <!-- CONTENT -->
+    <div>
+      <!-- sort bar with VIEW SWITCHER -->
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; background:#fff; border:1px solid rgba(11,23,48,.09); border-radius:14px; padding:11px 12px 11px 18px; margin-bottom:20px;">
+        <div style="font:600 14px/1 'Manrope', sans-serif; color:#566;">Показаны <b style="color:#0b1730;">1–12</b> из 12 480</div>
+        <div style="display:flex; align-items:center; gap:16px;">
+          <div style="display:flex; align-items:center; gap:9px;"><span style="font:500 13px/1 'Manrope', sans-serif; color:#8a93a6;">Сортировка</span><select style="border:1px solid rgba(11,23,48,.12); border-radius:9px; padding:8px 12px; outline:none; background:#fff; font:600 13px/1 'Manrope', sans-serif; color:#0b1730; cursor:pointer;"><option>Сначала дешевле</option><option>Сначала дороже</option><option>Сначала новые</option><option>По популярности</option></select></div>
+          <!-- VIEW TOGGLE -->
+          <div style="display:flex; gap:4px; background:#f4f7fd; border-radius:11px; padding:4px;">
+            <div class="viewbtn" onClick="{{ setGrid }}" title="Сетка" style="width:38px; height:38px; border-radius:8px; background:{{ gridBg }}; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:background .15s;">
+              <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:3px;"><span style="width:7px; height:7px; border-radius:2px; background:{{ gridColor }};"></span><span style="width:7px; height:7px; border-radius:2px; background:{{ gridColor }};"></span><span style="width:7px; height:7px; border-radius:2px; background:{{ gridColor }};"></span><span style="width:7px; height:7px; border-radius:2px; background:{{ gridColor }};"></span></div>
+            </div>
+            <div class="viewbtn" onClick="{{ setList }}" title="Список" style="width:38px; height:38px; border-radius:8px; background:{{ listBg }}; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px; cursor:pointer; transition:background .15s;">
+              <span style="width:17px; height:3px; border-radius:2px; background:{{ listColor }};"></span><span style="width:17px; height:3px; border-radius:2px; background:{{ listColor }};"></span><span style="width:17px; height:3px; border-radius:2px; background:{{ listColor }};"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- GRID VIEW -->
+      <sc-if value="{{ isGrid }}" hint-placeholder-val="{{ true }}">
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:18px;">
+          <sc-for list="{{ products }}" as="p" hint-placeholder-count="12">
+            <a href="Товар.dc.html" class="prod-card" style="display:block; background:#fff; border:1px solid rgba(11,23,48,.1); border-radius:16px; overflow:hidden; cursor:pointer; transition:border-color .18s, box-shadow .18s, transform .18s;">
+              <div style="position:relative; height:172px; background:#eef3fb;">
+                <image-slot id="{{ p.id }}" style="width:100%; height:172px; display:block;" shape="rect" fit="cover" placeholder="Фото детали"></image-slot>
+                <div style="position:absolute; top:11px; left:11px; display:inline-flex; align-items:center; gap:6px; padding:5px 9px; background:{{ p.condBg }}; border-radius:8px; font:600 11px/1 'Manrope', sans-serif; color:{{ p.condColor }};"><span style="width:6px; height:6px; border-radius:50%; background:{{ p.condColor }};"></span>{{ p.cond }}</div>
+                <div class="fav" style="position:absolute; top:11px; right:11px; width:32px; height:32px; border-radius:9px; background:rgba(255,255,255,.92); border:1px solid rgba(11,23,48,.1); display:flex; align-items:center; justify-content:center; font:600 15px/1 'Manrope', sans-serif; color:#8a93a6; cursor:pointer; transition:border-color .15s, color .15s;">♡</div>
+              </div>
+              <div style="padding:15px;">
+                <div style="font:600 11px/1 'JetBrains Mono', monospace; letter-spacing:.04em; color:#1e5cff; text-transform:uppercase; margin-bottom:8px;">{{ p.group }}</div>
+                <div style="font:700 15px/1.25 'Space Grotesk', sans-serif; color:#0b1730; margin-bottom:6px; min-height:38px;">{{ p.name }}</div>
+                <div style="font:500 12px/1.4 'Manrope', sans-serif; color:#5a6478; margin-bottom:3px;">{{ p.donor }}</div>
+                <div style="font:500 11px/1 'JetBrains Mono', monospace; color:#a6afc0; margin-bottom:12px;">OEM {{ p.oem }}</div>
+                <div style="display:flex; align-items:center; justify-content:space-between; padding-top:12px; border-top:1px solid rgba(11,23,48,.08);">
+                  <div><div style="font:700 18px/1 'Space Grotesk', sans-serif; color:#0b1730;">{{ p.price }}</div><div style="display:inline-flex; align-items:center; gap:5px; margin-top:6px; font:500 11px/1 'Manrope', sans-serif; color:#1f8a5b;"><span style="width:6px; height:6px; border-radius:50%; background:#3ddc84;"></span>{{ p.stock }}</div></div>
+                  <div class="prod-cart" style="padding:10px 14px; border-radius:10px; background:rgba(30,92,255,.1); color:#1e5cff; font:700 13px/1 'Manrope', sans-serif; transition:background .15s, color .15s;">В корзину</div>
+                </div>
+              </div>
+            </a>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <!-- LIST VIEW -->
+      <sc-if value="{{ isList }}" hint-placeholder-val="{{ false }}">
+        <div style="display:flex; flex-direction:column; gap:14px;">
+          <sc-for list="{{ products }}" as="p" hint-placeholder-count="12">
+            <a href="Товар.dc.html" class="prod-row" style="display:flex; align-items:stretch; gap:18px; background:#fff; border:1px solid rgba(11,23,48,.1); border-radius:16px; overflow:hidden; padding:14px; cursor:pointer; transition:border-color .18s, box-shadow .18s;">
+              <div style="position:relative; width:184px; flex:none; border-radius:11px; overflow:hidden; background:#eef3fb;">
+                <image-slot id="{{ p.id }}" style="width:184px; height:130px; display:block;" shape="rect" fit="cover" placeholder="Фото"></image-slot>
+                <div style="position:absolute; top:9px; left:9px; display:inline-flex; align-items:center; gap:5px; padding:4px 8px; background:{{ p.condBg }}; border-radius:7px; font:600 10px/1 'Manrope', sans-serif; color:{{ p.condColor }};"><span style="width:5px; height:5px; border-radius:50%; background:{{ p.condColor }};"></span>{{ p.cond }}</div>
+              </div>
+              <div style="flex:1; display:flex; flex-direction:column; justify-content:center; padding:4px 0;">
+                <div style="font:600 11px/1 'JetBrains Mono', monospace; letter-spacing:.04em; color:#1e5cff; text-transform:uppercase; margin-bottom:8px;">{{ p.group }}</div>
+                <div style="font:700 18px/1.2 'Space Grotesk', sans-serif; color:#0b1730; margin-bottom:8px;">{{ p.name }}</div>
+                <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+                  <span style="font:500 13px/1 'Manrope', sans-serif; color:#5a6478;">{{ p.donor }}</span>
+                  <span style="font:500 12px/1 'JetBrains Mono', monospace; color:#a6afc0;">OEM {{ p.oem }}</span>
+                  <span style="display:inline-flex; align-items:center; gap:5px; font:500 12px/1 'Manrope', sans-serif; color:#1f8a5b;"><span style="width:6px; height:6px; border-radius:50%; background:#3ddc84;"></span>{{ p.stock }}</span>
+                </div>
+              </div>
+              <div style="flex:none; display:flex; flex-direction:column; align-items:flex-end; justify-content:center; gap:12px; padding:4px 8px 4px 22px; border-left:1px solid rgba(11,23,48,.08);">
+                <div style="font:700 22px/1 'Space Grotesk', sans-serif; color:#0b1730;">{{ p.price }}</div>
+                <div style="display:flex; align-items:center; gap:9px;">
+                  <div class="fav" style="width:38px; height:38px; border-radius:10px; background:#fff; border:1px solid rgba(11,23,48,.12); display:flex; align-items:center; justify-content:center; font:600 16px/1 'Manrope', sans-serif; color:#8a93a6; cursor:pointer; transition:border-color .15s, color .15s;">♡</div>
+                  <div class="prod-cart" style="padding:11px 22px; border-radius:10px; background:rgba(30,92,255,.1); color:#1e5cff; font:700 14px/1 'Manrope', sans-serif; white-space:nowrap; transition:background .15s, color .15s;">В корзину</div>
+                </div>
+              </div>
+            </a>
+          </sc-for>
+        </div>
+      </sc-if>
+
+      <!-- pagination -->
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-top:28px;">
+        <div class="btn-blue" style="padding:14px 30px; border-radius:12px; background:#1e5cff; color:#fff; font:700 15px/1 'Manrope', sans-serif; cursor:pointer; box-shadow:0 10px 22px rgba(30,92,255,.28); transition:transform .15s, box-shadow .15s;">Показать ещё 12</div>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <div style="width:40px; height:40px; border-radius:10px; background:#1e5cff; color:#fff; display:flex; align-items:center; justify-content:center; font:700 14px/1 'Manrope', sans-serif; cursor:pointer;">1</div>
+          <div class="pagebtn" style="width:40px; height:40px; border-radius:10px; background:#fff; border:1px solid rgba(11,23,48,.12); color:#3c485f; display:flex; align-items:center; justify-content:center; font:700 14px/1 'Manrope', sans-serif; cursor:pointer; transition:border-color .15s, color .15s;">2</div>
+          <div class="pagebtn" style="width:40px; height:40px; border-radius:10px; background:#fff; border:1px solid rgba(11,23,48,.12); color:#3c485f; display:flex; align-items:center; justify-content:center; font:700 14px/1 'Manrope', sans-serif; cursor:pointer; transition:border-color .15s, color .15s;">3</div>
+          <span style="color:#a6afc0; font:600 14px/1 'Manrope', sans-serif; padding:0 4px;">…</span>
+          <div class="pagebtn" style="width:40px; height:40px; border-radius:10px; background:#fff; border:1px solid rgba(11,23,48,.12); color:#3c485f; display:flex; align-items:center; justify-content:center; font:700 14px/1 'Manrope', sans-serif; cursor:pointer; transition:border-color .15s, color .15s;">43</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ============ CTA BAND ============ -->
+  <div style="max-width:1280px; margin:56px auto 0; padding:0 32px;">
+    <div style="position:relative; overflow:hidden; border-radius:24px; background:radial-gradient(125% 130% at 12% 10%, #1b2f7e 0%, #0c1640 55%, #060a20 100%); padding:48px 56px;">
+      <div style="position:absolute; right:-40px; top:-40px; width:280px; height:280px; background:radial-gradient(closest-side, rgba(255,106,26,.35), transparent 70%); pointer-events:none;"></div>
+      <div style="position:relative; display:flex; align-items:center; justify-content:space-between; gap:40px; flex-wrap:wrap;">
+        <div style="max-width:600px;">
+          <h2 style="font:700 34px/1.1 'Space Grotesk', sans-serif; color:#fff; letter-spacing:-.02em; margin:0 0 12px;">Не нашли нужную деталь?</h2>
+          <p style="font:400 17px/1.5 'Manrope', sans-serif; color:#aeb9d8; margin:0;">Оставьте заявку — найдём по своему складу и базе партнёров-разборок. Перезвоним в течение 15 минут.</p>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:12px; align-items:flex-start;">
+          <a href="tel:+78005552424" style="font:700 26px/1 'Space Grotesk', sans-serif; color:#fff;">+7 800 555-24-24</a>
+          <div class="btn-primary" style="padding:15px 30px; border-radius:12px; background:#ff6a1a; color:#fff; font:700 16px/1 'Manrope', sans-serif; cursor:pointer; box-shadow:0 10px 26px rgba(255,106,26,.4); transition:transform .15s, box-shadow .15s;">Оставить заявку</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ FOOTER ============ -->
+  <div id="footer" style="margin-top:64px; background:#0b1730; color:#aeb9d8;">
+    <div style="max-width:1280px; margin:0 auto; padding:56px 32px 28px; display:grid; grid-template-columns:1.6fr 1fr 1fr 1.2fr; gap:40px;">
+      <div>
+        <div style="display:flex; align-items:center; gap:11px; margin-bottom:18px;">
+          <div style="width:38px; height:38px; border-radius:10px; background:#1e5cff; display:flex; align-items:center; justify-content:center; color:#fff; font:700 19px/1 'Space Grotesk', sans-serif;">А</div>
+          <div style="font:700 20px/1 'Space Grotesk', sans-serif; color:#fff; letter-spacing:-.01em;">АВТОРАЗБОРКА<span style="color:#ff6a1a;">23</span></div>
+        </div>
+        <p style="font:400 14px/1.6 'Manrope', sans-serif; color:#8693b3; margin:0 0 20px; max-width:300px;">Авторазборка полного цикла. Проверенные б/у запчасти с гарантией и доставкой по всей России с 2011 года.</p>
+        <div style="display:flex; gap:10px;">
+          <sc-for list="{{ socials }}" as="s" hint-placeholder-count="4">
+            <div style="width:38px; height:38px; border-radius:10px; background:rgba(255,255,255,.07); display:flex; align-items:center; justify-content:center; font:700 13px/1 'JetBrains Mono', monospace; color:#aeb9d8; cursor:pointer;">{{ s }}</div>
+          </sc-for>
+        </div>
+      </div>
+      <div>
+        <div style="font:700 14px/1 'Space Grotesk', sans-serif; color:#fff; margin-bottom:16px;">Каталог</div>
+        <div style="display:flex; flex-direction:column; gap:11px; font:400 14px/1 'Manrope', sans-serif;">
+          <sc-for list="{{ catLinks }}" as="l" hint-placeholder-count="8">
+            <a class="foot-link" href="#" style="color:#8693b3; cursor:pointer; transition:color .15s;">{{ l }}</a>
+          </sc-for>
+        </div>
+      </div>
+      <div>
+        <div style="font:700 14px/1 'Space Grotesk', sans-serif; color:#fff; margin-bottom:16px;">Покупателям</div>
+        <div style="display:flex; flex-direction:column; gap:11px; font:400 14px/1 'Manrope', sans-serif;">
+          <sc-for list="{{ buyerLinks }}" as="l" hint-placeholder-count="5">
+            <a class="foot-link" href="#" style="color:#8693b3; cursor:pointer; transition:color .15s;">{{ l }}</a>
+          </sc-for>
+        </div>
+      </div>
+      <div>
+        <div style="font:700 14px/1 'Space Grotesk', sans-serif; color:#fff; margin-bottom:16px;">Контакты</div>
+        <a href="tel:+78005552424" style="display:block; font:700 20px/1 'Space Grotesk', sans-serif; color:#fff; margin-bottom:12px;">+7 800 555-24-24</a>
+        <div style="font:400 14px/1.7 'Manrope', sans-serif; color:#8693b3;">
+          info@avtorazborka23.ru<br>
+          г. Краснодар, ул. Промышленная, 14с3<br>
+          Ежедневно 9:00–21:00
+        </div>
+        <div style="margin-top:16px; display:inline-flex; align-items:center; gap:8px; padding:8px 13px; border:1px solid rgba(255,255,255,.14); border-radius:10px; font:600 13px/1 'Manrope', sans-serif; color:#aeb9d8; cursor:pointer;"><span style="width:7px;height:7px;background:#3ddc84;border-radius:50%;"></span>Написать в WhatsApp</div>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,.09);">
+      <div style="max-width:1280px; margin:0 auto; padding:20px 32px; display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; font:400 13px/1.5 'Manrope', sans-serif; color:#6b7796;">
+        <span>© 2026 Авторазборка23. Все права защищены.</span>
+        <div style="display:flex; gap:24px;">
+          <a class="foot-link" href="#" style="color:#6b7796; transition:color .15s;">Политика конфиденциальности</a>
+          <a class="foot-link" href="#" style="color:#6b7796; transition:color .15s;">Договор оферты</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { view: 'grid', picker: false };
+
+  renderVals() {
+    const view = this.state.view;
+    const groups = [
+      { label:'Все', active:true },
+      { label:'Двигатель' }, { label:'Кузовные' }, { label:'Оптика' }, { label:'Стёкла' },
+      { label:'Салон' }, { label:'Топливная' }, { label:'Шины и диски' }, { label:'Трансмиссия' },
+    ].map(g => Object.assign(g, {
+      border: g.active ? '#1e5cff' : 'rgba(11,23,48,.14)',
+      bg: g.active ? 'rgba(30,92,255,.08)' : '#fff',
+      color: g.active ? '#1e5cff' : '#3c485f',
+    }));
+
+    const mk = (name, count, on) => ({ name, count, tick: on ? '✓' : '', bc: on ? '#1e5cff' : '#c2cbdc', bg: on ? '#1e5cff' : '#fff' });
+    const marks = [ mk('Toyota','1 840',false), mk('Volkswagen','1 220',false), mk('Kia','1 160',false), mk('Hyundai','980',false), mk('BMW','870',false) ];
+
+    const cd = (name, dot, on) => ({ name, dot, tick: on ? '✓' : '', bc: on ? '#1e5cff' : '#c2cbdc', bg: on ? '#1e5cff' : '#fff' });
+    const conds = [ cd('Отличное','#3ddc84',true), cd('Хорошее','#1e5cff',true), cd('Есть дефекты','#ff9a4d',false) ];
+
+    const EX = { cond:'Отличное', condColor:'#1f8a5b', condBg:'rgba(61,220,132,.16)' };
+    const GD = { cond:'Хорошее', condColor:'#1e5cff', condBg:'rgba(30,92,255,.12)' };
+    const DF = { cond:'Есть дефекты', condColor:'#c2691a', condBg:'rgba(255,154,77,.18)' };
+
+    const products = [
+      Object.assign({ id:'p1',  group:'Оптика',       name:'Фара левая в сборе',  donor:'Toyota Camry · 2018',  oem:'81170-33B40', price:'6 800 ₽',  stock:'2 шт' }, EX),
+      Object.assign({ id:'p2',  group:'Двигатель',    name:'Двигатель 1.6 G4FG',  donor:'Kia Ceed · 2017',      oem:'21101-2BW04', price:'78 000 ₽', stock:'1 шт' }, GD),
+      Object.assign({ id:'p3',  group:'Стёкла',       name:'Лобовое стекло',      donor:'VW Tiguan · 2019',     oem:'5NN-845-011', price:'9 400 ₽',  stock:'1 шт' }, EX),
+      Object.assign({ id:'p4',  group:'Салон',        name:'Сиденье водителя',    donor:'BMW 3 серии · 2016',   oem:'52-10-7-340', price:'12 500 ₽', stock:'1 шт' }, GD),
+      Object.assign({ id:'p5',  group:'Кузовные',     name:'Капот в сборе',       donor:'Toyota RAV4 · 2019',   oem:'53301-42010', price:'14 500 ₽', stock:'1 шт' }, EX),
+      Object.assign({ id:'p6',  group:'Топливная',    name:'Бензонасос',          donor:'Hyundai Solaris · 2018', oem:'31110-H5000', price:'4 200 ₽', stock:'3 шт' }, EX),
+      Object.assign({ id:'p7',  group:'Шины и диски', name:'Диск литой R17',      donor:'Kia Sportage · 2019',  oem:'52910-D9200', price:'5 600 ₽',  stock:'4 шт' }, GD),
+      Object.assign({ id:'p8',  group:'Трансмиссия',  name:'АКПП U340E',          donor:'Toyota Corolla · 2017', oem:'30500-02850', price:'46 000 ₽', stock:'1 шт' }, GD),
+      Object.assign({ id:'p9',  group:'Кузовные',     name:'Бампер передний',     donor:'VW Polo · 2020',       oem:'2G0-807-221', price:'8 900 ₽',  stock:'1 шт' }, GD),
+      Object.assign({ id:'p10', group:'Оптика',       name:'Фонарь задний правый',donor:'Kia Rio · 2019',       oem:'92402-H8000', price:'3 100 ₽',  stock:'2 шт' }, EX),
+      Object.assign({ id:'p11', group:'Двигатель',    name:'Стартер',             donor:'Hyundai Creta · 2019', oem:'36100-2E300', price:'5 400 ₽',  stock:'2 шт' }, EX),
+      Object.assign({ id:'p12', group:'Кузовные',     name:'Зеркало правое',      donor:'Toyota RAV4 · 2018',   oem:'87910-42E10', price:'3 900 ₽',  stock:'1 шт' }, DF),
+    ];
+
+    return {
+      groups, marks, conds, products,
+      pickerH: this.state.picker ? '460px' : '0px',
+      pickerO: this.state.picker ? 1 : 0,
+      pickerPE: this.state.picker ? 'auto' : 'none',
+      openPicker: () => this.setState({ picker: true }),
+      closePicker: () => this.setState({ picker: false }),
+      isGrid: view === 'grid',
+      isList: view === 'list',
+      gridBg: view === 'grid' ? '#fff' : 'transparent',
+      gridColor: view === 'grid' ? '#1e5cff' : '#9aa3b4',
+      listBg: view === 'list' ? '#fff' : 'transparent',
+      listColor: view === 'list' ? '#1e5cff' : '#9aa3b4',
+      setGrid: () => this.setState({ view: 'grid' }),
+      setList: () => this.setState({ view: 'list' }),
+      socials: ['VK', 'TG', 'WA', 'YT'],
+      catLinks: ['Двигатель', 'Кузовные элементы', 'Оптика', 'Стёкла', 'Салон', 'Топливная система', 'Шины и диски', 'Трансмиссия'],
+      buyerLinks: ['Доставка и оплата', 'Гарантия и возврат', 'Подбор по VIN', 'Оптовикам', 'О компании'],
+    };
+  }
+}
+</script>
+</body>
+</html>

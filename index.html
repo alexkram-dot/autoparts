@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Авторазборка23 — Запчасти с разборки с гарантией</title>
+  <meta name="description" content="Проверенные б/у запчасти с гарантией 14 дней. 12 000+ деталей в наличии. Подбор по VIN, отправка по всей России.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+
+<!-- ══ NAV ════════════════════════════════════ -->
+<header class="nav" id="top">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">А</div>
+      <span class="nav-logo-name">АВТОРАЗБОРКА<em>23</em></span>
+    </a>
+
+    <nav class="nav-links">
+      <a href="catalog.html">Каталог</a>
+      <a href="#how">Как мы работаем</a>
+      <a href="#why">Гарантия</a>
+      <a href="about.html">О компании</a>
+    </nav>
+
+    <div class="nav-right">
+      <a href="tel:+78005552424" class="nav-phone">+7 800 555-24-24</a>
+      <button class="btn btn-orange nav-btn" data-picker-open>Подобрать запчасть</button>
+    </div>
+
+    <button class="nav-burger" aria-label="Меню" onclick="window.AR23?.openDrawer()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <!-- Picker dropdown (desktop) -->
+  <div class="picker-drop" id="picker-drop">
+    <div class="picker-drop-inner">
+      <div class="picker-hdr">
+        <div>
+          <h3>Подбор запчасти</h3>
+          <p>Укажите параметры — подберём деталь по своему складу и базе разборок.</p>
+        </div>
+        <button class="picker-close" data-picker-close>✕</button>
+      </div>
+      <div class="picker-row">
+        <div class="picker-field"><span class="picker-field-lbl">Марка</span>
+          <select><option>Любая</option><option>Toyota</option><option>Volkswagen</option><option>Kia</option><option>Hyundai</option><option>BMW</option><option>LADA</option></select>
+        </div>
+        <div class="picker-field"><span class="picker-field-lbl">Модель</span>
+          <select><option>Любая</option><option>RAV4</option><option>Camry</option><option>Tiguan</option><option>Sportage</option></select>
+        </div>
+        <div class="picker-field"><span class="picker-field-lbl">Год</span>
+          <select><option>Любой</option><option>2020+</option><option>2015–2019</option><option>2010–2014</option><option>до 2010</option></select>
+        </div>
+        <div class="picker-field"><span class="picker-field-lbl">Категория детали</span>
+          <select><option>Любая</option><option>Двигатель</option><option>Кузовные элементы</option><option>Оптика</option><option>Стёкла</option><option>Салон</option><option>Топливная система</option><option>Шины и диски</option><option>Трансмиссия</option></select>
+        </div>
+        <div class="picker-field"><span class="picker-field-lbl">Тип детали</span>
+          <select><option>Любой</option><option>Капот</option><option>Дверь</option><option>Крыло</option><option>Бампер</option><option>Фара / фонарь</option><option>Стекло</option><option>Зеркало</option><option>Диск / шина</option></select>
+        </div>
+      </div>
+      <div class="picker-row">
+        <div class="picker-field wide"><span class="picker-field-lbl">Какая деталь нужна</span>
+          <input placeholder="Или укажите в свободной форме: капот, фара левая, бампер…">
+        </div>
+        <a href="catalog.html" class="btn btn-blue picker-submit" data-picker-close>Найти</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ══ SCRIM ══════════════════════════════════ -->
+<div class="scrim" id="scrim"></div>
+
+<!-- ══ MOBILE DRAWER ══════════════════════════ -->
+<aside class="drawer" id="drawer">
+  <div class="drawer-hdr">
+    <span>Меню</span>
+    <button class="drawer-close" id="drawer-close">✕</button>
+  </div>
+  <nav class="drawer-nav">
+    <a href="catalog.html">Каталог <span>→</span></a>
+    <a href="#how" onclick="window.AR23?.closeDrawer()">Как мы работаем <span>→</span></a>
+    <a href="#why" onclick="window.AR23?.closeDrawer()">Гарантия и возврат <span>→</span></a>
+    <a href="about.html">О компании <span>→</span></a>
+    <a href="#footer" onclick="window.AR23?.closeDrawer()">Контакты <span>→</span></a>
+  </nav>
+  <div class="drawer-footer">
+    <a href="tel:+78005552424" class="drawer-phone">+7 800 555-24-24</a>
+    <p class="drawer-hours">Ежедневно 9:00–21:00</p>
+    <button class="btn btn-orange picker-open-full" data-picker-open onclick="window.AR23?.closeDrawer()">Подобрать запчасть</button>
+  </div>
+</aside>
+
+<!-- ══ PICKER SHEET (mobile) ══════════════════ -->
+<div class="picker-sheet" id="picker-sheet">
+  <div class="picker-sheet-handle"><div class="picker-sheet-handle-bar"></div></div>
+  <div class="picker-sheet-hdr">
+    <div>
+      <h3>Подбор запчасти</h3>
+      <p>Укажите параметры — подберём деталь по своему складу и базе разборок.</p>
+    </div>
+    <button class="picker-close" data-picker-close>✕</button>
+  </div>
+  <div class="picker-sheet-body">
+    <div class="picker-sheet-field"><span class="picker-field-lbl">Марка</span>
+      <select><option>Любая</option><option>Toyota</option><option>Volkswagen</option><option>Kia</option><option>Hyundai</option><option>BMW</option><option>LADA</option></select>
+    </div>
+    <div class="picker-sheet-field"><span class="picker-field-lbl">Модель</span>
+      <select><option>Любая</option><option>RAV4</option><option>Camry</option><option>Tiguan</option><option>Sportage</option></select>
+    </div>
+    <div class="picker-sheet-field-row">
+      <div class="picker-sheet-field"><span class="picker-field-lbl">Год</span>
+        <select><option>Любой</option><option>2020+</option><option>2015–2019</option><option>2010–2014</option><option>до 2010</option></select>
+      </div>
+      <div class="picker-sheet-field"><span class="picker-field-lbl">Категория</span>
+        <select><option>Любая</option><option>Двигатель</option><option>Кузовные</option><option>Оптика</option><option>Стёкла</option><option>Салон</option><option>Топливная</option><option>Шины и диски</option><option>Трансмиссия</option></select>
+      </div>
+    </div>
+    <div class="picker-sheet-field"><span class="picker-field-lbl">Тип детали</span>
+      <select><option>Любой</option><option>Капот</option><option>Дверь</option><option>Крыло</option><option>Бампер</option><option>Фара / фонарь</option><option>Стекло</option><option>Зеркало</option><option>Диск / шина</option></select>
+    </div>
+    <div class="picker-sheet-field"><span class="picker-field-lbl">Какая деталь нужна</span>
+      <input placeholder="Капот, фара левая, бампер…">
+    </div>
+    <a href="catalog.html" class="btn btn-blue picker-submit-sheet" data-picker-close>Подобрать</a>
+  </div>
+</div>
+
+<!-- ══ HERO ════════════════════════════════════ -->
+<section class="hero-section">
+  <div class="hero-intro hero-text-center">
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>12 000+ деталей в наличии
+    </div>
+    <h1 class="hero-title">Любая деталь с разборки —<br>наведите на нужный узел</h1>
+    <p class="hero-sub">Проверенные б/у запчасти с гарантией 14 дней. Подбор по VIN и отправка по всей России.</p>
+  </div>
+
+  <!-- Desktop: car diagram -->
+  <div class="hero-intro hero-intro--diagram">
+    <div class="diagram-wrap" id="diagram">
+      <div class="diagram-glow"></div>
+      <div class="diagram-shadow"></div>
+      <img src="images/car-photo.png" alt="Автомобиль" class="diagram-car" draggable="false">
+      <svg class="diagram-svg" viewBox="0 0 100 100" preserveAspectRatio="none" id="diagram-svg"></svg>
+      <!-- dots and labels injected by JS -->
+    </div>
+  </div>
+
+  <!-- Mobile: simple car + CTA -->
+  <div class="hero-mobile">
+    <div class="hero-car-wrap">
+      <div class="hero-car-shadow"></div>
+      <img src="images/car-photo.png" alt="Авто в разборе" class="hero-car-img">
+    </div>
+    <button class="btn btn-blue hero-pick-btn" data-picker-open>
+      <svg width="20" height="20" viewBox="0 0 22 22" fill="none"><circle cx="9.5" cy="9.5" r="7" stroke="#fff" stroke-width="2.2"/><line x1="15" y1="15" x2="20" y2="20" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></svg>
+      Подобрать запчасть
+    </button>
+  </div>
+
+  <!-- Desktop search form -->
+  <div class="hero-search-wrap">
+    <div class="hero-search">
+      <div class="hero-search-row">
+        <div class="hs-field"><span class="hs-lbl">Марка</span>
+          <select><option>Любая</option><option>Toyota</option><option>Volkswagen</option><option>Kia</option><option>Hyundai</option><option>BMW</option><option>LADA</option></select>
+        </div>
+        <div class="hs-field"><span class="hs-lbl">Модель</span>
+          <select><option>Любая</option><option>RAV4</option><option>Camry</option><option>Tiguan</option><option>Sportage</option></select>
+        </div>
+        <div class="hs-field"><span class="hs-lbl">Год</span>
+          <select><option>Любой</option><option>2020+</option><option>2015–2019</option><option>2010–2014</option><option>до 2010</option></select>
+        </div>
+        <div class="hs-field"><span class="hs-lbl">Категория детали</span>
+          <select><option>Любая</option><option>Двигатель</option><option>Кузовные элементы</option><option>Оптика</option><option>Стёкла</option><option>Салон</option><option>Топливная система</option><option>Шины и диски</option><option>Трансмиссия</option></select>
+        </div>
+        <div class="hs-field"><span class="hs-lbl">Тип детали</span>
+          <select><option>Любой</option><option>Капот</option><option>Дверь</option><option>Крыло</option><option>Бампер</option><option>Фара / фонарь</option><option>Стекло</option><option>Зеркало</option><option>Диск / шина</option></select>
+        </div>
+      </div>
+      <div class="hero-search-row">
+        <div class="hs-field wide"><span class="hs-lbl">Какая деталь нужна</span>
+          <input placeholder="Или укажите в свободной форме: капот, фара левая, бампер…">
+        </div>
+        <a href="catalog.html" class="btn btn-blue picker-submit">Найти</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile search CTA wrap -->
+  <div class="hero-search-wrap-m">
+    <!-- search CTA already in .hero-mobile above -->
+  </div>
+
+  <!-- Stats strip -->
+  <div class="stats-strip">
+    <div class="stats-grid container">
+      <div class="stat-cell">
+        <div class="stat-num">12 000+</div>
+        <div class="stat-lbl">деталей в наличии</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">4 500</div>
+        <div class="stat-lbl">авто в разборе</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">14 дней</div>
+        <div class="stat-lbl">гарантия на запчасти</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">1 день</div>
+        <div class="stat-lbl">отгрузка после оплаты</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CATEGORIES ════════════════════════════ -->
+<section class="section" id="catalog">
+  <div class="container">
+    <div class="section-hdr">
+      <div>
+        <div class="label"><span class="label-dot"></span>Каталог по узлам</div>
+        <h2 class="section-title">Запчасти по группам</h2>
+      </div>
+      <a href="catalog.html" class="section-hdr-link">Весь каталог →</a>
+    </div>
+    <div class="cats-grid" id="cats-grid">
+      <!-- injected by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ══ WHY US ═════════════════════════════════ -->
+<section class="section-sm" id="why">
+  <div class="container">
+    <div class="label"><span class="label-dot"></span>Почему Авторазборка23</div>
+    <h2 class="section-title section-title--mb">Покупать б/у — спокойно</h2>
+    <div class="adv-grid">
+      <div class="adv-card">
+        <div class="adv-icon">✓</div>
+        <div class="adv-title">Гарантия 14 дней</div>
+        <p class="adv-text">Возврат или обмен, если деталь не подошла или есть скрытый дефект. Деньги возвращаем без споров.</p>
+      </div>
+      <div class="adv-card">
+        <div class="adv-icon">⤓</div>
+        <div class="adv-title">Доставка по РФ</div>
+        <p class="adv-text">СДЭК, ПЭК и до двери. Отправка в день оплаты, трек-номер сразу после отгрузки.</p>
+      </div>
+      <div class="adv-card">
+        <div class="adv-icon">⚲</div>
+        <div class="adv-title">Проверка перед отправкой</div>
+        <p class="adv-text">Фото реальной детали, проверка на стенде и тест перед упаковкой. Берёте именно то, что видели.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ HOW IT WORKS ═══════════════════════════ -->
+<section class="section-sm" id="how">
+  <div class="container">
+    <div class="label"><span class="label-dot"></span>4 шага</div>
+    <h2 class="section-title section-title--mb">Как мы работаем</h2>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-title">Оставьте заявку</div>
+        <p class="step-text">Марка, модель, год и нужный узел — через поиск или менеджеру.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-title">Подберём деталь</div>
+        <p class="step-text">Найдём по своему складу и базе партнёров-разборок.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-title">Проверка и фото</div>
+        <p class="step-text">Пришлём фото, артикул и состояние. Согласуем цену.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-title">Доставка</div>
+        <p class="step-text">Отправим удобной ТК и поддержим по гарантии после.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CTA BAND ═══════════════════════════════ -->
+<div class="cta-section">
+  <div class="container">
+    <div class="cta-band">
+      <div class="cta-inner">
+        <div>
+          <h2 class="cta-title">Не нашли нужную деталь?</h2>
+          <p class="cta-text">Оставьте заявку — найдём по своему складу и базе партнёров-разборок. Перезвоним в течение 15 минут.</p>
+        </div>
+        <div class="cta-aside">
+          <a href="tel:+78005552424" class="cta-phone">+7 800 555-24-24</a>
+          <button class="btn btn-orange" data-picker-open>Оставить заявку</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FOOTER ═════════════════════════════════ -->
+<footer class="footer" id="footer">
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">
+        <div class="footer-logo-icon">А</div>
+        <span class="footer-logo-name">АВТОРАЗБОРКА<em>23</em></span>
+      </div>
+      <p class="footer-desc">Авторазборка полного цикла. Проверенные б/у запчасти с гарантией и доставкой по всей России с 2011 года.</p>
+      <div class="footer-socials">
+        <a class="footer-social" href="#" aria-label="VK">VK</a>
+        <a class="footer-social" href="#" aria-label="Telegram">TG</a>
+        <a class="footer-social" href="#" aria-label="WhatsApp">WA</a>
+        <a class="footer-social" href="#" aria-label="YouTube">YT</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-ttl">Каталог</div>
+      <div class="footer-links">
+        <a href="catalog.html">Двигатель</a>
+        <a href="catalog.html">Кузовные элементы</a>
+        <a href="catalog.html">Оптика</a>
+        <a href="catalog.html">Стёкла</a>
+        <a href="catalog.html">Салон</a>
+        <a href="catalog.html">Топливная система</a>
+        <a href="catalog.html">Шины и диски</a>
+        <a href="catalog.html">Трансмиссия</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-ttl">Покупателям</div>
+      <div class="footer-links">
+        <a href="#">Доставка и оплата</a>
+        <a href="#">Гарантия и возврат</a>
+        <a href="#">Подбор по VIN</a>
+        <a href="#">Оптовикам</a>
+        <a href="#">О компании</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-ttl">Контакты</div>
+      <a href="tel:+78005552424" class="footer-contact-phone">+7 800 555-24-24</a>
+      <p class="footer-contact-info">info@avtorazborka23.ru<br>г. Краснодар, ул. Промышленная, 14с3<br>Ежедневно 9:00–21:00</p>
+      <a href="#" class="footer-wa">
+        <span class="footer-wa-dot"></span>Написать в WhatsApp
+      </a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-bottom-inner">
+      <span>© 2026 Авторазборка23. Все права защищены.</span>
+      <div class="footer-legal">
+        <a href="#">Политика конфиденциальности</a>
+        <a href="#">Договор оферты</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ══ BOTTOM TABS (mobile) ══════════════════ -->
+<nav class="btabs">
+  <div class="btabs-inner">
+    <a class="btab" href="catalog.html">
+      <svg width="22" height="22" viewBox="0 0 22 22"><rect x="2" y="2" width="7.5" height="7.5" rx="2" fill="#9aa3b4"/><rect x="12.5" y="2" width="7.5" height="7.5" rx="2" fill="#9aa3b4"/><rect x="2" y="12.5" width="7.5" height="7.5" rx="2" fill="#9aa3b4"/><rect x="12.5" y="12.5" width="7.5" height="7.5" rx="2" fill="#9aa3b4"/></svg>
+      <span>Каталог</span>
+    </a>
+    <button class="btab" data-tab="search" data-picker-open>
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="9.5" cy="9.5" r="6.5" stroke="#9aa3b4" stroke-width="2.2"/><line x1="14.5" y1="14.5" x2="19.5" y2="19.5" stroke="#9aa3b4" stroke-width="2.2" stroke-linecap="round"/></svg>
+      <span>Поиск</span>
+    </button>
+    <button class="btab">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M5 7h12l-1 11H6L5 7z" stroke="#9aa3b4" stroke-width="2.2" stroke-linejoin="round"/><path d="M8 7a3 3 0 0 1 6 0" stroke="#9aa3b4" stroke-width="2.2" stroke-linecap="round"/></svg>
+      <span>Корзина</span>
+    </button>
+    <a class="btab" href="#footer">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><rect x="2.5" y="3.5" width="17" height="12" rx="3" stroke="#9aa3b4" stroke-width="2.2"/><path d="M7 18.5l3-3" stroke="#9aa3b4" stroke-width="2.2" stroke-linecap="round"/></svg>
+      <span>Контакты</span>
+    </a>
+  </div>
+</nav>
+
+<script src="js/main.js"></script>
+<script src="js/home.js"></script>
+</body>
+</html>

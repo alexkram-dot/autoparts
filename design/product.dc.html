@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<script src="image-slot.js"></script>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body { font-family: 'Manrope', system-ui, sans-serif; -webkit-font-smoothing: antialiased; background:#f4f7fd; }
+  ::selection { background: #ff6a1a; color: #fff; }
+  .chip-link:hover { color:#ff6a1a !important; }
+  .foot-link:hover { color:#fff !important; }
+  .btn-primary:hover { box-shadow:0 12px 26px rgba(255,106,26,.42) !important; transform:translateY(-1px); }
+  .btn-blue:hover { box-shadow:0 12px 26px rgba(30,92,255,.42) !important; transform:translateY(-1px); }
+  .prod-card:hover { border-color:#1e5cff !important; box-shadow:0 18px 40px rgba(30,92,255,.13) !important; transform:translateY(-3px); }
+  .prod-card:hover .prod-cart { background:#1e5cff !important; color:#fff !important; }
+  .fav:hover { border-color:#ff6a1a !important; color:#ff6a1a !important; }
+  .thumb:hover { border-color:#1e5cff !important; }
+  .tabbtn:hover { color:#1e5cff !important; }
+  select, input { font-family: inherit; }
+  a { text-decoration:none; color:inherit; }
+</style>
+</helmet>
+
+<div style="width:100%; overflow-x:hidden;">
+
+  <!-- ============ STICKY NAV ============ -->
+  <div style="position:sticky; top:0; z-index:50; background:rgba(255,255,255,.92); backdrop-filter:blur(12px); border-bottom:1px solid rgba(11,23,48,.08);">
+    <div style="max-width:1280px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; padding:16px 32px;">
+      <a href="Главная авторазборки.dc.html" style="display:flex; align-items:center; gap:11px;">
+        <div style="width:38px; height:38px; border-radius:10px; background:#1e5cff; display:flex; align-items:center; justify-content:center; color:#fff; font:700 19px/1 'Space Grotesk', sans-serif;">А</div>
+        <div style="font:700 20px/1 'Space Grotesk', sans-serif; color:#0b1730; letter-spacing:-.01em;">АВТОРАЗБОРКА<span style="color:#ff6a1a;">23</span></div>
+      </a>
+      <div style="display:flex; align-items:center; gap:32px; font:600 14px/1 'Manrope', sans-serif; color:#3c485f;">
+        <a class="chip-link" href="Каталог.dc.html" style="cursor:pointer; transition:color .15s;">Каталог</a>
+        <a class="chip-link" href="Главная авторазборки.dc.html#how" style="cursor:pointer; transition:color .15s;">Как мы работаем</a>
+        <a class="chip-link" href="Главная авторазборки.dc.html#why" style="cursor:pointer; transition:color .15s;">Гарантия</a>
+        <a class="chip-link" href="#footer" style="cursor:pointer; transition:color .15s;">Контакты</a>
+      </div>
+      <div style="display:flex; align-items:center; gap:20px;">
+        <a href="tel:+78005552424" style="font:700 16px/1 'Space Grotesk', sans-serif; color:#0b1730;">+7 800 555-24-24</a>
+        <div class="btn-primary" onClick="{{ openPicker }}" style="padding:11px 20px; border-radius:10px; background:#ff6a1a; color:#fff; font:700 14px/1 'Manrope', sans-serif; cursor:pointer; box-shadow:0 8px 18px rgba(255,106,26,.32); transition:transform .15s, box-shadow .15s;">Подобрать запчасть</div>
+      </div>
+    </div>
+    <!-- slide-down picker -->
+    <div style="position:absolute; top:100%; left:0; right:0; background:#fff; border-bottom:1px solid rgba(11,23,48,.1); box-shadow:0 26px 44px rgba(11,23,48,.14); overflow:hidden; max-height:{{ pickerH }}; opacity:{{ pickerO }}; pointer-events:{{ pickerPE }}; transition:max-height .34s ease, opacity .26s ease; z-index:40;">
+      <div style="max-width:1280px; margin:0 auto; padding:24px 32px 28px;">
+        <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:20px; margin-bottom:18px;">
+          <div>
+            <div style="font:700 22px/1.1 'Space Grotesk', sans-serif; color:#0b1730; margin-bottom:6px;">Подбор запчасти</div>
+            <div style="font:400 14px/1.5 'Manrope', sans-serif; color:#566;">Укажите параметры — подберём деталь по своему складу и базе разборок.</div>
+          </div>
+          <div onClick="{{ closePicker }}" style="width:38px; height:38px; flex:none; border-radius:10px; background:#f4f7fd; display:flex; align-items:center; justify-content:center; font:600 17px/1 'Manrope', sans-serif; color:#8a93a6; cursor:pointer;">✕</div>
+        </div>
+        <div style="display:flex; gap:10px; align-items:stretch; flex-wrap:wrap;">
+          <div style="flex:1; min-width:130px; display:flex; flex-direction:column; gap:3px; padding:8px 12px; background:#f4f7fd; border-radius:11px;"><span style="font:600 10px/1 'JetBrains Mono', monospace; letter-spacing:.06em; color:#8a93a6; text-transform:uppercase;">Марка</span><select style="border:none; outline:none; background:none; font:600 14px/1 'Manrope', sans-serif; color:#0b1730; cursor:pointer;"><option>Любая</option><option>Toyota</option><option>Volkswagen</option><option>Kia</option><option>Hyundai</option><option>BMW</option><option>LADA</option></select></div>
+          <div style="flex:1; min-width:130px; display:flex; flex-direction:column; gap:3px; padding:8px 12px; background:#f4f7fd; border-radius:11px;"><span style="font:600 10px/1 'JetBrains Mono', monospace; letter-spacing:.06em; color:#8a93a6; text-transform:uppercase;">Модель</span><select style="border:none; outline:none; background:none; font:600 14px/1 'Manrope', sans-serif; color:#0b1730; cursor:pointer;"><option>Любая</option><option>RAV4</option><option>Camry</option><option>Tiguan</option><option>Sportage</option></select></div>
+          <div style="flex:1; min-width:110px; display:flex; flex-direction:column; gap:3px; padding:8px 12px; background:#f4f7fd; border-radius:11px;"><span style="font:600 10px/1 'JetBrains Mono', monospace; letter-spacing:.06em; color:#8a93a6; text-transform:uppercase;">Год</span><select style="border:none; outline:none; background:none; font:600 14px/1 'Manrope', sans-serif; color:#0b1730; cursor:pointer;"><option>Любой</option><option>2020+</option><option>2015–2019</option><option>2010–2014</option><option>до 2010</option></select></div>
+          <div style="flex:1; min-width:160px; display:flex; flex-direction:column; gap:3px; padding:8px 12px; background:#f4f7fd; border-radius:11px;"><span style="font:600 10px/1 'JetBrains Mono', monospace; letter-spacing:.06em; color:#8a93a6; text-transform:uppercase;">Категория детали</span><select style="border:none; outline:none; background:none; font:600 14px/1 'Manrope', sans-serif; color:#0b1730; cursor:pointer;"><option>Любая</option><option>Двигатель</option><option>Кузовные элементы</option><option>Оптика</option><option>Стёкла</option><option>Салон</option><option>Топливная система</option><option>Шины и диски</option><option>Трансмиссия</option></select></div>
+          <div style="flex:1; min-width:150px; display:flex; flex-direction:column; gap:3px; padding:8px 12px; background:#f4f7fd; border-radius:11px;"><span style="font:600 10px/1 'JetBrains Mono', monospace; letter-spacing:.06em; color:#8a93a6; text-transform:uppercase;">Тип детали</span><select style="border:none; outline:none; background:none; font:600 14px/1 'Manrope', sans-serif; color:#0b1730; cursor:pointer;"><option>Любой</option><option>Капот</option><option>Дверь</option><option>Крыло</option><option>Бампер</option><option>Фара / фонарь</option><option>Стекло</option><option>Зеркало</option><option>Диск / шина</option></select></div>
+        </div>
+        <div style="display:flex; gap:10px; margin-top:10px; flex-wrap:wrap;">
+          <div style="flex:3; min-width:240px; display:flex; flex-direction:column; gap:3px; padding:8px 12px; background:#f4f7fd; border-radius:11px;"><span style="font:600 10px/1 'JetBrains Mono', monospace; letter-spacing:.06em; color:#8a93a6; text-transform:uppercase;">Какая деталь нужна</span><input placeholder="Или укажите в свободной форме: капот, фара левая, бампер…" style="border:none; outline:none; background:none; font:600 14px/1 'Manrope', sans-serif; color:#0b1730; width:100%;"></div>
+          <div onClick="{{ closePicker }}" class="btn-blue" style="flex:1; min-width:200px; display:flex; align-items:center; justify-content:center; padding:0 36px; border-radius:11px; background:#1e5cff; color:#fff; font:700 15px/1 'Manrope', sans-serif; cursor:pointer; box-shadow:0 10px 22px rgba(30,92,255,.3); transition:transform .15s, box-shadow .15s; min-height:54px;">Подобрать</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ BREADCRUMBS ============ -->
+  <div style="max-width:1280px; margin:0 auto; padding:22px 32px 0;">
+    <div style="display:flex; align-items:center; gap:8px; font:500 13px/1 'Manrope', sans-serif; color:#8a93a6; flex-wrap:wrap;">
+      <a href="Главная авторазборки.dc.html" class="chip-link" style="cursor:pointer; transition:color .15s;">Главная</a><span>/</span>
+      <a href="Каталог.dc.html" class="chip-link" style="cursor:pointer; transition:color .15s;">Каталог</a><span>/</span>
+      <a href="Каталог.dc.html" class="chip-link" style="cursor:pointer; transition:color .15s;">Кузовные элементы</a><span>/</span>
+      <span style="color:#0b1730; font-weight:600;">Капот в сборе · Toyota RAV4 2019</span>
+    </div>
+  </div>
+
+  <!-- ============ TOP: GALLERY + BUY BOX ============ -->
+  <div style="max-width:1280px; margin:0 auto; padding:22px 32px 0; display:grid; grid-template-columns:1fr 424px; gap:36px; align-items:start;">
+
+    <!-- GALLERY -->
+    <div>
+      <div style="position:relative; background:#fff; border:1px solid rgba(11,23,48,.09); border-radius:20px; overflow:hidden;">
+        <image-slot id="t-main" style="width:100%; height:468px; display:block;" shape="rect" fit="cover" placeholder="Главное фото детали — перетащите сюда"></image-slot>
+        <div style="position:absolute; top:16px; left:16px; display:inline-flex; align-items:center; gap:7px; padding:7px 12px; background:rgba(61,220,132,.16); border-radius:9px; font:600 12px/1 'Manrope', sans-serif; color:#1f8a5b; backdrop-filter:blur(4px);"><span style="width:7px; height:7px; border-radius:50%; background:#1f8a5b;"></span>Отличное состояние</div>
+        <div class="fav" style="position:absolute; top:16px; right:16px; width:40px; height:40px; border-radius:11px; background:rgba(255,255,255,.92); border:1px solid rgba(11,23,48,.1); display:flex; align-items:center; justify-content:center; font:600 18px/1 'Manrope', sans-serif; color:#8a93a6; cursor:pointer; transition:border-color .15s, color .15s;">♡</div>
+      </div>
+      <!-- thumbs below -->
+      <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:12px; margin-top:12px;">
+        <sc-for list="{{ thumbs }}" as="t" hint-placeholder-count="5">
+          <image-slot id="{{ t.id }}" class="thumb" style="width:100%; height:84px; display:block; border:2px solid {{ t.border }}; border-radius:12px;" shape="rounded" radius="10" fit="cover" placeholder="фото"></image-slot>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- BUY BOX -->
+    <div style="position:sticky; top:96px; display:flex; flex-direction:column; gap:16px;">
+      <div style="background:#fff; border:1px solid rgba(11,23,48,.09); border-radius:20px; padding:26px;">
+        <div style="font:600 11px/1 'JetBrains Mono', monospace; letter-spacing:.06em; color:#1e5cff; text-transform:uppercase; margin-bottom:12px;">Кузовные элементы</div>
+        <h1 style="font:700 28px/1.15 'Space Grotesk', sans-serif; color:#0b1730; letter-spacing:-.01em; margin:0 0 14px;">Капот в сборе</h1>
+        <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px;">
+          <span style="display:inline-flex; align-items:center; gap:7px; padding:7px 11px; background:#f4f7fd; border-radius:9px; font:600 12px/1 'Manrope', sans-serif; color:#3c485f;">Toyota RAV4 · 2019</span>
+          <span style="display:inline-flex; align-items:center; gap:7px; padding:7px 11px; background:#f4f7fd; border-radius:9px; font:600 12px/1 'JetBrains Mono', monospace; color:#3c485f;">OEM 53301-42010</span>
+        </div>
+        <div style="display:flex; align-items:flex-end; gap:12px; margin-bottom:6px;">
+          <div style="font:700 34px/1 'Space Grotesk', sans-serif; color:#0b1730;">14 500 ₽</div>
+          <div style="font:500 17px/1 'Manrope', sans-serif; color:#a6afc0; text-decoration:line-through; padding-bottom:3px;">18 000 ₽</div>
+          <div style="font:700 12px/1 'Manrope', sans-serif; color:#fff; background:#ff6a1a; padding:5px 8px; border-radius:6px; margin-bottom:3px;">−19%</div>
+        </div>
+        <div style="display:inline-flex; align-items:center; gap:6px; font:600 13px/1 'Manrope', sans-serif; color:#1f8a5b; margin-bottom:20px;"><span style="width:7px; height:7px; border-radius:50%; background:#3ddc84;"></span>1 шт в наличии · готов к отправке</div>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div class="btn-blue" style="text-align:center; padding:15px; border-radius:12px; background:#1e5cff; color:#fff; font:700 16px/1 'Manrope', sans-serif; cursor:pointer; box-shadow:0 10px 22px rgba(30,92,255,.3); transition:transform .15s, box-shadow .15s;">Добавить в корзину</div>
+          <div class="btn-primary" style="text-align:center; padding:15px; border-radius:12px; background:#ff6a1a; color:#fff; font:700 16px/1 'Manrope', sans-serif; cursor:pointer; box-shadow:0 10px 22px rgba(255,106,26,.32); transition:transform .15s, box-shadow .15s;">Купить в 1 клик</div>
+        </div>
+      </div>
+      <!-- assurances -->
+      <div style="background:#fff; border:1px solid rgba(11,23,48,.09); border-radius:20px; padding:20px 24px; display:flex; flex-direction:column; gap:15px;">
+        <sc-for list="{{ assurances }}" as="a" hint-placeholder-count="3">
+          <div style="display:flex; align-items:flex-start; gap:13px;">
+            <div style="width:38px; height:38px; flex:none; border-radius:11px; background:rgba(30,92,255,.1); display:flex; align-items:center; justify-content:center; font:700 17px/1 'Space Grotesk', sans-serif; color:#1e5cff;">{{ a.icon }}</div>
+            <div><div style="font:700 14px/1.3 'Space Grotesk', sans-serif; color:#0b1730; margin-bottom:3px;">{{ a.title }}</div><div style="font:400 13px/1.45 'Manrope', sans-serif; color:#5a6478;">{{ a.text }}</div></div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ TABS ============ -->
+  <div style="max-width:1280px; margin:0 auto; padding:36px 32px 0;">
+    <div style="background:#fff; border:1px solid rgba(11,23,48,.09); border-radius:20px; overflow:hidden;">
+      <div style="display:flex; gap:4px; border-bottom:1px solid rgba(11,23,48,.08); padding:6px 12px 0;">
+        <div class="tabbtn" onClick="{{ tabDesc }}" style="padding:16px 22px; font:700 15px/1 'Space Grotesk', sans-serif; color:{{ descColor }}; border-bottom:3px solid {{ descBar }}; cursor:pointer; transition:color .15s;">Описание</div>
+        <div class="tabbtn" onClick="{{ tabSpecs }}" style="padding:16px 22px; font:700 15px/1 'Space Grotesk', sans-serif; color:{{ specsColor }}; border-bottom:3px solid {{ specsBar }}; cursor:pointer; transition:color .15s;">Характеристики</div>
+        <div class="tabbtn" onClick="{{ tabDelivery }}" style="padding:16px 22px; font:700 15px/1 'Space Grotesk', sans-serif; color:{{ delColor }}; border-bottom:3px solid {{ delBar }}; cursor:pointer; transition:color .15s;">Доставка и оплата</div>
+      </div>
+
+      <div style="padding:28px 32px 32px;">
+        <!-- DESCRIPTION -->
+        <sc-if value="{{ isDesc }}" hint-placeholder-val="{{ true }}">
+          <div style="max-width:780px;">
+            <p style="font:400 16px/1.65 'Manrope', sans-serif; color:#3c485f; margin:0 0 18px;">Оригинальный капот в сборе с Toyota RAV4 (XA50) 2019 года. Снят с автомобиля без серьёзных ДТП в передней части. Геометрия не нарушена, крепления целые, петли и замок в рабочем состоянии. Лёгкие эксплуатационные сколы по кромке, без следов ремонта и шпатлёвки.</p>
+            <div style="font:700 16px/1 'Space Grotesk', sans-serif; color:#0b1730; margin:0 0 12px;">Что входит</div>
+            <div style="display:flex; flex-direction:column; gap:9px; margin-bottom:22px;">
+              <sc-for list="{{ included }}" as="i" hint-placeholder-count="4">
+                <div style="display:flex; align-items:center; gap:10px; font:400 15px/1.4 'Manrope', sans-serif; color:#3c485f;"><span style="width:20px; height:20px; flex:none; border-radius:6px; background:rgba(61,220,132,.16); display:flex; align-items:center; justify-content:center; color:#1f8a5b; font:700 12px/1 'Manrope', sans-serif;">✓</span>{{ i }}</div>
+              </sc-for>
+            </div>
+            <div style="display:flex; align-items:flex-start; gap:11px; background:#f4f7fd; border-radius:13px; padding:16px 18px;">
+              <span style="width:22px; height:22px; flex:none; border-radius:7px; background:rgba(255,106,26,.16); display:flex; align-items:center; justify-content:center; color:#c2691a; font:700 13px/1 'Manrope', sans-serif;">!</span>
+              <div style="font:400 14px/1.5 'Manrope', sans-serif; color:#5a6478;">Цвет — серебристый (код 1F7). Перед покраской уточняйте код краски своего авто: оттенок может незначительно отличаться из-за выгорания.</div>
+            </div>
+          </div>
+        </sc-if>
+
+        <!-- SPECS -->
+        <sc-if value="{{ isSpecs }}" hint-placeholder-val="{{ false }}">
+          <div style="max-width:780px;">
+            <sc-for list="{{ specs }}" as="s" hint-placeholder-count="8">
+              <div style="display:flex; align-items:baseline; gap:16px; padding:13px 0; border-bottom:1px solid rgba(11,23,48,.07);">
+                <div style="width:240px; flex:none; font:500 14px/1.4 'Manrope', sans-serif; color:#8a93a6;">{{ s.k }}</div>
+                <div style="font:600 15px/1.4 'Manrope', sans-serif; color:#0b1730;">{{ s.v }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+
+        <!-- DELIVERY -->
+        <sc-if value="{{ isDelivery }}" hint-placeholder-val="{{ false }}">
+          <div style="max-width:880px; display:grid; grid-template-columns:repeat(2,1fr); gap:16px;">
+            <sc-for list="{{ delivery }}" as="d" hint-placeholder-count="4">
+              <div style="border:1px solid rgba(11,23,48,.1); border-radius:14px; padding:20px;">
+                <div style="font:700 16px/1.2 'Space Grotesk', sans-serif; color:#0b1730; margin-bottom:7px;">{{ d.title }}</div>
+                <div style="font:400 14px/1.55 'Manrope', sans-serif; color:#5a6478;">{{ d.text }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ SIMILAR: same part, other cars ============ -->
+  <div style="max-width:1280px; margin:0 auto; padding:48px 32px 0;">
+    <h2 style="font:700 28px/1.1 'Space Grotesk', sans-serif; color:#0b1730; letter-spacing:-.01em; margin:0 0 20px;">Капоты на другие авто</h2>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:18px;">
+      <sc-for list="{{ similarParts }}" as="p" hint-placeholder-count="4">
+        <a href="Товар.dc.html" class="prod-card" style="display:block; background:#fff; border:1px solid rgba(11,23,48,.1); border-radius:16px; overflow:hidden; cursor:pointer; transition:border-color .18s, box-shadow .18s, transform .18s;">
+          <div style="position:relative; height:150px; background:#eef3fb;">
+            <image-slot id="{{ p.id }}" style="width:100%; height:150px; display:block;" shape="rect" fit="cover" placeholder="фото"></image-slot>
+            <div style="position:absolute; top:10px; left:10px; display:inline-flex; align-items:center; gap:5px; padding:4px 8px; background:{{ p.condBg }}; border-radius:7px; font:600 10px/1 'Manrope', sans-serif; color:{{ p.condColor }};"><span style="width:5px; height:5px; border-radius:50%; background:{{ p.condColor }};"></span>{{ p.cond }}</div>
+          </div>
+          <div style="padding:15px;">
+            <div style="font:700 15px/1.25 'Space Grotesk', sans-serif; color:#0b1730; margin-bottom:5px;">{{ p.name }}</div>
+            <div style="font:500 12px/1.4 'Manrope', sans-serif; color:#5a6478; margin-bottom:12px;">{{ p.donor }}</div>
+            <div style="display:flex; align-items:center; justify-content:space-between;"><div style="font:700 18px/1 'Space Grotesk', sans-serif; color:#0b1730;">{{ p.price }}</div><div class="prod-cart" style="padding:9px 13px; border-radius:9px; background:rgba(30,92,255,.1); color:#1e5cff; font:700 12px/1 'Manrope', sans-serif; transition:background .15s, color .15s;">В корзину</div></div>
+          </div>
+        </a>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- ============ SIMILAR: same donor, other parts ============ -->
+  <div style="max-width:1280px; margin:0 auto; padding:44px 32px 0;">
+    <h2 style="font:700 28px/1.1 'Space Grotesk', sans-serif; color:#0b1730; letter-spacing:-.01em; margin:0 0 20px;">Другие запчасти с этого авто <span style="color:#8a93a6; font-weight:500; font-size:18px;">Toyota RAV4 2019</span></h2>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:18px;">
+      <sc-for list="{{ donorParts }}" as="p" hint-placeholder-count="4">
+        <a href="Товар.dc.html" class="prod-card" style="display:block; background:#fff; border:1px solid rgba(11,23,48,.1); border-radius:16px; overflow:hidden; cursor:pointer; transition:border-color .18s, box-shadow .18s, transform .18s;">
+          <div style="position:relative; height:150px; background:#eef3fb;">
+            <image-slot id="{{ p.id }}" style="width:100%; height:150px; display:block;" shape="rect" fit="cover" placeholder="фото"></image-slot>
+            <div style="position:absolute; top:10px; left:10px; display:inline-flex; align-items:center; gap:5px; padding:4px 8px; background:{{ p.condBg }}; border-radius:7px; font:600 10px/1 'Manrope', sans-serif; color:{{ p.condColor }};"><span style="width:5px; height:5px; border-radius:50%; background:{{ p.condColor }};"></span>{{ p.cond }}</div>
+          </div>
+          <div style="padding:15px;">
+            <div style="font:600 11px/1 'JetBrains Mono', monospace; letter-spacing:.04em; color:#1e5cff; text-transform:uppercase; margin-bottom:7px;">{{ p.group }}</div>
+            <div style="font:700 15px/1.25 'Space Grotesk', sans-serif; color:#0b1730; margin-bottom:12px;">{{ p.name }}</div>
+            <div style="display:flex; align-items:center; justify-content:space-between;"><div style="font:700 18px/1 'Space Grotesk', sans-serif; color:#0b1730;">{{ p.price }}</div><div class="prod-cart" style="padding:9px 13px; border-radius:9px; background:rgba(30,92,255,.1); color:#1e5cff; font:700 12px/1 'Manrope', sans-serif; transition:background .15s, color .15s;">В корзину</div></div>
+          </div>
+        </a>
+      </sc-for>
+    </div>
+  </div>
+
+  <!-- ============ CTA BAND ============ -->
+  <div style="max-width:1280px; margin:56px auto 0; padding:0 32px;">
+    <div style="position:relative; overflow:hidden; border-radius:24px; background:radial-gradient(125% 130% at 12% 10%, #1b2f7e 0%, #0c1640 55%, #060a20 100%); padding:48px 56px;">
+      <div style="position:absolute; right:-40px; top:-40px; width:280px; height:280px; background:radial-gradient(closest-side, rgba(255,106,26,.35), transparent 70%); pointer-events:none;"></div>
+      <div style="position:relative; display:flex; align-items:center; justify-content:space-between; gap:40px; flex-wrap:wrap;">
+        <div style="max-width:600px;">
+          <h2 style="font:700 34px/1.1 'Space Grotesk', sans-serif; color:#fff; letter-spacing:-.02em; margin:0 0 12px;">Нужна консультация по детали?</h2>
+          <p style="font:400 17px/1.5 'Manrope', sans-serif; color:#aeb9d8; margin:0;">Подскажем по состоянию, совместимости и доставке. Перезвоним в течение 15 минут.</p>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:12px; align-items:flex-start;">
+          <a href="tel:+78005552424" style="font:700 26px/1 'Space Grotesk', sans-serif; color:#fff;">+7 800 555-24-24</a>
+          <div class="btn-primary" style="padding:15px 30px; border-radius:12px; background:#ff6a1a; color:#fff; font:700 16px/1 'Manrope', sans-serif; cursor:pointer; box-shadow:0 10px 26px rgba(255,106,26,.4); transition:transform .15s, box-shadow .15s;">Заказать звонок</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ FOOTER ============ -->
+  <div id="footer" style="margin-top:64px; background:#0b1730; color:#aeb9d8;">
+    <div style="max-width:1280px; margin:0 auto; padding:56px 32px 28px; display:grid; grid-template-columns:1.6fr 1fr 1fr 1.2fr; gap:40px;">
+      <div>
+        <div style="display:flex; align-items:center; gap:11px; margin-bottom:18px;">
+          <div style="width:38px; height:38px; border-radius:10px; background:#1e5cff; display:flex; align-items:center; justify-content:center; color:#fff; font:700 19px/1 'Space Grotesk', sans-serif;">А</div>
+          <div style="font:700 20px/1 'Space Grotesk', sans-serif; color:#fff; letter-spacing:-.01em;">АВТОРАЗБОРКА<span style="color:#ff6a1a;">23</span></div>
+        </div>
+        <p style="font:400 14px/1.6 'Manrope', sans-serif; color:#8693b3; margin:0 0 20px; max-width:300px;">Авторазборка полного цикла. Проверенные б/у запчасти с гарантией и доставкой по всей России с 2011 года.</p>
+        <div style="display:flex; gap:10px;">
+          <sc-for list="{{ socials }}" as="s" hint-placeholder-count="4">
+            <div style="width:38px; height:38px; border-radius:10px; background:rgba(255,255,255,.07); display:flex; align-items:center; justify-content:center; font:700 13px/1 'JetBrains Mono', monospace; color:#aeb9d8; cursor:pointer;">{{ s }}</div>
+          </sc-for>
+        </div>
+      </div>
+      <div>
+        <div style="font:700 14px/1 'Space Grotesk', sans-serif; color:#fff; margin-bottom:16px;">Каталог</div>
+        <div style="display:flex; flex-direction:column; gap:11px; font:400 14px/1 'Manrope', sans-serif;">
+          <sc-for list="{{ catLinks }}" as="l" hint-placeholder-count="8">
+            <a class="foot-link" href="Каталог.dc.html" style="color:#8693b3; cursor:pointer; transition:color .15s;">{{ l }}</a>
+          </sc-for>
+        </div>
+      </div>
+      <div>
+        <div style="font:700 14px/1 'Space Grotesk', sans-serif; color:#fff; margin-bottom:16px;">Покупателям</div>
+        <div style="display:flex; flex-direction:column; gap:11px; font:400 14px/1 'Manrope', sans-serif;">
+          <sc-for list="{{ buyerLinks }}" as="l" hint-placeholder-count="5">
+            <a class="foot-link" href="#" style="color:#8693b3; cursor:pointer; transition:color .15s;">{{ l }}</a>
+          </sc-for>
+        </div>
+      </div>
+      <div>
+        <div style="font:700 14px/1 'Space Grotesk', sans-serif; color:#fff; margin-bottom:16px;">Контакты</div>
+        <a href="tel:+78005552424" style="display:block; font:700 20px/1 'Space Grotesk', sans-serif; color:#fff; margin-bottom:12px;">+7 800 555-24-24</a>
+        <div style="font:400 14px/1.7 'Manrope', sans-serif; color:#8693b3;">
+          info@avtorazborka23.ru<br>
+          г. Краснодар, ул. Промышленная, 14с3<br>
+          Ежедневно 9:00–21:00
+        </div>
+        <div style="margin-top:16px; display:inline-flex; align-items:center; gap:8px; padding:8px 13px; border:1px solid rgba(255,255,255,.14); border-radius:10px; font:600 13px/1 'Manrope', sans-serif; color:#aeb9d8; cursor:pointer;"><span style="width:7px;height:7px;background:#3ddc84;border-radius:50%;"></span>Написать в WhatsApp</div>
+      </div>
+    </div>
+    <div style="border-top:1px solid rgba(255,255,255,.09);">
+      <div style="max-width:1280px; margin:0 auto; padding:20px 32px; display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; font:400 13px/1.5 'Manrope', sans-serif; color:#6b7796;">
+        <span>© 2026 Авторазборка23. Все права защищены.</span>
+        <div style="display:flex; gap:24px;">
+          <a class="foot-link" href="#" style="color:#6b7796; transition:color .15s;">Политика конфиденциальности</a>
+          <a class="foot-link" href="#" style="color:#6b7796; transition:color .15s;">Договор оферты</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { tab: 'desc', thumb: 0, picker: false };
+
+  renderVals() {
+    const tab = this.state.tab;
+    const blue = '#1e5cff', gray = '#8a93a6', none = 'transparent';
+
+    const thumbs = [0,1,2,3,4].map(i => ({
+      id: 't-th' + i,
+      border: this.state.thumb === i ? '#1e5cff' : 'rgba(11,23,48,.1)',
+    }));
+
+    const EX = { cond:'Отличное', condColor:'#1f8a5b', condBg:'rgba(61,220,132,.16)' };
+    const GD = { cond:'Хорошее', condColor:'#1e5cff', condBg:'rgba(30,92,255,.12)' };
+
+    return {
+      pickerH: this.state.picker ? '460px' : '0px',
+      pickerO: this.state.picker ? 1 : 0,
+      pickerPE: this.state.picker ? 'auto' : 'none',
+      openPicker: () => this.setState({ picker: true }),
+      closePicker: () => this.setState({ picker: false }),
+      thumbs,
+      assurances: [
+        { icon:'✓', title:'Гарантия 14 дней', text:'Возврат или обмен при скрытом дефекте или несовпадении.' },
+        { icon:'⤓', title:'Доставка по РФ, 1–4 дня', text:'СДЭК, ПЭК и курьер. Отправка в день оплаты.' },
+        { icon:'⚲', title:'Проверено перед отправкой', text:'Фото реальной детали и проверка креплений.' },
+      ],
+      included: ['Капот (наружная и внутренняя панель)', 'Петли крепления — 2 шт', 'Шумоизоляция / обивка капота', 'Замок и кронштейн (при наличии)'],
+      specs: [
+        { k:'Авто-донор', v:'Toyota RAV4 (XA50)' },
+        { k:'Год выпуска', v:'2019' },
+        { k:'Пробег донора', v:'48 000 км' },
+        { k:'Сторона / расположение', v:'Передняя часть' },
+        { k:'Цвет кузова', v:'Серебристый, код 1F7' },
+        { k:'OEM / артикул', v:'53301-42010' },
+        { k:'Состояние', v:'Отличное, без ремонта' },
+        { k:'Гарантия', v:'14 дней' },
+      ],
+      delivery: [
+        { title:'Транспортные компании', text:'СДЭК, ПЭК, «Энергия», КИТ. Отправка в день оплаты, трек-номер сразу после отгрузки.' },
+        { title:'Доставка по Краснодару', text:'Курьером до двери или самовывоз со склада на ул. Промышленной. По городу — 1 день.' },
+        { title:'Оплата', text:'Картой онлайн, наличными при самовывозе, по счёту для юрлиц. Наложенный платёж для проверенных ТК.' },
+        { title:'Гарантия и возврат', text:'14 дней на возврат и обмен. Деньги возвращаем в течение 3 рабочих дней.' },
+      ],
+      similarParts: [
+        Object.assign({ id:'sp1', name:'Капот в сборе', donor:'Kia Sportage · 2018', price:'11 200 ₽' }, EX),
+        Object.assign({ id:'sp2', name:'Капот в сборе', donor:'VW Tiguan · 2017', price:'12 800 ₽' }, GD),
+        Object.assign({ id:'sp3', name:'Капот в сборе', donor:'Hyundai Tucson · 2020', price:'13 400 ₽' }, EX),
+        Object.assign({ id:'sp4', name:'Капот в сборе', donor:'Toyota Camry · 2016', price:'10 600 ₽' }, GD),
+      ],
+      donorParts: [
+        Object.assign({ id:'dp1', group:'Оптика', name:'Фара правая', price:'7 100 ₽' }, EX),
+        Object.assign({ id:'dp2', group:'Кузовные', name:'Бампер передний', price:'9 800 ₽' }, GD),
+        Object.assign({ id:'dp3', group:'Кузовные', name:'Крыло переднее левое', price:'6 400 ₽' }, EX),
+        Object.assign({ id:'dp4', group:'Трансмиссия', name:'АКПП в сборе', price:'52 000 ₽' }, GD),
+      ],
+      isDesc: tab === 'desc', isSpecs: tab === 'specs', isDelivery: tab === 'delivery',
+      descColor: tab === 'desc' ? blue : gray, descBar: tab === 'desc' ? blue : none,
+      specsColor: tab === 'specs' ? blue : gray, specsBar: tab === 'specs' ? blue : none,
+      delColor: tab === 'delivery' ? blue : gray, delBar: tab === 'delivery' ? blue : none,
+      tabDesc: () => this.setState({ tab: 'desc' }),
+      tabSpecs: () => this.setState({ tab: 'specs' }),
+      tabDelivery: () => this.setState({ tab: 'delivery' }),
+      socials: ['VK', 'TG', 'WA', 'YT'],
+      catLinks: ['Двигатель', 'Кузовные элементы', 'Оптика', 'Стёкла', 'Салон', 'Топливная система', 'Шины и диски', 'Трансмиссия'],
+      buyerLinks: ['Доставка и оплата', 'Гарантия и возврат', 'Подбор по VIN', 'Оптовикам', 'О компании'],
+    };
+  }
+}
+</script>
+</body>
+</html>

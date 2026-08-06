@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; background:#e7e5df; }
+  body { font-family: 'Manrope', system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+  .m-scroll::-webkit-scrollbar { display:none; }
+  .m-scroll { scrollbar-width:none; }
+</style>
+</helmet>
+
+<div style="min-height:100vh; display:flex; align-items:center; justify-content:center; padding:30px; background:#e7e5df;">
+<x-import component="IOSDevice" from="./ios-frame.jsx" width="{{ w }}" height="{{ h }}" hint-size="390px,844px">
+
+  <div style="position:relative; height:100%; overflow:hidden; background:#fff; font-family:'Manrope',sans-serif;">
+
+    <!-- ============ SCROLL ============ -->
+    <div class="m-scroll" style="position:absolute; inset:0; overflow-y:auto; padding-top:108px; padding-bottom:94px;">
+
+      <!-- HERO -->
+      <div style="background:linear-gradient(180deg,#ffffff 0%,#e8eefb 100%); padding:10px 18px 22px;">
+        <div style="display:inline-flex; align-items:center; gap:7px; font:600 10px/1 'JetBrains Mono', monospace; letter-spacing:.1em; color:#1e5cff; text-transform:uppercase; padding:6px 11px; border:1px solid rgba(30,92,255,.25); border-radius:999px;"><span style="width:5px;height:5px;background:#ff6a1a;border-radius:50%;"></span>12 000+ деталей в наличии</div>
+        <h1 style="font:700 30px/1.1 'Space Grotesk', sans-serif; color:#0b1730; letter-spacing:-.02em; margin:14px 0 10px; text-wrap:balance;">Любая деталь<br>с разборки</h1>
+        <p style="font:400 15px/1.5 'Manrope', sans-serif; color:#566; margin:0 0 18px;">Проверенные б/у запчасти с гарантией 14 дней. Подбор по марке, модели и VIN.</p>
+
+        <!-- car photo, simple -->
+        <div style="position:relative; height:178px;">
+          <div style="position:absolute; left:50%; bottom:20px; transform:translateX(-50%); width:240px; height:22px; background:radial-gradient(closest-side, rgba(11,23,48,.16), transparent 75%); filter:blur(2px);"></div>
+          <img src="car-photo.png" alt="Авто в разборе" style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:330px; height:200px; object-fit:contain;">
+        </div>
+
+        <!-- search CTA -->
+        <div onClick="{{ openPicker }}" style="display:flex; align-items:center; justify-content:center; gap:10px; background:#1e5cff; border-radius:14px; padding:16px; margin-top:18px; box-shadow:0 12px 30px rgba(30,92,255,.32);">
+          <svg width="20" height="20" viewBox="0 0 22 22" style="flex:none;"><circle cx="9.5" cy="9.5" r="7" fill="none" stroke="#fff" stroke-width="2.2"></circle><line x1="15" y1="15" x2="20" y2="20" stroke="#fff" stroke-width="2.2" stroke-linecap="round"></line></svg>
+          <span style="font:700 16px/1 'Manrope', sans-serif; color:#fff;">Подобрать запчасть</span>
+        </div>
+      </div>
+
+      <!-- STATS -->
+      <div style="display:grid; grid-template-columns:repeat(2,1fr); border-top:1px solid rgba(11,23,48,.07);">
+        <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+          <div style="padding:16px 18px; border-right:1px solid rgba(11,23,48,.07); border-bottom:1px solid rgba(11,23,48,.07);">
+            <div style="font:700 22px/1 'Space Grotesk', sans-serif; color:#1e5cff;">{{ s.num }}</div>
+            <div style="font:500 12px/1.3 'Manrope', sans-serif; color:#566; margin-top:5px;">{{ s.label }}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <!-- CATEGORIES -->
+      <div style="padding:26px 18px 6px;">
+        <div style="font:600 11px/1 'JetBrains Mono', monospace; letter-spacing:.12em; color:#1e5cff; text-transform:uppercase; margin-bottom:8px;">Каталог по узлам</div>
+        <h2 style="font:700 24px/1.1 'Space Grotesk', sans-serif; color:#0b1730; letter-spacing:-.02em; margin:0 0 16px;">Запчасти по группам</h2>
+        <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:11px;">
+          <sc-for list="{{ pins }}" as="c" hint-placeholder-count="8">
+            <div style="border:1px solid rgba(11,23,48,.1); border-radius:14px; padding:15px; background:#fff;">
+              <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+                <div style="width:36px; height:36px; border-radius:9px; background:rgba(30,92,255,.1); display:flex; align-items:center; justify-content:center; font:700 12px/1 'JetBrains Mono', monospace; color:#1e5cff;">{{ c.n }}</div>
+                <span style="font:700 16px/1 'Manrope', sans-serif; color:#c2cbdc;">→</span>
+              </div>
+              <div style="font:700 15px/1.2 'Space Grotesk', sans-serif; color:#0b1730; margin-bottom:5px;">{{ c.label }}</div>
+              <div style="font:600 11px/1 'JetBrains Mono', monospace; color:#1e5cff;">{{ c.count }}</div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <!-- WHY US -->
+      <div style="padding:28px 18px 6px;">
+        <div style="font:600 11px/1 'JetBrains Mono', monospace; letter-spacing:.12em; color:#1e5cff; text-transform:uppercase; margin-bottom:8px;">Почему мы</div>
+        <h2 style="font:700 24px/1.1 'Space Grotesk', sans-serif; color:#0b1730; letter-spacing:-.02em; margin:0 0 16px;">Покупать б/у — спокойно</h2>
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <sc-for list="{{ advantages }}" as="a" hint-placeholder-count="3">
+            <div style="display:flex; align-items:flex-start; gap:13px; border:1px solid rgba(11,23,48,.1); border-radius:15px; padding:18px;">
+              <div style="width:42px; height:42px; flex:none; border-radius:12px; background:rgba(30,92,255,.1); display:flex; align-items:center; justify-content:center; font:700 19px/1 'Space Grotesk', sans-serif; color:#1e5cff;">{{ a.icon }}</div>
+              <div><div style="font:700 16px/1.2 'Space Grotesk', sans-serif; color:#0b1730; margin-bottom:4px;">{{ a.title }}</div><div style="font:400 13px/1.5 'Manrope', sans-serif; color:#5a6478;">{{ a.text }}</div></div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <!-- HOW IT WORKS -->
+      <div style="padding:28px 18px 6px;">
+        <div style="font:600 11px/1 'JetBrains Mono', monospace; letter-spacing:.12em; color:#1e5cff; text-transform:uppercase; margin-bottom:8px;">4 шага</div>
+        <h2 style="font:700 24px/1.1 'Space Grotesk', sans-serif; color:#0b1730; letter-spacing:-.02em; margin:0 0 16px;">Как мы работаем</h2>
+        <div style="display:flex; flex-direction:column; gap:11px;">
+          <sc-for list="{{ steps }}" as="s" hint-placeholder-count="4">
+            <div style="display:flex; align-items:flex-start; gap:14px; background:#f4f7fd; border-radius:14px; padding:16px 18px;">
+              <div style="font:700 24px/1 'Space Grotesk', sans-serif; color:#1e5cff; flex:none;">{{ s.n }}</div>
+              <div><div style="font:700 15px/1.25 'Space Grotesk', sans-serif; color:#0b1730; margin-bottom:3px;">{{ s.title }}</div><div style="font:400 13px/1.45 'Manrope', sans-serif; color:#5a6478;">{{ s.text }}</div></div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div style="padding:28px 18px 6px;">
+        <div style="position:relative; overflow:hidden; border-radius:20px; background:radial-gradient(125% 130% at 12% 10%, #1b2f7e 0%, #0c1640 55%, #060a20 100%); padding:28px 22px;">
+          <div style="position:absolute; right:-30px; top:-30px; width:180px; height:180px; background:radial-gradient(closest-side, rgba(255,106,26,.35), transparent 70%);"></div>
+          <div style="position:relative;">
+            <h2 style="font:700 22px/1.15 'Space Grotesk', sans-serif; color:#fff; letter-spacing:-.02em; margin:0 0 8px;">Не нашли деталь?</h2>
+            <p style="font:400 14px/1.5 'Manrope', sans-serif; color:#aeb9d8; margin:0 0 18px;">Оставьте заявку — найдём по своему складу и базе партнёров-разборок.</p>
+            <a href="tel:+78005552424" style="display:block; font:700 22px/1 'Space Grotesk', sans-serif; color:#fff; margin-bottom:14px; text-decoration:none;">+7 800 555-24-24</a>
+            <div onClick="{{ openPicker }}" style="text-align:center; padding:14px; border-radius:12px; background:#ff6a1a; color:#fff; font:700 15px/1 'Manrope', sans-serif; box-shadow:0 10px 24px rgba(255,106,26,.4);">Оставить заявку</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <div style="margin-top:28px; background:#0b1730; padding:28px 18px 22px;">
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+          <div style="width:34px; height:34px; border-radius:9px; background:#1e5cff; display:flex; align-items:center; justify-content:center; color:#fff; font:700 17px/1 'Space Grotesk', sans-serif;">А</div>
+          <div style="font:700 18px/1 'Space Grotesk', sans-serif; color:#fff;">АВТОРАЗБОРКА<span style="color:#ff6a1a;">23</span></div>
+        </div>
+        <p style="font:400 13px/1.6 'Manrope', sans-serif; color:#8693b3; margin:0 0 16px;">Проверенные б/у запчасти с гарантией и доставкой по всей России с 2011 года.</p>
+        <div style="font:400 13px/1.7 'Manrope', sans-serif; color:#8693b3; margin-bottom:16px;">info@avtorazborka23.ru<br>г. Краснодар, ул. Промышленная, 14с3<br>Ежедневно 9:00–21:00</div>
+        <div style="display:flex; gap:9px; margin-bottom:18px;">
+          <sc-for list="{{ socials }}" as="s" hint-placeholder-count="4">
+            <div style="width:36px; height:36px; border-radius:9px; background:rgba(255,255,255,.07); display:flex; align-items:center; justify-content:center; font:700 12px/1 'JetBrains Mono', monospace; color:#aeb9d8;">{{ s }}</div>
+          </sc-for>
+        </div>
+        <div style="border-top:1px solid rgba(255,255,255,.09); padding-top:14px; font:400 12px/1.5 'Manrope', sans-serif; color:#6b7796;">© 2026 Авторазборка23.<br>Все права защищены.</div>
+      </div>
+
+    </div>
+
+    <!-- ============ HEADER ============ -->
+    <div style="position:absolute; top:0; left:0; right:0; z-index:30; padding-top:54px; background:rgba(255,255,255,.86); backdrop-filter:blur(12px); border-bottom:1px solid rgba(11,23,48,.08);">
+      <div style="display:flex; align-items:center; justify-content:space-between; padding:8px 18px;">
+        <div style="display:flex; align-items:center; gap:9px;">
+          <div style="width:34px; height:34px; border-radius:9px; background:#1e5cff; display:flex; align-items:center; justify-content:center; color:#fff; font:700 17px/1 'Space Grotesk', sans-serif;">А</div>
+          <div style="font:700 17px/1 'Space Grotesk', sans-serif; color:#0b1730; letter-spacing:-.01em;">АВТОРАЗБОРКА<span style="color:#ff6a1a;">23</span></div>
+        </div>
+        <div onClick="{{ openMenu }}" style="width:40px; height:40px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:4px;">
+          <span style="width:20px; height:2px; border-radius:2px; background:#0b1730;"></span>
+          <span style="width:20px; height:2px; border-radius:2px; background:#0b1730;"></span>
+          <span style="width:20px; height:2px; border-radius:2px; background:#0b1730;"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ BOTTOM TAB BAR ============ -->
+    <div style="position:absolute; bottom:0; left:0; right:0; z-index:30; background:rgba(255,255,255,.94); backdrop-filter:blur(14px); border-top:1px solid rgba(11,23,48,.08); padding:9px 6px 26px;">
+      <div style="display:flex;">
+        <div onClick="{{ tapCatalog }}" style="flex:1; display:flex; flex-direction:column; align-items:center; gap:5px;">
+          <svg width="22" height="22" viewBox="0 0 22 22"><rect x="2" y="2" width="7.5" height="7.5" rx="2" fill="{{ catalogColor }}"></rect><rect x="12.5" y="2" width="7.5" height="7.5" rx="2" fill="{{ catalogColor }}"></rect><rect x="2" y="12.5" width="7.5" height="7.5" rx="2" fill="{{ catalogColor }}"></rect><rect x="12.5" y="12.5" width="7.5" height="7.5" rx="2" fill="{{ catalogColor }}"></rect></svg>
+          <span style="font:600 11px/1 'Manrope', sans-serif; color:{{ catalogColor }};">Каталог</span>
+        </div>
+        <div onClick="{{ tapSearch }}" style="flex:1; display:flex; flex-direction:column; align-items:center; gap:5px;">
+          <svg width="22" height="22" viewBox="0 0 22 22"><circle cx="9.5" cy="9.5" r="6.5" fill="none" stroke="{{ searchColor }}" stroke-width="2.2"></circle><line x1="14.5" y1="14.5" x2="19.5" y2="19.5" stroke="{{ searchColor }}" stroke-width="2.2" stroke-linecap="round"></line></svg>
+          <span style="font:600 11px/1 'Manrope', sans-serif; color:{{ searchColor }};">Поиск</span>
+        </div>
+        <div onClick="{{ tapCart }}" style="flex:1; display:flex; flex-direction:column; align-items:center; gap:5px;">
+          <svg width="22" height="22" viewBox="0 0 22 22"><path d="M5 7h12l-1 11H6L5 7z" fill="none" stroke="{{ cartColor }}" stroke-width="2.2" stroke-linejoin="round"></path><path d="M8 7a3 3 0 0 1 6 0" fill="none" stroke="{{ cartColor }}" stroke-width="2.2" stroke-linecap="round"></path></svg>
+          <span style="font:600 11px/1 'Manrope', sans-serif; color:{{ cartColor }};">Корзина</span>
+        </div>
+        <div onClick="{{ tapContacts }}" style="flex:1; display:flex; flex-direction:column; align-items:center; gap:5px;">
+          <svg width="22" height="22" viewBox="0 0 22 22"><rect x="2.5" y="3.5" width="17" height="12" rx="3" fill="none" stroke="{{ contactsColor }}" stroke-width="2.2"></rect><path d="M7 18.5l3-3" fill="none" stroke="{{ contactsColor }}" stroke-width="2.2" stroke-linecap="round"></path></svg>
+          <span style="font:600 11px/1 'Manrope', sans-serif; color:{{ contactsColor }};">Контакты</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ PICKER SHEET ============ -->
+    <div onClick="{{ closePicker }}" style="position:absolute; inset:0; z-index:40; background:rgba(11,23,48,.45); opacity:{{ pickerScrimO }}; pointer-events:{{ pickerScrimPE }}; transition:opacity .3s;"></div>
+    <div style="position:absolute; left:0; right:0; bottom:0; z-index:41; background:#fff; border-radius:24px 24px 0 0; transform:{{ sheetT }}; transition:transform .36s cubic-bezier(.32,.72,0,1); max-height:90%; display:flex; flex-direction:column; box-shadow:0 -20px 50px rgba(11,23,48,.22);">
+      <div style="padding:10px 0 4px; display:flex; justify-content:center;"><div style="width:40px; height:5px; border-radius:3px; background:#d6dce8;"></div></div>
+      <div style="display:flex; align-items:flex-start; justify-content:space-between; gap:14px; padding:8px 20px 14px;">
+        <div>
+          <div style="font:700 20px/1.1 'Space Grotesk', sans-serif; color:#0b1730; margin-bottom:5px;">Подбор запчасти</div>
+          <div style="font:400 13px/1.45 'Manrope', sans-serif; color:#566;">Укажите параметры — подберём деталь по своему складу и базе разборок.</div>
+        </div>
+        <div onClick="{{ closePicker }}" style="width:34px; height:34px; flex:none; border-radius:9px; background:#f4f7fd; display:flex; align-items:center; justify-content:center; font:600 16px/1 'Manrope', sans-serif; color:#8a93a6;">✕</div>
+      </div>
+      <div class="m-scroll" style="overflow-y:auto; padding:0 20px 18px; display:flex; flex-direction:column; gap:10px;">
+        <div style="display:flex; flex-direction:column; gap:3px; padding:9px 13px; background:#f4f7fd; border-radius:12px;"><span style="font:600 10px/1 'JetBrains Mono', monospace; letter-spacing:.06em; color:#8a93a6; text-transform:uppercase;">Марка</span><select style="border:none; outline:none; background:none; font:600 15px/1 'Manrope', sans-serif; color:#0b1730;"><option>Любая</option><option>Toyota</option><option>Volkswagen</option><option>Kia</option><option>Hyundai</option><option>BMW</option><option>LADA</option></select></div>
+        <div style="display:flex; flex-direction:column; gap:3px; padding:9px 13px; background:#f4f7fd; border-radius:12px;"><span style="font:600 10px/1 'JetBrains Mono', monospace; letter-spacing:.06em; color:#8a93a6; text-transform:uppercase;">Модель</span><select style="border:none; outline:none; background:none; font:600 15px/1 'Manrope', sans-serif; color:#0b1730;"><option>Любая</option><option>RAV4</option><option>Camry</option><option>Tiguan</option><option>Sportage</option></select></div>
+        <div style="display:flex; gap:10px;">
+          <div style="flex:1; display:flex; flex-direction:column; gap:3px; padding:9px 13px; background:#f4f7fd; border-radius:12px;"><span style="font:600 10px/1 'JetBrains Mono', monospace; letter-spacing:.06em; color:#8a93a6; text-transform:uppercase;">Год</span><select style="border:none; outline:none; background:none; font:600 15px/1 'Manrope', sans-serif; color:#0b1730;"><option>Любой</option><option>2020+</option><option>2015–2019</option><option>2010–2014</option><option>до 2010</option></select></div>
+          <div style="flex:1; display:flex; flex-direction:column; gap:3px; padding:9px 13px; background:#f4f7fd; border-radius:12px;"><span style="font:600 10px/1 'JetBrains Mono', monospace; letter-spacing:.06em; color:#8a93a6; text-transform:uppercase;">Категория</span><select style="border:none; outline:none; background:none; font:600 15px/1 'Manrope', sans-serif; color:#0b1730;"><option>Любая</option><option>Двигатель</option><option>Кузовные</option><option>Оптика</option><option>Стёкла</option><option>Салон</option><option>Топливная</option><option>Шины и диски</option><option>Трансмиссия</option></select></div>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:3px; padding:9px 13px; background:#f4f7fd; border-radius:12px;"><span style="font:600 10px/1 'JetBrains Mono', monospace; letter-spacing:.06em; color:#8a93a6; text-transform:uppercase;">Тип детали</span><select style="border:none; outline:none; background:none; font:600 15px/1 'Manrope', sans-serif; color:#0b1730;"><option>Любой</option><option>Капот</option><option>Дверь</option><option>Крыло</option><option>Бампер</option><option>Фара / фонарь</option><option>Стекло</option><option>Зеркало</option><option>Диск / шина</option></select></div>
+        <div style="display:flex; flex-direction:column; gap:3px; padding:9px 13px; background:#f4f7fd; border-radius:12px;"><span style="font:600 10px/1 'JetBrains Mono', monospace; letter-spacing:.06em; color:#8a93a6; text-transform:uppercase;">Какая деталь нужна</span><input placeholder="Или укажите в свободной форме: капот, фара левая…" style="border:none; outline:none; background:none; font:600 15px/1 'Manrope', sans-serif; color:#0b1730; width:100%;"></div>
+        <div onClick="{{ closePicker }}" style="margin-top:4px; text-align:center; padding:15px; border-radius:13px; background:#1e5cff; color:#fff; font:700 16px/1 'Manrope', sans-serif; box-shadow:0 10px 24px rgba(30,92,255,.32);">Подобрать</div>
+      </div>
+    </div>
+
+    <!-- ============ MENU ============ -->
+    <div onClick="{{ closeMenu }}" style="position:absolute; inset:0; z-index:44; background:rgba(11,23,48,.45); opacity:{{ menuScrimO }}; pointer-events:{{ menuScrimPE }}; transition:opacity .3s;"></div>
+    <div style="position:absolute; top:0; right:0; bottom:0; width:80%; z-index:45; background:#fff; transform:{{ menuX }}; transition:transform .34s cubic-bezier(.32,.72,0,1); box-shadow:-20px 0 50px rgba(11,23,48,.2); display:flex; flex-direction:column; padding:58px 22px 22px;">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:26px;">
+        <div style="font:700 17px/1 'Space Grotesk', sans-serif; color:#0b1730;">Меню</div>
+        <div onClick="{{ closeMenu }}" style="width:36px; height:36px; border-radius:10px; background:#f4f7fd; display:flex; align-items:center; justify-content:center; font:600 17px/1 'Manrope', sans-serif; color:#8a93a6;">✕</div>
+      </div>
+      <div style="display:flex; flex-direction:column;">
+        <sc-for list="{{ menuLinks }}" as="l" hint-placeholder-count="4">
+          <div onClick="{{ closeMenu }}" style="display:flex; align-items:center; justify-content:space-between; padding:16px 0; border-bottom:1px solid rgba(11,23,48,.08); font:600 17px/1 'Manrope', sans-serif; color:#0b1730;">{{ l }}<span style="color:#c2cbdc;">→</span></div>
+        </sc-for>
+      </div>
+      <div style="margin-top:auto;">
+        <a href="tel:+78005552424" style="display:block; font:700 24px/1 'Space Grotesk', sans-serif; color:#0b1730; margin-bottom:6px; text-decoration:none;">+7 800 555-24-24</a>
+        <div style="font:400 13px/1.5 'Manrope', sans-serif; color:#8a93a6; margin-bottom:16px;">Ежедневно 9:00–21:00</div>
+        <div onClick="{{ openPicker }}" style="text-align:center; padding:15px; border-radius:13px; background:#ff6a1a; color:#fff; font:700 16px/1 'Manrope', sans-serif; box-shadow:0 10px 24px rgba(255,106,26,.32);">Подобрать запчасть</div>
+      </div>
+    </div>
+
+  </div>
+
+</x-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:450,&quot;height&quot;:904}}">
+class Component extends DCLogic {
+  state = { menu: false, picker: false, tab: null };
+
+  renderVals() {
+    const tc = k => this.state.tab === k ? '#1e5cff' : '#9aa3b4';
+    return {
+      w: 390, h: 844,
+      openMenu: () => this.setState({ menu: true }),
+      closeMenu: () => this.setState({ menu: false }),
+      openPicker: () => this.setState({ picker: true, menu: false }),
+      closePicker: () => this.setState({ picker: false }),
+      tapCatalog: () => { window.location.href = 'Каталог-mobile.dc.html'; },
+      tapSearch: () => this.setState({ tab: 'search', picker: true }),
+      tapCart: () => this.setState({ tab: 'cart' }),
+      tapContacts: () => this.setState({ tab: 'contacts' }),
+      catalogColor: tc('catalog'),
+      searchColor: tc('search'),
+      cartColor: tc('cart'),
+      contactsColor: tc('contacts'),
+      sheetT: this.state.picker ? 'translateY(0)' : 'translateY(100%)',
+      pickerScrimO: this.state.picker ? 1 : 0,
+      pickerScrimPE: this.state.picker ? 'auto' : 'none',
+      menuX: this.state.menu ? 'translateX(0)' : 'translateX(100%)',
+      menuScrimO: this.state.menu ? 1 : 0,
+      menuScrimPE: this.state.menu ? 'auto' : 'none',
+      pins: [
+        { n:'01', label:'Оптика',       count:'1 510 шт' },
+        { n:'02', label:'Двигатель',    count:'1 240 шт' },
+        { n:'03', label:'Стёкла',       count:'540 шт' },
+        { n:'04', label:'Салон',        count:'2 100 шт' },
+        { n:'05', label:'Кузовные',     count:'3 880 шт' },
+        { n:'06', label:'Топливная',    count:'720 шт' },
+        { n:'07', label:'Шины и диски', count:'960 компл' },
+        { n:'08', label:'Трансмиссия',  count:'830 шт' },
+      ],
+      stats: [
+        { num:'12 000+', label:'деталей в наличии' },
+        { num:'4 500',   label:'авто в разборе' },
+        { num:'14 дней', label:'гарантия' },
+        { num:'1 день',  label:'отгрузка' },
+      ],
+      advantages: [
+        { icon:'✓', title:'Гарантия 14 дней', text:'Возврат или обмен, если деталь не подошла или есть скрытый дефект.' },
+        { icon:'⤓', title:'Доставка по РФ', text:'СДЭК, ПЭК и до двери. Отправка в день оплаты, трек сразу.' },
+        { icon:'⚲', title:'Проверка перед отправкой', text:'Фото реальной детали и проверка перед упаковкой.' },
+      ],
+      steps: [
+        { n:'1', title:'Оставьте заявку', text:'Марка, модель, год и нужный узел.' },
+        { n:'2', title:'Подберём деталь', text:'Найдём по складу и базе партнёров-разборок.' },
+        { n:'3', title:'Проверка и фото', text:'Пришлём фото, артикул и состояние, согласуем цену.' },
+        { n:'4', title:'Доставка', text:'Отправим удобной ТК и поддержим по гарантии.' },
+      ],
+      socials: ['VK', 'TG', 'WA', 'YT'],
+      menuLinks: ['Каталог', 'Как мы работаем', 'Гарантия и возврат', 'Доставка и оплата', 'Контакты'],
+      catalogHref: 'Каталог-mobile.dc.html',
+    };
+  }
+}
+</script>
+</body>
+</html>
