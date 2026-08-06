@@ -39,14 +39,14 @@
   <!-- ============ STICKY NAV ============ -->
   <div style="position:sticky; top:0; z-index:50; background:rgba(255,255,255,.92); backdrop-filter:blur(12px); border-bottom:1px solid rgba(11,23,48,.08);">
     <div style="max-width:1280px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; padding:16px 32px;">
-      <a href="Главная авторазборки.dc.html" style="display:flex; align-items:center; gap:11px;">
+      <a href="home.dc.html" style="display:flex; align-items:center; gap:11px;">
         <div style="width:38px; height:38px; border-radius:10px; background:#1e5cff; display:flex; align-items:center; justify-content:center; color:#fff; font:700 19px/1 'Space Grotesk', sans-serif;">А</div>
         <div style="font:700 20px/1 'Space Grotesk', sans-serif; color:#0b1730; letter-spacing:-.01em;">АВТОРАЗБОРКА<span style="color:#ff6a1a;">23</span></div>
       </a>
       <div style="display:flex; align-items:center; gap:32px; font:600 14px/1 'Manrope', sans-serif; color:#3c485f;">
         <span style="color:#1e5cff; cursor:pointer;">Каталог</span>
-        <a class="chip-link" href="Главная авторазборки.dc.html#how" style="cursor:pointer; transition:color .15s;">Как мы работаем</a>
-        <a class="chip-link" href="Главная авторазборки.dc.html#why" style="cursor:pointer; transition:color .15s;">Гарантия</a>
+        <a class="chip-link" href="home.dc.html#how" style="cursor:pointer; transition:color .15s;">Как мы работаем</a>
+        <a class="chip-link" href="home.dc.html#why" style="cursor:pointer; transition:color .15s;">Гарантия</a>
         <a class="chip-link" href="#footer" style="cursor:pointer; transition:color .15s;">Контакты</a>
       </div>
       <div style="display:flex; align-items:center; gap:20px;">
@@ -82,7 +82,7 @@
   <!-- ============ HEADER + BREADCRUMBS + CHIPS ============ -->
   <div style="max-width:1280px; margin:0 auto; padding:28px 32px 0;">
     <div style="display:flex; align-items:center; gap:8px; font:500 13px/1 'Manrope', sans-serif; color:#8a93a6; margin-bottom:16px;">
-      <a href="Главная авторазборки.dc.html" class="chip-link" style="cursor:pointer; transition:color .15s;">Главная</a><span>/</span>
+      <a href="home.dc.html" class="chip-link" style="cursor:pointer; transition:color .15s;">Главная</a><span>/</span>
       <span style="color:#0b1730; font-weight:600;">Каталог</span>
     </div>
     <div style="display:flex; align-items:flex-end; justify-content:space-between; gap:24px; flex-wrap:wrap;">
@@ -154,7 +154,7 @@
       <sc-if value="{{ isGrid }}" hint-placeholder-val="{{ true }}">
         <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:18px;">
           <sc-for list="{{ products }}" as="p" hint-placeholder-count="12">
-            <a href="Товар.dc.html" class="prod-card" style="display:block; background:#fff; border:1px solid rgba(11,23,48,.1); border-radius:16px; overflow:hidden; cursor:pointer; transition:border-color .18s, box-shadow .18s, transform .18s;">
+            <a href="product.dc.html" class="prod-card" style="display:block; background:#fff; border:1px solid rgba(11,23,48,.1); border-radius:16px; overflow:hidden; cursor:pointer; transition:border-color .18s, box-shadow .18s, transform .18s;">
               <div style="position:relative; height:172px; background:#eef3fb;">
                 <image-slot id="{{ p.id }}" style="width:100%; height:172px; display:block;" shape="rect" fit="cover" placeholder="Фото детали"></image-slot>
                 <div style="position:absolute; top:11px; left:11px; display:inline-flex; align-items:center; gap:6px; padding:5px 9px; background:{{ p.condBg }}; border-radius:8px; font:600 11px/1 'Manrope', sans-serif; color:{{ p.condColor }};"><span style="width:6px; height:6px; border-radius:50%; background:{{ p.condColor }};"></span>{{ p.cond }}</div>
@@ -179,7 +179,7 @@
       <sc-if value="{{ isList }}" hint-placeholder-val="{{ false }}">
         <div style="display:flex; flex-direction:column; gap:14px;">
           <sc-for list="{{ products }}" as="p" hint-placeholder-count="12">
-            <a href="Товар.dc.html" class="prod-row" style="display:flex; align-items:stretch; gap:18px; background:#fff; border:1px solid rgba(11,23,48,.1); border-radius:16px; overflow:hidden; padding:14px; cursor:pointer; transition:border-color .18s, box-shadow .18s;">
+            <a href="product.dc.html" class="prod-row" style="display:flex; align-items:stretch; gap:18px; background:#fff; border:1px solid rgba(11,23,48,.1); border-radius:16px; overflow:hidden; padding:14px; cursor:pointer; transition:border-color .18s, box-shadow .18s;">
               <div style="position:relative; width:184px; flex:none; border-radius:11px; overflow:hidden; background:#eef3fb;">
                 <image-slot id="{{ p.id }}" style="width:184px; height:130px; display:block;" shape="rect" fit="cover" placeholder="Фото"></image-slot>
                 <div style="position:absolute; top:9px; left:9px; display:inline-flex; align-items:center; gap:5px; padding:4px 8px; background:{{ p.condBg }}; border-radius:7px; font:600 10px/1 'Manrope', sans-serif; color:{{ p.condColor }};"><span style="width:5px; height:5px; border-radius:50%; background:{{ p.condColor }};"></span>{{ p.cond }}</div>

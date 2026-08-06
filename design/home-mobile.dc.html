@@ -231,7 +231,7 @@ class Component extends DCLogic {
       closeMenu: () => this.setState({ menu: false }),
       openPicker: () => this.setState({ picker: true, menu: false }),
       closePicker: () => this.setState({ picker: false }),
-      tapCatalog: () => { window.location.href = 'Каталог-mobile.dc.html'; },
+      tapCatalog: () => { window.location.href = 'catalog-mobile.dc.html'; },
       tapSearch: () => this.setState({ tab: 'search', picker: true }),
       tapCart: () => this.setState({ tab: 'cart' }),
       tapContacts: () => this.setState({ tab: 'contacts' }),
@@ -274,7 +274,7 @@ class Component extends DCLogic {
       ],
       socials: ['VK', 'TG', 'WA', 'YT'],
       menuLinks: ['Каталог', 'Как мы работаем', 'Гарантия и возврат', 'Доставка и оплата', 'Контакты'],
-      catalogHref: 'Каталог-mobile.dc.html',
+      catalogHref: 'catalog-mobile.dc.html',
     };
   }
 }

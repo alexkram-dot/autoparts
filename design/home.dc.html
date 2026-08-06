@@ -37,7 +37,7 @@
         <div style="font:700 20px/1 'Space Grotesk', sans-serif; color:#0b1730; letter-spacing:-.01em;">АВТОРАЗБОРКА<span style="color:#ff6a1a;">23</span></div>
       </div>
       <div style="display:flex; align-items:center; gap:32px; font:600 14px/1 'Manrope', sans-serif; color:#3c485f;">
-        <a class="chip-link" href="Каталог.dc.html" style="cursor:pointer; transition:color .15s;">Каталог</a>
+        <a class="chip-link" href="catalog.dc.html" style="cursor:pointer; transition:color .15s;">Каталог</a>
         <a class="chip-link" href="#how" style="cursor:pointer; transition:color .15s;">Как мы работаем</a>
         <a class="chip-link" href="#why" style="cursor:pointer; transition:color .15s;">Гарантия</a>
         <a class="chip-link" href="#footer" style="cursor:pointer; transition:color .15s;">Контакты</a>
@@ -118,7 +118,7 @@
           </div>
           <div style="display:flex; gap:10px; margin-top:10px; flex-wrap:wrap;">
             <div style="flex:3; min-width:240px; display:flex; flex-direction:column; gap:3px; padding:8px 12px; background:#f4f7fd; border-radius:11px;"><span style="font:600 10px/1 'JetBrains Mono', monospace; letter-spacing:.06em; color:#8a93a6; text-transform:uppercase;">Какая деталь нужна</span><input placeholder="Или укажите в свободной форме: капот, фара левая, бампер…" style="border:none; outline:none; background:none; font:600 14px/1 'Manrope', sans-serif; color:#0b1730; width:100%;"></div>
-            <a href="Каталог.dc.html" class="btn-blue" style="flex:1; min-width:200px; display:flex; align-items:center; justify-content:center; padding:0 36px; border-radius:11px; background:#1e5cff; color:#fff; font:700 15px/1 'Manrope', sans-serif; cursor:pointer; box-shadow:0 10px 22px rgba(30,92,255,.3); transition:transform .15s, box-shadow .15s; min-height:54px;">Найти</a>
+            <a href="catalog.dc.html" class="btn-blue" style="flex:1; min-width:200px; display:flex; align-items:center; justify-content:center; padding:0 36px; border-radius:11px; background:#1e5cff; color:#fff; font:700 15px/1 'Manrope', sans-serif; cursor:pointer; box-shadow:0 10px 22px rgba(30,92,255,.3); transition:transform .15s, box-shadow .15s; min-height:54px;">Найти</a>
           </div>
         </div>
       </div>
@@ -145,11 +145,11 @@
         <div style="font:600 12px/1 'JetBrains Mono', monospace; letter-spacing:.14em; color:#1e5cff; text-transform:uppercase; margin-bottom:10px;">Каталог по узлам</div>
         <h2 style="font:700 38px/1.08 'Space Grotesk', sans-serif; color:#0b1730; letter-spacing:-.02em; margin:0;">Запчасти по группам</h2>
       </div>
-      <a class="chip-link" href="Каталог.dc.html" style="font:700 15px/1 'Manrope', sans-serif; color:#1e5cff; cursor:pointer; white-space:nowrap;">Весь каталог →</a>
+      <a class="chip-link" href="catalog.dc.html" style="font:700 15px/1 'Manrope', sans-serif; color:#1e5cff; cursor:pointer; white-space:nowrap;">Весь каталог →</a>
     </div>
     <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:18px;">
       <sc-for list="{{ pins }}" as="c" hint-placeholder-count="8">
-        <a href="Каталог.dc.html" class="cat-card" style="display:block; border:1px solid rgba(11,23,48,.1); border-radius:16px; padding:22px; background:#fff; cursor:pointer; transition:border-color .18s, box-shadow .18s, transform .18s;">
+        <a href="catalog.dc.html" class="cat-card" style="display:block; border:1px solid rgba(11,23,48,.1); border-radius:16px; padding:22px; background:#fff; cursor:pointer; transition:border-color .18s, box-shadow .18s, transform .18s;">
           <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;">
             <div style="width:44px; height:44px; border-radius:11px; background:rgba(30,92,255,.1); display:flex; align-items:center; justify-content:center; font:700 14px/1 'JetBrains Mono', monospace; color:#1e5cff;">{{ c.n }}</div>
             <span class="cat-arrow" style="font:700 18px/1 'Manrope', sans-serif; color:#c2cbdc; transition:color .18s, transform .18s;">→</span>
@@ -230,7 +230,7 @@
         <div style="font:700 14px/1 'Space Grotesk', sans-serif; color:#fff; margin-bottom:16px;">Каталог</div>
         <div style="display:flex; flex-direction:column; gap:11px; font:400 14px/1 'Manrope', sans-serif;">
           <sc-for list="{{ pins }}" as="c" hint-placeholder-count="8">
-            <a class="foot-link" href="Каталог.dc.html" style="color:#8693b3; cursor:pointer; transition:color .15s;">{{ c.label }}</a>
+            <a class="foot-link" href="catalog.dc.html" style="color:#8693b3; cursor:pointer; transition:color .15s;">{{ c.label }}</a>
           </sc-for>
         </div>
       </div>
