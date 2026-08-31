@@ -1672,7 +1672,9 @@ a.channel-value:hover { color: var(--orange); }
 .section-lead {
   font: 400 17px/1.6 var(--font);
   color: var(--muted);
-  max-width: 620px;
+  /* шире левой колонки (672px), иначе лид читается как её часть,
+     но не во всю ширину — строка длиннее ~100 знаков плохо читается */
+  max-width: 880px;
   margin-bottom: 24px;
 }
 @media (max-width: 768px) { .section-lead { font-size: 15px; margin-bottom: 18px; } }
