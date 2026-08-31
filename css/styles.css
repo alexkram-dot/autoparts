@@ -1686,3 +1686,13 @@ a.channel-value:hover { color: var(--orange); }
   text-align: center;
 }
 .img-ph--tall { min-height: 340px; }
+
+/* Форма во всю ширину контейнера (страница отзывов) */
+.form-card--wide { max-width: none; }
+
+/* Отступ между чипами фильтров и списком отзывов */
+.review-list { margin-top: 24px; }
+@media (max-width: 768px) {
+  .form-card--wide { padding: 24px 20px; }
+  .review-list { margin-top: 18px; }
+}
