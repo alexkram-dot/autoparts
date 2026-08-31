@@ -58,6 +58,16 @@ function partImg(p, cls) {
     width="1200" height="600" loading="lazy" decoding="async">`;
 }
 
+
+/* Шкала состояния: 3 деления, при наведении раскрывается словом.
+   На тач-устройствах наведения нет — слово дублируется в title/aria-label. */
+function condPill(p) {
+  return `<span class="prod-cond ${p.cls}" title="Состояние: ${p.cond.toLowerCase()}" aria-label="Состояние: ${p.cond.toLowerCase()}">
+        <span class="cond-bars" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="cond-label" aria-hidden="true">${p.cond}</span>
+      </span>`;
+}
+
 /* ── Filter & sort state ─────────────────── */
 let currentView  = 'grid';
 let activeGroup  = 'Все';
@@ -110,8 +120,10 @@ function gridCard(p) {
   return `<a href="product.html" class="prod-card">
     <div class="prod-img">
       ${partImg(p, "prod-img-ph--grid")}
-      <div class="prod-badge ${p.cls}"><span class="badge-dot"></span>${p.cond}</div>
-      <button class="prod-fav" aria-label="В избранное" onclick="event.preventDefault()">♡</button>
+      <div class="prod-img-actions">
+        ${condPill(p)}
+        <button class="prod-fav" aria-label="В избранное" onclick="event.preventDefault()">♡</button>
+      </div>
     </div>
     <div class="prod-body">
       <div class="prod-group">${p.group}</div>
@@ -133,7 +145,7 @@ function listCard(p) {
   return `<a href="product.html" class="prod-card">
     <div class="prod-img">
       ${partImg(p, "")}
-      <div class="prod-badge ${p.cls} prod-badge--sm"><span class="badge-dot"></span>${p.cond}</div>
+      <div class="prod-img-actions">${condPill(p)}</div>
     </div>
     <div class="prod-body">
       <div class="prod-group">${p.group}</div>

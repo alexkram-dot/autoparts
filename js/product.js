@@ -50,6 +50,15 @@ const GROUP_IMG = {
   'Оптика':'optics', 'Двигатель':'engine', 'Стёкла':'glass', 'Салон':'interior',
   'Кузовные':'body', 'Топливная':'fuel', 'Шины и диски':'wheels', 'Трансмиссия':'transmission',
 };
+/* Шкала состояния: 3 деления, при наведении раскрывается словом.
+   На тач-устройствах наведения нет — слово дублируется в title/aria-label. */
+function condPill(p) {
+  return `<span class="prod-cond ${p.cls}" title="Состояние: ${p.cond.toLowerCase()}" aria-label="Состояние: ${p.cond.toLowerCase()}">
+        <span class="cond-bars" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="cond-label" aria-hidden="true">${p.cond}</span>
+      </span>`;
+}
+
 function smallImg(p) {
   const slug = GROUP_IMG[p.group];
   if (!slug) return `<div class="prod-img-ph prod-img-ph--sm">${PH}</div>`;
@@ -61,8 +70,10 @@ function smallCard(p, showGroup) {
   return `<a href="product.html" class="prod-card">
     <div class="prod-img">
       ${smallImg(p)}
-      <div class="prod-badge ${p.cls} prod-badge--xs"><span class="badge-dot"></span>${p.cond}</div>
-      <button class="prod-fav" aria-label="В избранное" onclick="event.preventDefault()">♡</button>
+      <div class="prod-img-actions">
+        ${condPill(p)}
+        <button class="prod-fav" aria-label="В избранное" onclick="event.preventDefault()">♡</button>
+      </div>
     </div>
     <div class="prod-body">
       ${showGroup ? `<div class="prod-group">${p.group}</div>` : ''}
