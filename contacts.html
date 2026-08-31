@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=02e66875">
+  <link rel="stylesheet" href="css/styles.css?v=f19b9d0c">
 </head>
 <body>
 
@@ -106,10 +106,25 @@
   </div>
 
   <div class="container">
-    <div class="page-head">
-      <div class="label"><span class="label-dot"></span>Ежедневно 9:00–21:00</div>
-      <h1 class="page-title">Контакты и режим работы</h1>
-      <p class="page-lead">Звоните, пишите в мессенджеры или приезжайте на площадку — покажем деталь до покупки.</p>
+    <div class="page-head page-head--split">
+      <div>
+        <div class="label"><span class="label-dot"></span>Ежедневно 9:00–21:00</div>
+        <h1 class="page-title">Контакты и режим работы</h1>
+        <p class="page-lead">Звоните, пишите в мессенджеры или приезжайте на площадку — покажем деталь до покупки.</p>
+      </div>
+
+      <aside class="hours-card" id="hours-card">
+        <div class="hours-ttl">Режим работы</div>
+        <p class="hours-status" id="hours-status">
+          <span class="hours-dot" id="hours-dot"></span>
+          <span id="hours-state">Ежедневно 9:00–21:00</span>
+        </p>
+        <div class="hours-rows">
+          <div class="hours-row"><span>Пн — Вс</span><b>9:00 – 21:00</b></div>
+          <div class="hours-row"><span>Заявки на сайте</span><b>круглосуточно</b></div>
+          <div class="hours-row"><span>Осмотр деталей</span><b>по записи</b></div>
+        </div>
+      </aside>
     </div>
   </div>
 
@@ -351,5 +366,6 @@
 </nav>
 
 <script src="js/main.js?v=a5af56cf"></script>
+<script src="js/contacts.js?v=5134852a"></script>
 </body>
 </html>
