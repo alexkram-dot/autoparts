@@ -15,7 +15,23 @@ const PRODUCTS = [
   { id:'p9',  group:'Кузовные',     name:'Бампер передний',       donor:'VW Polo · 2020',           oem:'2G0-807-221', price:'8 900 ₽',  stock:'1 шт',  ...GD },
   { id:'p10', group:'Оптика',       name:'Фонарь задний правый',  donor:'Kia Rio · 2019',           oem:'92402-H8000', price:'3 100 ₽',  stock:'2 шт',  ...EX },
   { id:'p11', group:'Двигатель',    name:'Стартер',               donor:'Hyundai Creta · 2019',     oem:'36100-2E300', price:'5 400 ₽',  stock:'2 шт',  ...EX },
-  { id:'p12', group:'Кузовные',     name:'Зеркало боковое правое',donor:'Toyota RAV4 · 2018',       oem:'87910-42E10', price:'3 900 ₽',  stock:'1 шт',  ...DF },
+  { id:'p12', group:'Кузовные',     name:'Зеркало правое',      donor:'Toyota RAV4 · 2018',       oem:'87910-42E10', price:'3 900 ₽',  stock:'1 шт',  ...DF },
+];
+
+/* Вторая партия — подгружается кнопкой «Показать ещё» */
+const PRODUCTS_MORE = [
+  { id:'p13', group:'Оптика',       name:'Фара правая в сборе',   donor:'VW Tiguan · 2018',        oem:'5NA-941-036', price:'7 200 ₽',  stock:'1 шт',    ...EX },
+  { id:'p14', group:'Салон',        name:'Торпедо в сборе',       donor:'Kia Sportage · 2017',     oem:'84710-F1000', price:'18 400 ₽', stock:'1 шт',    ...GD },
+  { id:'p15', group:'Двигатель',    name:'ГБЦ 1.8 4ZZ-FE',        donor:'Toyota Corolla · 2015',   oem:'11101-0D040', price:'21 000 ₽', stock:'1 шт',    ...GD },
+  { id:'p16', group:'Кузовные',     name:'Дверь передняя левая',  donor:'Hyundai Solaris · 2019',  oem:'76003-H5000', price:'11 300 ₽', stock:'1 шт',    ...EX },
+  { id:'p17', group:'Шины и диски', name:'Комплект дисков R16',   donor:'Toyota Camry · 2016',     oem:'42611-06D40', price:'16 800 ₽', stock:'1 компл', ...GD },
+  { id:'p18', group:'Стёкла',       name:'Стекло двери заднее',   donor:'BMW X3 · 2015',           oem:'51-35-7-289', price:'4 600 ₽',  stock:'2 шт',    ...EX },
+  { id:'p19', group:'Топливная',    name:'Топливный бак',         donor:'Kia Rio · 2018',          oem:'31150-H5000', price:'6 300 ₽',  stock:'1 шт',    ...GD },
+  { id:'p20', group:'Трансмиссия',  name:'МКПП 5-ступенчатая',    donor:'VW Polo · 2017',          oem:'0AF-300-041', price:'32 000 ₽', stock:'1 шт',    ...GD },
+  { id:'p21', group:'Оптика',       name:'Фонарь задний левый',   donor:'Hyundai Creta · 2020',    oem:'92401-M0000', price:'3 400 ₽',  stock:'2 шт',    ...EX },
+  { id:'p22', group:'Кузовные',     name:'Крыло переднее правое', donor:'Toyota RAV4 · 2017',      oem:'53801-42180', price:'7 900 ₽',  stock:'1 шт',    ...DF },
+  { id:'p23', group:'Салон',        name:'Блок управления климатом', donor:'Kia Ceed · 2019',      oem:'97250-A2000', price:'5 100 ₽',  stock:'1 шт',    ...EX },
+  { id:'p24', group:'Двигатель',    name:'Генератор 110А',        donor:'VW Polo · 2019',          oem:'04E-903-023', price:'6 900 ₽',  stock:'2 шт',    ...EX },
 ];
 
 /* ── Icon placeholder SVG ─────────────────── */
@@ -27,18 +43,22 @@ let activeGroup  = 'Все';
 let activeSort   = 'cheap';
 let activeChecks = new Set();
 
-const PRICE_MAP = {
-  'p1':6800,'p2':78000,'p3':9400,'p4':12500,'p5':14500,
-  'p6':4200,'p7':5600,'p8':46000,'p9':8900,'p10':3100,
-  'p11':5400,'p12':3900
-};
+/* Показана ли вторая партия */
+let showAll = false;
+
+/* Цена берётся из самой карточки — отдельной таблицы цен не держим */
+const priceOf = p => Number(p.price.replace(/[^\d]/g, ''));
+
+function visibleProducts() {
+  return showAll ? PRODUCTS.concat(PRODUCTS_MORE) : PRODUCTS.slice();
+}
 
 function filteredProducts() {
-  let list = PRODUCTS.slice();
+  let list = visibleProducts();
   if (activeGroup !== 'Все') list = list.filter(p => p.group === activeGroup);
   if (activeChecks.size) list = list.filter(p => activeChecks.has(p.cond));
-  if (activeSort === 'cheap') list.sort((a,b) => PRICE_MAP[a.id] - PRICE_MAP[b.id]);
-  if (activeSort === 'exp')   list.sort((a,b) => PRICE_MAP[b.id] - PRICE_MAP[a.id]);
+  if (activeSort === 'cheap') list.sort((a, b) => priceOf(a) - priceOf(b));
+  if (activeSort === 'exp')   list.sort((a, b) => priceOf(b) - priceOf(a));
   return list;
 }
 
@@ -50,8 +70,19 @@ function renderProducts() {
   const list = filteredProducts();
   container.innerHTML = list.length
     ? list.map(p => isGrid ? gridCard(p) : listCard(p)).join('')
-    : '<p style="padding:24px;color:var(--subtle);">Ничего не найдено</p>';
+    : '<p class="review-empty">Ничего не найдено — попробуйте снять часть фильтров.</p>';
   document.querySelector('.found-count').textContent = list.length.toLocaleString('ru');
+  syncLoadMore();
+}
+
+/* Кнопка «Показать ещё»: подгружает вторую партию, затем гаснет */
+function syncLoadMore() {
+  const btn = document.getElementById('load-more');
+  if (!btn) return;
+  btn.textContent = showAll ? 'Показаны все 24 из 12 480' : 'Показать ещё 12';
+  btn.disabled = showAll;
+  btn.classList.toggle('btn-blue', !showAll);
+  btn.classList.toggle('btn-ghost', showAll);
 }
 
 function gridCard(p) {
@@ -59,7 +90,7 @@ function gridCard(p) {
     <div class="prod-img">
       <div class="prod-img-ph prod-img-ph--grid">${PH_ICON}</div>
       <div class="prod-badge ${p.cls}"><span class="badge-dot"></span>${p.cond}</div>
-      <button class="prod-fav" onclick="event.preventDefault()">♡</button>
+      <button class="prod-fav" aria-label="В избранное" onclick="event.preventDefault()">♡</button>
     </div>
     <div class="prod-body">
       <div class="prod-group">${p.group}</div>
@@ -95,7 +126,7 @@ function listCard(p) {
     <div class="prod-aside">
       <div class="prod-price">${p.price}</div>
       <div class="prod-actions">
-        <button class="prod-fav-btn" onclick="event.preventDefault()">♡</button>
+        <button class="prod-fav-btn" aria-label="В избранное" onclick="event.preventDefault()">♡</button>
         <button class="prod-cart" onclick="event.preventDefault()">В корзину</button>
       </div>
     </div>
@@ -171,3 +202,10 @@ document.getElementById('scrim').addEventListener('click', closeFilterSheet);
 
 /* ── Init ─────────────────────────────────── */
 renderProducts();
+
+/* ── Load more ────────────────────────────── */
+document.getElementById('load-more')?.addEventListener('click', () => {
+  if (showAll) return;
+  showAll = true;
+  renderProducts();
+});

@@ -107,4 +107,26 @@
   document.querySelectorAll('[data-tab="search"]')
     .forEach(el => el.addEventListener('click', openPicker));
 
+  /* ── Demo form submit ───────────────────────────
+     Прототип без бэкенда: показываем успех и сбрасываем форму.
+     Текст кнопки берём из data-demo-submit. После сброса шлём
+     событие 'demo:reset' — страница может доснять своё состояние. */
+  document.querySelectorAll('form[data-demo-submit]').forEach(form => {
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+      const btn = form.querySelector('button[type="submit"]');
+      if (!btn) return;
+      const label = btn.textContent;
+      btn.textContent = form.dataset.demoSubmit || 'Отправлено ✓';
+      btn.disabled = true;
+      setTimeout(() => {
+        form.reset();
+        form.dispatchEvent(new CustomEvent('demo:reset'));
+        btn.textContent = label;
+        btn.disabled = false;
+      }, 2500);
+    });
+  });
+
 })();

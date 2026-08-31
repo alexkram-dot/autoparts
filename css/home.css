@@ -189,50 +189,6 @@
 }
 .hs-field input::placeholder { color: var(--subtle); font-weight: 500; }
 
-/* ── Categories grid ─────────────────────── */
-.cats-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 18px;
-}
-
-/* ── Adv grid ────────────────────────────── */
-.adv-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-
-/* ── Steps grid ──────────────────────────── */
-.steps-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 18px;
-}
-
-/* ── Section spacing ─────────────────────── */
-.section { padding: 72px 0 8px; }
-.section-sm { padding: 56px 0 8px; }
-.section-hdr {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 24px;
-  margin-bottom: 28px;
-}
-.section-hdr-link {
-  font: 700 15px/1 var(--font);
-  color: var(--blue);
-  white-space: nowrap;
-  transition: color .15s;
-}
-.section-hdr-link:hover { color: var(--orange); }
-.section-title {
-  font: 700 38px/1.08 var(--font-d);
-  color: var(--dark);
-  letter-spacing: -.02em;
-  margin: 0;
-}
 
 /* ── Mobile hero ─────────────────────────── */
 @media (max-width: 768px) {
@@ -243,17 +199,6 @@
   .hero-search-wrap { display: none; }
   .hero-mobile { display: block !important; }
   .hero-search-wrap-m { display: block !important; }
-  .section { padding: 32px 0 8px; }
-  .section-sm { padding: 28px 0 8px; }
-  .section-title { font-size: 24px; }
-  .cats-grid { grid-template-columns: repeat(2, 1fr); gap: 11px; }
-  .cat-card-desc { display: none; }
-  .adv-grid { grid-template-columns: 1fr; gap: 12px; }
-  .adv-card { display: flex; align-items: flex-start; gap: 13px; padding: 18px; }
-  .adv-icon { margin-bottom: 0; flex-shrink: 0; width: 42px; height: 42px; }
-  .steps-grid { grid-template-columns: 1fr; gap: 11px; }
-  .step-card { display: flex; align-items: flex-start; gap: 14px; padding: 16px 18px; border-radius: 14px; }
-  .step-num { font-size: 24px; margin-bottom: 0; flex-shrink: 0; }
 }
 .hero-mobile { display: none; padding: 10px 18px 0; }
 .hero-search-wrap-m { display: none; padding: 14px 18px 22px; }
@@ -268,5 +213,4 @@
   .diagram-glow { width: 940px; height: 520px; }
   .diagram-shadow { width: 720px; height: 40px; bottom: 64px; }
   .hero-search-wrap { padding-left: 48px; padding-right: 48px; }
-  .section-title { font-size: 44px; }
 }

@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>О компании — Авторазборка23</title>
-  <meta name="description" content="Авторазборка полного цикла в Краснодаре с 2011 года: площадка 2,5 га, 12 000 позиций на складе, гарантия 14 дней и доставка по всей России.">
+  <title>Отзывы покупателей — Авторазборка23</title>
+  <meta name="description" content="1 248 отзывов о покупке б/у запчастей в Авторазборка23. Публикуем все отзывы без модерации и отвечаем на каждый.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
@@ -21,9 +21,9 @@
     </a>
 
     <nav class="nav-links">
-      <a href="about.html" class="active">О компании</a>
+      <a href="about.html">О компании</a>
       <a href="catalog.html">Каталог</a>
-      <a href="reviews.html">Отзывы</a>
+      <a href="reviews.html" class="active">Отзывы</a>
       <a href="warranty.html">Гарантия</a>
       <a href="contacts.html">Контакты</a>
     </nav>
@@ -100,157 +100,102 @@
   <div class="breadcrumb-section">
     <div class="container">
       <nav class="breadcrumb" aria-label="Хлебные крошки">
-        <a href="index.html">Главная</a><span class="breadcrumb-sep">/</span><span class="current">О компании</span>
+        <a href="index.html">Главная</a><span class="breadcrumb-sep">/</span><span class="current">Отзывы</span>
       </nav>
     </div>
   </div>
 
   <div class="container">
     <div class="page-head">
-      <div class="label"><span class="label-dot"></span>С 2011 года</div>
-      <h1 class="page-title">Авторазборка полного цикла в Краснодаре</h1>
-      <p class="page-lead">Выкупаем автомобили после ДТП, разбираем их на собственной площадке, проверяем каждую деталь и отправляем по всей России.</p>
+      <div class="label"><span class="label-dot"></span>1 248 отзывов</div>
+      <h1 class="page-title">Отзывы покупателей</h1>
+      <p class="page-lead">Публикуем все отзывы без модерации — и хорошие, и с претензиями. На каждый отвечаем.</p>
     </div>
   </div>
 
   <div class="stats-strip">
     <div class="stats-grid">
         <div class="stat-cell">
-          <div class="stat-num">15 лет</div>
-          <div class="stat-lbl">на рынке запчастей</div>
+          <div class="stat-num">1 248</div>
+          <div class="stat-lbl">отзывов всего</div>
         </div>
         <div class="stat-cell">
-          <div class="stat-num">2,5 га</div>
-          <div class="stat-lbl">собственная площадка</div>
+          <div class="stat-num">4,8</div>
+          <div class="stat-lbl">средняя оценка</div>
         </div>
         <div class="stat-cell">
-          <div class="stat-num">4 500</div>
-          <div class="stat-lbl">разобранных авто</div>
+          <div class="stat-num">96 %</div>
+          <div class="stat-lbl">рекомендуют нас</div>
         </div>
         <div class="stat-cell">
-          <div class="stat-num">28</div>
-          <div class="stat-lbl">человек в команде</div>
+          <div class="stat-num">2 часа</div>
+          <div class="stat-lbl">среднее время ответа</div>
         </div>
     </div>
   </div>
 
-  <!-- Кто мы -->
-  <section class="section-sm">
+  <!-- Форма отзыва -->
+  <section class="form-section">
     <div class="container">
-      <div class="content-layout">
-        <article class="prose">
-          <div class="section-head">
-            <div class="label"><span class="label-dot"></span>Кто мы</div>
-            <h2 class="section-title">15 лет разбираем автомобили — и знаем их до последнего болта</h2>
+      <div class="form-card">
+        <h2>Оставить отзыв</h2>
+        <p class="form-card-sub">Расскажите, что покупали и как всё прошло. Публикуем без правок.</p>
+        <form id="review-form" novalidate data-demo-submit="Отзыв отправлен ✓">
+          <div class="form-grid">
+            <div class="field full">
+              <span class="field-lbl">Ваша оценка</span>
+              <div class="rating-input" id="rating" role="radiogroup" aria-label="Оценка от 1 до 5">
+                <button type="button" class="rating-star on" data-value="1" role="radio" aria-checked="true"  aria-label="1 из 5">★</button>
+                <button type="button" class="rating-star on" data-value="2" role="radio" aria-checked="false" aria-label="2 из 5">★</button>
+                <button type="button" class="rating-star on" data-value="3" role="radio" aria-checked="false" aria-label="3 из 5">★</button>
+                <button type="button" class="rating-star on" data-value="4" role="radio" aria-checked="false" aria-label="4 из 5">★</button>
+                <button type="button" class="rating-star on" data-value="5" role="radio" aria-checked="true"  aria-label="5 из 5">★</button>
+              </div>
+            </div>
+            <div class="field">
+              <label class="field-lbl" for="r-name">Имя</label>
+              <input class="field-input" id="r-name" name="name" placeholder="Как вас подписать" required>
+            </div>
+            <div class="field">
+              <label class="field-lbl" for="r-car">Автомобиль</label>
+              <input class="field-input" id="r-car" name="car" placeholder="Toyota RAV4, 2016">
+            </div>
+            <div class="field full">
+              <label class="field-lbl" for="r-part">Что покупали</label>
+              <input class="field-input" id="r-part" name="part" placeholder="Капот, фара левая, АКПП…">
+            </div>
+            <div class="field full">
+              <label class="field-lbl" for="r-text">Отзыв</label>
+              <textarea class="field-textarea" id="r-text" name="text" placeholder="Как прошёл подбор, упаковка, доставка, подошла ли деталь…" required></textarea>
+            </div>
+            <label class="form-consent field full">
+              <input type="checkbox" required>
+              <span>Отправляя отзыв, вы соглашаетесь с публикацией имени, автомобиля и текста на сайте.</span>
+            </label>
+            <div class="field full">
+              <button type="submit" class="btn btn-blue form-submit">Отправить отзыв</button>
+            </div>
           </div>
-          <p>Авторазборка23 началась в 2011 году с одного бокса и двух машин на разбор. Сегодня это площадка 2,5 га, собственный склад на 12 000 позиций и команда из 28 человек: приёмщики, дефектовщики, механики и менеджеры подбора.</p>
-          <p>Мы выкупаем автомобили после ДТП и с пробегом, разбираем их аккуратно и по технологии: каждая деталь проходит дефектовку, маркируется и попадает на склад с фотофиксацией. Поэтому в каталоге вы видите реальные фото и честное описание состояния.</p>
-          <p>Работаем с частными покупателями, СТО и страховыми компаниями. Отправляем запчасти по всей России — от Калининграда до Владивостока.</p>
-
-          <figure class="prose-figure">
-            <div class="img-ph img-ph--tall"><svg width="48" height="48" viewBox="0 0 48 48" fill="none" aria-hidden="true"><rect x="4" y="10" width="40" height="28" rx="5" stroke="currentColor" stroke-width="2.5"/><circle cx="24" cy="24" r="8" stroke="currentColor" stroke-width="2.5"/></svg></div>
-            <figcaption>Площадка на ул. Промышленной, 14с3 — приёмка, разбор и склад на одной территории.</figcaption>
-          </figure>
-        </article>
-        <aside>
-          <div class="aside-card">
-            <h3>Коротко о нас</h3>
-            <div class="aside-fact">
-              <div class="aside-fact-num">12 000+</div>
-              <div class="aside-fact-lbl">позиций на складе</div>
-            </div>
-            <div class="aside-fact">
-              <div class="aside-fact-num">4 500</div>
-              <div class="aside-fact-lbl">разобранных автомобилей</div>
-            </div>
-            <div class="aside-fact">
-              <div class="aside-fact-num">28</div>
-              <div class="aside-fact-lbl">человек в команде</div>
-            </div>
-            <div class="aside-fact">
-              <div class="aside-fact-num">14 дней</div>
-              <div class="aside-fact-lbl">гарантия на каждую деталь</div>
-            </div>
-          </div>
-        </aside>
+        </form>
       </div>
     </div>
   </section>
 
-  <!-- Путь детали -->
+  <!-- Список отзывов -->
   <section class="section-sm">
     <div class="container">
       <div class="section-head">
-        <div class="label"><span class="label-dot"></span>Как устроена разборка</div>
-        <h2 class="section-title">Путь детали от машины до вашей двери</h2>
+        <div class="label"><span class="label-dot"></span>Что пишут покупатели</div>
+        <h2 class="section-title">Все отзывы</h2>
       </div>
-      <div class="steps-grid">
-        <div class="step-card">
-          <div class="step-num">1</div>
-          <div class="step-title">Выкуп авто</div>
-          <p class="step-text">Покупаем машины после ДТП и с пробегом — с документами и историей.</p>
-        </div>
-        <div class="step-card">
-          <div class="step-num">2</div>
-          <div class="step-title">Разбор и дефектовка</div>
-          <p class="step-text">Аккуратно снимаем узлы, проверяем каждую деталь на стенде.</p>
-        </div>
-        <div class="step-card">
-          <div class="step-num">3</div>
-          <div class="step-title">Склад и фото</div>
-          <p class="step-text">Маркируем, фотографируем и заносим в каталог с честным описанием.</p>
-        </div>
-        <div class="step-card">
-          <div class="step-num">4</div>
-          <div class="step-title">Продажа и гарантия</div>
-          <p class="step-text">Отправляем по РФ в день оплаты и даём 14 дней на проверку.</p>
-        </div>
+      <div class="group-chips" id="review-filters">
+        <button class="gchip active" data-filter="Все">Все</button>
+        <button class="gchip" data-filter="5 звёзд">5 звёзд</button>
+        <button class="gchip" data-filter="4 и ниже">4 и ниже</button>
+        <button class="gchip" data-filter="С ответом">С ответом</button>
       </div>
-    </div>
-  </section>
-
-  <!-- Принципы -->
-  <section class="section-sm">
-    <div class="container">
-      <div class="section-head">
-        <div class="label"><span class="label-dot"></span>Принципы</div>
-        <h2 class="section-title">На чём стоим</h2>
-      </div>
-      <div class="adv-grid">
-        <div class="adv-card">
-          <div class="adv-icon" aria-hidden="true">✓</div>
-          <div class="adv-title">Честное состояние</div>
-          <p class="adv-text">Фото реальной детали и описание дефектов до оплаты. Никаких «сюрпризов» в коробке.</p>
-        </div>
-        <div class="adv-card">
-          <div class="adv-icon" aria-hidden="true">⚲</div>
-          <div class="adv-title">Проверка каждой детали</div>
-          <p class="adv-text">Дефектовка при разборе и повторная проверка перед отправкой.</p>
-        </div>
-        <div class="adv-card">
-          <div class="adv-icon" aria-hidden="true">↺</div>
-          <div class="adv-title">Простой возврат</div>
-          <p class="adv-text">14 дней на проверку. Не подошла — вернём деньги без споров.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Реквизиты -->
-  <section class="section-sm">
-    <div class="container">
-      <div class="info-grid">
-        <div class="info-card">
-          <div class="info-card-ttl">Реквизиты</div>
-          <h3>ООО «Авторазборка23»</h3>
-          <p>ИНН 2311123456 · КПП 231101001<br>ОГРН 1112311012345<br>Юр. адрес: 350000, г. Краснодар, ул. Промышленная, 14с3</p>
-        </div>
-        <div class="info-card">
-          <div class="info-card-ttl">Площадка и склад</div>
-          <h3>г. Краснодар, ул. Промышленная, 14с3</h3>
-          <p>Ежедневно 9:00–21:00<br>Самовывоз и осмотр деталей — по записи<br><a href="tel:+78005552424">+7 800 555-24-24</a></p>
-        </div>
-      </div>
+      <div class="review-list" id="review-list"></div>
+      <nav class="pagination" id="review-pagination" aria-label="Страницы отзывов"></nav>
     </div>
   </section>
 
@@ -332,5 +277,6 @@
 </nav>
 
 <script src="js/main.js"></script>
+<script src="js/reviews.js"></script>
 </body>
 </html>

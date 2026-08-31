@@ -42,7 +42,7 @@ function smallCard(p, showGroup) {
     <div class="prod-img">
       <div class="prod-img-ph prod-img-ph--sm">${PH}</div>
       <div class="prod-badge ${p.cls} prod-badge--xs"><span class="badge-dot"></span>${p.cond}</div>
-      <button class="prod-fav" onclick="event.preventDefault()">♡</button>
+      <button class="prod-fav" aria-label="В избранное" onclick="event.preventDefault()">♡</button>
     </div>
     <div class="prod-body">
       ${showGroup ? `<div class="prod-group">${p.group}</div>` : ''}
