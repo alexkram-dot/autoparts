@@ -1734,10 +1734,7 @@ a.channel-value:hover { color: var(--orange); }
    наведения нет, поэтому слово продублировано в title и aria-label.
    ════════════════════════════════════════════════ */
 .prod-cond {
-  position: absolute;
-  top: 11px; left: 11px;
-  z-index: 2;
-  height: 32px;
+  height: 30px;
   padding: 0 9px;
   border-radius: 9px;
   background: rgba(255,255,255,.92);
@@ -1767,30 +1764,44 @@ a.channel-value:hover { color: var(--orange); }
 
 /* подпись: свёрнута, раскрывается при наведении на карточку */
 .cond-label {
-  max-width: 0;
-  opacity: 0;
   white-space: nowrap;
   font: 600 11px/1 var(--font);
-  transition: max-width .22s ease, opacity .16s ease;
 }
 .prod-cond.cond-ex  .cond-label { color: #1f8a5b; }
 .prod-cond.cond-gd  .cond-label { color: var(--blue); }
 .prod-cond.cond-def .cond-label { color: #c2691a; }
 
-.prod-card:hover .cond-label,
-.prod-cond:hover .cond-label,
-.prod-cond:focus-visible .cond-label { max-width: 110px; opacity: 1; }
-.prod-card:hover .prod-cond { border-color: rgba(11,23,48,.18); }
-
-/* Клавиатура: подпись раскрывается и при фокусе */
-.prod-cond:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+/* На узкой полосе (мобильная карточка) слово прячется, остаются деления */
+@media (max-width: 768px) {
+  .cond-label { display: none; }
+}
 
 @media (max-width: 768px) {
-  /* пилюля и сердечко одной высоты, углы поближе к краю */
-  .prod-cond { top: 8px; left: 8px; height: 28px; padding: 0 8px; border-radius: 8px; gap: 6px; }
-  .prod-fav  { bottom: 8px; right: 8px; width: 28px; height: 28px; border-radius: 8px; font-size: 14px; }
-  .cond-bars { height: 12px; }
+  .prod-tools { height: 34px; padding: 0 6px; gap: 4px; }
+  .prod-cond  { height: 26px; padding: 0 7px; border-radius: 7px; }
+  .prod-fav   { width: 26px; height: 26px; border-radius: 7px; font-size: 14px; }
+  .cond-bars  { height: 11px; }
   .cond-bars i:nth-child(1) { height: 5px; }
   .cond-bars i:nth-child(2) { height: 8px; }
-  .cond-bars i:nth-child(3) { height: 12px; }
+  .cond-bars i:nth-child(3) { height: 11px; }
+}
+
+/* ── Служебная полоса под фото ────────────────
+   Отдельная зона под значки: ничего не лежит поверх детали,
+   и место масштабируется, если значков станет больше. */
+.prod-media { position: relative; }
+.prod-tools {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 40px;
+  padding: 0 11px;
+  background: #fff;
+  border-top: 1px solid var(--border-soft);
+}
+/* сердечко прижато к правому краю полосы */
+.prod-tools .prod-fav {
+  position: static;
+  margin-left: auto;
+  bottom: auto; right: auto;
 }

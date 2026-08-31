@@ -118,10 +118,12 @@ function syncLoadMore() {
 
 function gridCard(p) {
   return `<a href="product.html" class="prod-card">
-    <div class="prod-img">
-      ${partImg(p, "prod-img-ph--grid")}
-      ${condPill(p)}
-      <button class="prod-fav" aria-label="В избранное" onclick="event.preventDefault()">♡</button>
+    <div class="prod-media">
+      <div class="prod-img">${partImg(p, "prod-img-ph--grid")}</div>
+      <div class="prod-tools">
+        ${condPill(p)}
+        <button class="prod-fav" aria-label="В избранное" onclick="event.preventDefault()">♡</button>
+      </div>
     </div>
     <div class="prod-body">
       <div class="prod-group">${p.group}</div>
@@ -141,9 +143,9 @@ function gridCard(p) {
 
 function listCard(p) {
   return `<a href="product.html" class="prod-card">
-    <div class="prod-img">
-      ${partImg(p, "")}
-      ${condPill(p)}
+    <div class="prod-media">
+      <div class="prod-img">${partImg(p, "")}</div>
+      <div class="prod-tools">${condPill(p)}</div>
     </div>
     <div class="prod-body">
       <div class="prod-group">${p.group}</div>

@@ -406,7 +406,8 @@ body { background: var(--light); }
   .products-grid .prod-card {
     display: flex; gap: 13px; padding: 12px; border-radius: 16px;
   }
-  .products-grid .prod-img { width: 108px; flex-shrink: 0; border-radius: 11px; overflow: hidden; }
+  .products-grid .prod-media { width: 108px; flex-shrink: 0; border-radius: 11px; overflow: hidden; align-self: flex-start; }
+  .products-grid .prod-img { width: 108px; }
   .products-grid .prod-img-ph { width: 108px; height: 108px; }
   .products-grid .prod-body { padding: 0; display: flex; flex-direction: column; flex: 1; min-width: 0; }
   .products-grid .prod-footer { margin-top: auto; }

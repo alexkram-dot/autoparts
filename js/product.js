@@ -68,10 +68,12 @@ function smallImg(p) {
 
 function smallCard(p, showGroup) {
   return `<a href="product.html" class="prod-card">
-    <div class="prod-img">
-      ${smallImg(p)}
-      ${condPill(p)}
-      <button class="prod-fav" aria-label="В избранное" onclick="event.preventDefault()">♡</button>
+    <div class="prod-media">
+      <div class="prod-img">${smallImg(p)}</div>
+      <div class="prod-tools">
+        ${condPill(p)}
+        <button class="prod-fav" aria-label="В избранное" onclick="event.preventDefault()">♡</button>
+      </div>
     </div>
     <div class="prod-body">
       ${showGroup ? `<div class="prod-group">${p.group}</div>` : ''}
