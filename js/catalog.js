@@ -120,10 +120,8 @@ function gridCard(p) {
   return `<a href="product.html" class="prod-card">
     <div class="prod-img">
       ${partImg(p, "prod-img-ph--grid")}
-      <div class="prod-img-actions">
-        ${condPill(p)}
-        <button class="prod-fav" aria-label="В избранное" onclick="event.preventDefault()">♡</button>
-      </div>
+      ${condPill(p)}
+      <button class="prod-fav" aria-label="В избранное" onclick="event.preventDefault()">♡</button>
     </div>
     <div class="prod-body">
       <div class="prod-group">${p.group}</div>
@@ -145,7 +143,7 @@ function listCard(p) {
   return `<a href="product.html" class="prod-card">
     <div class="prod-img">
       ${partImg(p, "")}
-      <div class="prod-img-actions">${condPill(p)}</div>
+      ${condPill(p)}
     </div>
     <div class="prod-body">
       <div class="prod-group">${p.group}</div>

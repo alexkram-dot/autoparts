@@ -1733,18 +1733,10 @@ a.channel-value:hover { color: var(--orange); }
    При наведении на карточку раскрывается словом. На тач-устройствах
    наведения нет, поэтому слово продублировано в title и aria-label.
    ════════════════════════════════════════════════ */
-.prod-img-actions {
-  position: absolute;
-  bottom: 11px; right: 11px;
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  z-index: 2;
-}
-/* сердечко внутри группы перестаёт позиционироваться само */
-.prod-img-actions .prod-fav { position: static; bottom: auto; right: auto; }
-
 .prod-cond {
+  position: absolute;
+  top: 11px; left: 11px;
+  z-index: 2;
   height: 32px;
   padding: 0 9px;
   border-radius: 9px;
@@ -1794,10 +1786,11 @@ a.channel-value:hover { color: var(--orange); }
 .prod-cond:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
 
 @media (max-width: 768px) {
-  .prod-img-actions { bottom: 8px; right: 8px; gap: 5px; }
-  .prod-cond { height: 26px; padding: 0 7px; border-radius: 8px; gap: 5px; }
-  .cond-bars { height: 11px; }
+  /* пилюля и сердечко одной высоты, углы поближе к краю */
+  .prod-cond { top: 8px; left: 8px; height: 28px; padding: 0 8px; border-radius: 8px; gap: 6px; }
+  .prod-fav  { bottom: 8px; right: 8px; width: 28px; height: 28px; border-radius: 8px; font-size: 14px; }
+  .cond-bars { height: 12px; }
   .cond-bars i:nth-child(1) { height: 5px; }
   .cond-bars i:nth-child(2) { height: 8px; }
-  .cond-bars i:nth-child(3) { height: 11px; }
+  .cond-bars i:nth-child(3) { height: 12px; }
 }
