@@ -13,8 +13,16 @@ document.querySelectorAll('.tab-btn').forEach(btn => {
 document.getElementById('thumbs').addEventListener('click', e => {
   const thumb = e.target.closest('.gallery-thumb');
   if (!thumb) return;
-  document.querySelectorAll('.gallery-thumb').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.gallery-thumb').forEach(t => {
+    t.classList.remove('active');
+    t.setAttribute('aria-current', 'false');
+  });
   thumb.classList.add('active');
+  thumb.setAttribute('aria-current', 'true');
+
+  const main = document.getElementById('gallery-main-img');
+  const full = thumb.dataset.full;
+  if (main && full) main.src = full;
 });
 
 /* ── Related products data ─────────────────── */
@@ -37,10 +45,22 @@ const DONOR = [
   { group:'Трансмиссия', name:'АКПП в сборе',        price:'52 000 ₽', ...GD },
 ];
 
+/* Фото для карточек «похожие» — по группе детали */
+const GROUP_IMG = {
+  'Оптика':'optics', 'Двигатель':'engine', 'Стёкла':'glass', 'Салон':'interior',
+  'Кузовные':'body', 'Топливная':'fuel', 'Шины и диски':'wheels', 'Трансмиссия':'transmission',
+};
+function smallImg(p) {
+  const slug = GROUP_IMG[p.group];
+  if (!slug) return `<div class="prod-img-ph prod-img-ph--sm">${PH}</div>`;
+  return `<img src="images/parts/${slug}.webp" alt="${p.name}" class="prod-img-photo prod-img-ph--sm"
+    width="1200" height="600" loading="lazy" decoding="async">`;
+}
+
 function smallCard(p, showGroup) {
   return `<a href="product.html" class="prod-card">
     <div class="prod-img">
-      <div class="prod-img-ph prod-img-ph--sm">${PH}</div>
+      ${smallImg(p)}
       <div class="prod-badge ${p.cls} prod-badge--xs"><span class="badge-dot"></span>${p.cond}</div>
       <button class="prod-fav" aria-label="В избранное" onclick="event.preventDefault()">♡</button>
     </div>

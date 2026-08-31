@@ -1696,3 +1696,33 @@ a.channel-value:hover { color: var(--orange); }
   .form-card--wide { padding: 24px 20px; }
   .review-list { margin-top: 18px; }
 }
+
+/* Фото детали в карточке — повторяет габариты SVG-заглушки */
+.prod-img-photo {
+  width: 100%;
+  height: 172px;
+  object-fit: cover;
+  background: #eef3fb;
+  display: block;
+}
+.products-list .prod-img-photo { width: 184px; height: 130px; }
+.prod-img-photo.prod-img-ph--sm { height: 150px; }
+@media (max-width: 768px) {
+  /* мобильная карточка каталога горизонтальная: картинка 108x108 */
+  .products-grid .prod-img-photo { width: 108px; height: 108px; }
+  .products-list .prod-img-photo { width: 108px; height: 108px; }
+}
+
+@media (max-width: 768px) {
+  /* На миниатюре 108px бейдж состояния не должен закрывать деталь */
+  .products-grid .prod-badge,
+  .products-list .prod-badge {
+    top: 6px; left: 6px;
+    padding: 3px 6px;
+    font-size: 9px;
+    gap: 4px;
+    border-radius: 6px;
+  }
+  .products-grid .prod-badge .badge-dot,
+  .products-list .prod-badge .badge-dot { width: 4px; height: 4px; }
+}

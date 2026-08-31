@@ -8,8 +8,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css">
-  <link rel="stylesheet" href="css/product.css">
+  <link rel="stylesheet" href="css/styles.css?v=a53328b2">
+  <link rel="stylesheet" href="css/product.css?v=65460968">
 </head>
 <body>
 
@@ -112,7 +112,8 @@
       <div class="gallery">
         <div class="gallery-main">
           <div class="gallery-main-img">
-            <svg width="96" height="96" viewBox="0 0 48 48" fill="none"><rect x="4" y="10" width="40" height="28" rx="5" stroke="#b8c5de" stroke-width="2.5"/><circle cx="24" cy="24" r="8" stroke="#b8c5de" stroke-width="2.5"/><circle cx="24" cy="24" r="3" fill="#b8c5de"/><path d="M15 10l3-6h10l3 6" stroke="#b8c5de" stroke-width="2.5" stroke-linejoin="round"/></svg>
+            <img src="images/parts/hood-1.webp" alt="Капот в сборе Toyota RAV4 2019" id="gallery-main-img"
+              width="1920" height="960" decoding="async">
           </div>
           <div class="gallery-main-badge">
             <span class="gallery-main-badge-dot"></span>Отличное состояние
@@ -120,11 +121,21 @@
           <button class="gallery-fav" aria-label="В избранное">♡</button>
         </div>
         <div class="gallery-thumbs" id="thumbs">
-          <button type="button" class="gallery-thumb active" aria-label="Фото 1"><svg width="28" height="28" viewBox="0 0 48 48" fill="none"><rect x="4" y="10" width="40" height="28" rx="5" stroke="#b8c5de" stroke-width="2.5"/><circle cx="24" cy="24" r="8" stroke="#b8c5de" stroke-width="2.5"/></svg></button>
-          <button type="button" class="gallery-thumbNone" aria-label="Фото 2"><svg width="28" height="28" viewBox="0 0 48 48" fill="none"><rect x="4" y="10" width="40" height="28" rx="5" stroke="#b8c5de" stroke-width="2.5"/><circle cx="24" cy="24" r="8" stroke="#b8c5de" stroke-width="2.5"/></svg></button>
-          <button type="button" class="gallery-thumbNone" aria-label="Фото 3"><svg width="28" height="28" viewBox="0 0 48 48" fill="none"><rect x="4" y="10" width="40" height="28" rx="5" stroke="#b8c5de" stroke-width="2.5"/><circle cx="24" cy="24" r="8" stroke="#b8c5de" stroke-width="2.5"/></svg></button>
-          <button type="button" class="gallery-thumbNone" aria-label="Фото 4"><svg width="28" height="28" viewBox="0 0 48 48" fill="none"><rect x="4" y="10" width="40" height="28" rx="5" stroke="#b8c5de" stroke-width="2.5"/><circle cx="24" cy="24" r="8" stroke="#b8c5de" stroke-width="2.5"/></svg></button>
-          <button type="button" class="gallery-thumbNone" aria-label="Фото 5"><svg width="28" height="28" viewBox="0 0 48 48" fill="none"><rect x="4" y="10" width="40" height="28" rx="5" stroke="#b8c5de" stroke-width="2.5"/><circle cx="24" cy="24" r="8" stroke="#b8c5de" stroke-width="2.5"/></svg></button>
+          <button type="button" class="gallery-thumb active" aria-label="Фото 1" data-full="images/parts/hood-1.webp">
+            <img src="images/parts/hood-1.webp" alt="" width="1920" height="960" loading="lazy" decoding="async">
+          </button>
+          <button type="button" class="gallery-thumb" aria-label="Фото 2" data-full="images/parts/hood-2.webp">
+            <img src="images/parts/hood-2.webp" alt="" width="1920" height="960" loading="lazy" decoding="async">
+          </button>
+          <button type="button" class="gallery-thumb" aria-label="Фото 3" data-full="images/parts/hood-3.webp">
+            <img src="images/parts/hood-3.webp" alt="" width="1920" height="960" loading="lazy" decoding="async">
+          </button>
+          <button type="button" class="gallery-thumb" aria-label="Фото 4" data-full="images/parts/hood-4.webp">
+            <img src="images/parts/hood-4.webp" alt="" width="1920" height="960" loading="lazy" decoding="async">
+          </button>
+          <button type="button" class="gallery-thumb" aria-label="Фото 5" data-full="images/parts/hood-5.webp">
+            <img src="images/parts/hood-5.webp" alt="" width="1920" height="960" loading="lazy" decoding="async">
+          </button>
         </div>
 
         <!-- Mobile: title + price (shown below gallery) -->
@@ -364,7 +375,7 @@
   </div>
 </nav>
 
-<script src="js/main.js"></script>
-<script src="js/product.js"></script>
+<script src="js/main.js?v=a5af56cf"></script>
+<script src="js/product.js?v=c0644d0f"></script>
 </body>
 </html>

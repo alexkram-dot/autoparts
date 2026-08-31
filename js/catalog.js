@@ -37,6 +37,27 @@ const PRODUCTS_MORE = [
 /* ── Icon placeholder SVG ─────────────────── */
 const PH_ICON = `<svg width="48" height="48" viewBox="0 0 48 48" fill="none"><rect x="4" y="10" width="40" height="28" rx="5" stroke="#b8c5de" stroke-width="2.5"/><circle cx="24" cy="24" r="8" stroke="#b8c5de" stroke-width="2.5"/><circle cx="24" cy="24" r="3" fill="#b8c5de"/><path d="M15 10l3-6h10l3 6" stroke="#b8c5de" stroke-width="2.5" stroke-linejoin="round"/></svg>`;
 
+/* ── Фото по группам ──────────────────────── */
+const GROUP_IMG = {
+  'Оптика':       'optics',
+  'Двигатель':    'engine',
+  'Стёкла':       'glass',
+  'Салон':        'interior',
+  'Кузовные':     'body',
+  'Топливная':    'fuel',
+  'Шины и диски': 'wheels',
+  'Трансмиссия':  'transmission',
+};
+
+/* Фото детали. Если группа неизвестна — остаётся SVG-заглушка.
+   width/height заданы явно, чтобы блок не «прыгал» при загрузке. */
+function partImg(p, cls) {
+  const slug = GROUP_IMG[p.group];
+  if (!slug) return `<div class="prod-img-ph ${cls}">${PH_ICON}</div>`;
+  return `<img src="images/parts/${slug}.webp" alt="${p.name}" class="prod-img-photo ${cls}"
+    width="1200" height="600" loading="lazy" decoding="async">`;
+}
+
 /* ── Filter & sort state ─────────────────── */
 let currentView  = 'grid';
 let activeGroup  = 'Все';
@@ -88,7 +109,7 @@ function syncLoadMore() {
 function gridCard(p) {
   return `<a href="product.html" class="prod-card">
     <div class="prod-img">
-      <div class="prod-img-ph prod-img-ph--grid">${PH_ICON}</div>
+      ${partImg(p, "prod-img-ph--grid")}
       <div class="prod-badge ${p.cls}"><span class="badge-dot"></span>${p.cond}</div>
       <button class="prod-fav" aria-label="В избранное" onclick="event.preventDefault()">♡</button>
     </div>
@@ -111,7 +132,7 @@ function gridCard(p) {
 function listCard(p) {
   return `<a href="product.html" class="prod-card">
     <div class="prod-img">
-      <div class="prod-img-ph">${PH_ICON}</div>
+      ${partImg(p, "")}
       <div class="prod-badge ${p.cls} prod-badge--sm"><span class="badge-dot"></span>${p.cond}</div>
     </div>
     <div class="prod-body">
