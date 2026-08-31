@@ -463,3 +463,11 @@ body { background: var(--light); }
   .catalog-cta   { padding-bottom: 44px; }
 }
 #load-more:disabled { cursor: default; transform: none; box-shadow: none; }
+
+@media (max-width: 768px) {
+  /* Бейджу состояния — своя полоса над фото, чтобы он не закрывал деталь.
+     Полоса того же цвета, что фон фото, поэтому читается как одно поле. */
+  .products-grid .prod-img { padding-top: 22px; }
+  .products-grid .prod-img-photo,
+  .products-grid .prod-img-ph { height: 86px; }   /* 108 - 22 */
+}
