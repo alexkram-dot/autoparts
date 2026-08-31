@@ -1805,3 +1805,75 @@ a.channel-value:hover { color: var(--orange); }
   margin-left: auto;
   bottom: auto; right: auto;
 }
+
+/* ── Карта на странице контактов ─────────────── */
+.map-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+.map-block { margin: 0; }
+.map-frame {
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  overflow: hidden;
+  height: 420px;
+  background: var(--light);
+}
+.map-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+.map-caption {
+  margin-top: 10px;
+  font: 500 12px/1.5 var(--font);
+  color: var(--subtle);
+}
+.map-caption a { color: var(--blue); font-weight: 600; }
+.map-caption a:hover { color: var(--orange); }
+
+/* ── Форма как часть страницы: два столбца ───── */
+.form-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 28px;
+  align-items: start;
+}
+/* в потоке страницы карточке не нужна своя центровка и тень */
+.form-card--flat {
+  max-width: none;
+  margin: 0;
+  box-shadow: none;
+  padding: 28px;
+}
+.form-aside .aside-card { position: sticky; top: calc(var(--nav-h) + 16px); }
+.hint-list { display: flex; flex-direction: column; gap: 11px; }
+.hint-list li {
+  position: relative;
+  padding-left: 20px;
+  font: 400 14px/1.5 var(--font);
+  color: var(--muted);
+}
+.hint-list li::before {
+  content: '';
+  position: absolute;
+  left: 2px; top: 8px;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--blue);
+}
+.aside-divider {
+  height: 1px;
+  background: var(--border-soft);
+  margin: 18px 0 16px;
+}
+.aside-note { font: 600 14px/1.4 var(--font); color: var(--dark); margin-bottom: 12px; }
+.aside-phone-btn { width: 100%; }
+
+@media (max-width: 1024px) {
+  .map-layout  { grid-template-columns: 1fr; gap: 24px; }
+  .form-layout { grid-template-columns: 1fr; gap: 20px; }
+  .form-aside .aside-card { position: static; }
+}
+@media (max-width: 768px) {
+  .map-frame { height: 300px; border-radius: 14px; }
+  .form-card--flat { padding: 20px; }
+}

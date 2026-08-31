@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/styles.css?v=e46ceb7a">
+  <link rel="stylesheet" href="css/styles.css?v=053ae1d3">
 </head>
 <body>
 
@@ -167,7 +167,7 @@
   <!-- Площадка -->
   <section class="section-sm">
     <div class="container">
-      <div class="content-layout">
+      <div class="map-layout">
         <div>
           <div class="section-head">
             <div class="label"><span class="label-dot"></span>Площадка и склад</div>
@@ -205,32 +205,31 @@
         </div>
           </div>
         </div>
-        <aside>
-          <div class="aside-card">
-            <h3>Коротко</h3>
-            <div class="aside-fact">
-              <div class="aside-fact-num">2,5 га</div>
-              <div class="aside-fact-lbl">площадь разборки и склада</div>
-            </div>
-            <div class="aside-fact">
-              <div class="aside-fact-num">20 мин</div>
-              <div class="aside-fact-lbl">от центра Краснодара</div>
-            </div>
-            <div class="aside-fact">
-              <div class="aside-fact-num">12 000+</div>
-              <div class="aside-fact-lbl">позиций на складе</div>
-            </div>
+        <figure class="map-block">
+          <div class="map-frame">
+            <iframe
+              title="Карта проезда: Краснодар, ул. Промышленная, 14с3"
+              src="https://www.openstreetmap.org/export/embed.html?bbox=38.9200%2C45.0400%2C39.0000%2C45.0900&amp;layer=mapnik&amp;marker=45.0650%2C38.9550"
+              loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
           </div>
-        </aside>
+          <figcaption class="map-caption">
+            Координаты на карте ориентировочные — уточните перед публикацией.
+            <a href="https://www.openstreetmap.org/?mlat=45.0650&amp;mlon=38.9550#map=14/45.0650/38.9550" target="_blank" rel="noopener">Открыть карту</a>
+          </figcaption>
+        </figure>
       </div>
     </div>
   </section>
 
   <!-- Форма -->
-  <section class="form-section">
+  <section class="section-sm">
     <div class="container">
-      <div class="form-card">
-        <h2>Напишите нам</h2>
+      <div class="section-head">
+        <div class="label"><span class="label-dot"></span>Обратный звонок</div>
+        <h2 class="section-title">Напишите нам</h2>
+      </div>
+      <div class="form-layout">
+      <div class="form-card form-card--flat">
         <p class="form-card-sub">Оставьте контакты и вопрос — ответим в рабочее время, обычно в течение 15 минут.</p>
         <form id="contact-form" novalidate data-demo-submit="Заявка отправлена ✓">
           <div class="form-grid">
@@ -259,6 +258,21 @@
             </div>
           </div>
         </form>
+      </div>
+
+      <aside class="form-aside">
+        <div class="aside-card">
+          <h3>Чтобы ответить быстрее</h3>
+          <ul class="hint-list">
+            <li>Укажите VIN — по нему подберём деталь точно, без примерки</li>
+            <li>Приложите фото места установки, если не уверены в названии узла</li>
+            <li>По статусу заказа — назовите его номер из письма</li>
+          </ul>
+          <div class="aside-divider"></div>
+          <p class="aside-note">Не хотите ждать письма?</p>
+          <a href="tel:+78005552424" class="btn btn-ghost aside-phone-btn">Позвонить: +7 800 555-24-24</a>
+        </div>
+      </aside>
       </div>
     </div>
   </section>
